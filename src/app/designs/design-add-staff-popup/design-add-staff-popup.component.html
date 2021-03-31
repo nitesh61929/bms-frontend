@@ -1,0 +1,57 @@
+<h1 mat-dialog-title class="text-primary">
+  <div class="d-flex align-center justify-between">
+    <span>Add Staffs</span>
+    <i class="las la-times" (click)="closeDialog()"></i>
+  </div>
+</h1>
+<div mat-dialog-content>
+  <form class="staff-configuration-form">
+    <div class="d-flex is-column-layout align-center">
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left is-phone-field">
+          <mat-form-field class="zip-code-input">
+            <mat-label> Code </mat-label>
+            <span matPrefix><i class="las la-plus"></i></span>
+            <input type="number" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label> Mobile </mat-label>
+            <input type="number" matInput />
+          </mat-form-field>
+
+          <mat-nav-list class="suggestion-list">
+            <a mat-list-item>
+              <p>Ghanashyam</p>
+              <span>98031264567</span>
+            </a>
+            <a mat-list-item>
+              <p>Ghanashyam</p>
+              <span>98031264567</span>
+            </a>
+            <a mat-list-item>
+              <p>Ghanashyam</p>
+              <span>98031264567</span>
+            </a>
+            <a mat-list-item>
+              <p>Ghanashyam</p>
+              <span>98031264567</span>
+            </a>
+          </mat-nav-list>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput required />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <button mat-button class="btn-theme-green">Add</button>
+      </div>
+    </div>
+  </form>
+</div>

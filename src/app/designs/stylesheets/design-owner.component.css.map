@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../design-owner/design-owner.component.scss"
+    ],
+    "names": [],
+    "file": "design-owner.component.css"
+}

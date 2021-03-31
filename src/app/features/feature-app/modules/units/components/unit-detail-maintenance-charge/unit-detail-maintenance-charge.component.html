@@ -1,0 +1,242 @@
+<form class="form-detail" [formGroup]="maintenanceChargeFormGrp">
+  <h4>
+    <span>{{ "maintenance_charge_label" | translate }}</span>
+  </h4>
+  <div
+    class="d-flex form-detail justify-between"
+    [class.has-2-cols]="selectedMaintenanceChargeObj?.maintenanceChargeTypeName === 'ONE_TIME_FIXED'"
+    [class.has-4-cols]="selectedMaintenanceChargeObj?.maintenanceChargeTypeName === 'RECURRING'"
+    [class.has-5-cols]="
+      selectedMaintenanceChargeObj?.maintenanceChargeTypeName === 'RECURRING' && showTotalAmountField()
+    "
+  >
+    <div class="col">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "select_occurrence_label" | translate }}</mat-label>
+          <mat-select formControlName="maintenanceChargeTypeId" required>
+            <mat-option [value]="maintenanceCharge.id" *ngFor="let maintenanceCharge of maintenanceCharges">
+              {{ maintenanceCharge.maintenanceChargeTypeName | translate }}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            <app-error-message [control]="maintenanceChargeFormGrp.get('maintenanceChargeTypeId')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="col" *ngIf="amountChargeTypes && amountChargeTypes.length > 0">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "select_charge_type" | translate }}</mat-label>
+          <mat-select formControlName="amountChargeTypeId" required>
+            <mat-option [value]="amountChargeType.id" *ngFor="let amountChargeType of amountChargeTypes">
+              {{ amountChargeType.amountChargeTypeName | translate }}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            <app-error-message [control]="maintenanceChargeFormGrp.get('amountChargeTypeId')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>
+            {{ showTotalAmountField() ? ("rate_label" | translate) : ("amount_label" | translate) }}
+          </mat-label>
+          <input matInput formControlName="amount" appOnlyNumber decimal="true" required />
+          <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+          <mat-error>
+            <app-error-message [control]="maintenanceChargeFormGrp.get('amount')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col" *ngIf="showTotalAmountField()">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "amount_label" | translate }}</mat-label>
+          <input matInput appOnlyNumber disabled [value]="getTotalAmount()" decimal="true" />
+          <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col" *ngIf="amountChargeTypes && amountChargeTypes.length > 0">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select formControlName="maintenanceChargeFrequencyInterval" required>
+            <mat-option [value]="paymentTerm.value" *ngFor="let paymentTerm of paymentTerms">{{
+              paymentTerm.title
+            }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "invoice_generation_interval_label" | translate }}</mat-label>
+          <mat-error>
+            <app-error-message
+              [control]="maintenanceChargeFormGrp.get('maintenanceChargeFrequencyInterval')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex form-detail has-3-col">
+    <div class="col form-field-wrapper has-padding-right">
+      <mat-checkbox class="example-margin" formControlName="includeTax">{{ "include_tax" | translate }}</mat-checkbox>
+    </div>
+    <div class="col form-field-wrapper has-padding-right" *ngIf="maintenanceChargeFormGrp.get('includeTax').value">
+      <mat-form-field>
+        <mat-label>{{ "percent" | translate }}</mat-label>
+        <input matInput formControlName="taxPercent" appOnlyNumber decimal="true" required />
+        <span matSuffix class="text-primary">%</span>
+        <mat-error>
+          <app-error-message [control]="maintenanceChargeFormGrp.get('taxPercent')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col form-field-wrapper has-padding-right" *ngIf="maintenanceChargeFormGrp.get('includeTax').value">
+      <mat-form-field>
+        <mat-label>{{ "amount_label" | translate }}</mat-label>
+        <input matInput appOnlyNumber disabled [value]="getTaxAmount()" decimal="true" />
+        <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!--Fine-->
+  <div class="d-flex has-4-col">
+    <div class="col form-field-wrapper has-padding-right">
+      <mat-checkbox class="example-margin" formControlName="includeFine">{{ "include_fine" | translate }}</mat-checkbox>
+    </div>
+    <div class="col has-padding-right" *ngIf="maintenanceChargeFormGrp.get('includeFine').value">
+      <mat-form-field class="form-field-wrapper">
+        <mat-label>{{ "select_fine_type" | translate }}</mat-label>
+        <mat-select formControlName="fineChargeFrequency" required>
+          <mat-option [value]="type.value" *ngFor="let type of fineTypes">{{ type.title }}</mat-option>
+        </mat-select>
+        <mat-error>
+          <app-error-message [control]="maintenanceChargeFormGrp.get('fineChargeFrequency')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col has-padding-right" *ngIf="maintenanceChargeFormGrp.get('includeFine').value">
+      <mat-form-field class="form-field-wrapper">
+        <mat-label>{{ "amount_label" | translate }}</mat-label>
+        <input matInput formControlName="fineAmount" appOnlyNumber decimal="true" required />
+        <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+        <mat-error>
+          <app-error-message [control]="maintenanceChargeFormGrp.get('fineAmount')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col has-padding-right" *ngIf="maintenanceChargeFormGrp.get('includeFine').value">
+      <div class="col form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "due_days_label" | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ 'days_placeholder' | translate }}"
+            formControlName="dueDays"
+            appOnlyNumber
+            required
+          />
+          <span matSuffix>{{ "days_label" | translate }}</span>
+          <mat-hint>
+            <strong>{{ "due_days_description" | translate }}</strong>
+          </mat-hint>
+          <mat-error>
+            <app-error-message [control]="maintenanceChargeFormGrp.get('dueDays')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex has-2-col has-padding-top" *ngIf="amountChargeTypes && amountChargeTypes.length > 0">
+    <div class="form-field-wrapper has-margin-right col">
+      <mat-form-field>
+        <mat-label>{{ "invoice_issue_date_label" | translate }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="invoiceStartDatepicker"
+          formControlName="invoiceStartDate"
+          (click)="invoiceStartDatepicker.open()"
+          [errorStateMatcher]="matcher"
+          [min]="minDate"
+          required
+        />
+        <mat-datepicker-toggle style="font-size: 18px" matSuffix [for]="invoiceStartDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #invoiceStartDatepicker></mat-datepicker>
+        <mat-error>
+          <app-error-message [control]="maintenanceChargeFormGrp.get('invoiceStartDate')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col has-padding-right">
+      <div class="col form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "first_invoice_generation_label" | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="firstInvoiceGenerationDay"
+            placeholder="{{ 'first_invoice_generation_placeholder' | translate }}"
+            appOnlyNumber
+            required
+          />
+          <mat-hint>
+            <strong>{{ "first_invoice_generation_description" | translate }}</strong>
+          </mat-hint>
+          <mat-error>
+            <app-error-message
+              [control]="maintenanceChargeFormGrp.get('firstInvoiceGenerationDay')"
+            ></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="has-margin-top">
+    <h4>{{ "maintenance_charge_includes" | translate }}</h4>
+    <div class="maintenance-charge-options">
+      <div class="options-lists">
+        <div class="d-flex has-3-cols justify-between">
+          <div class="col">
+            <mat-list *ngFor="let maintenanceFeature of maintenanceFeatures">
+              <mat-list-item>
+                <span>{{ maintenanceFeature.name }}</span>
+                <mat-checkbox
+                  [checked]="isChecked(maintenanceFeature)"
+                  (change)="onMaintenanceFeatureChange($event, maintenanceFeature)"
+                ></mat-checkbox>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex form-field-wrapper has-margin-top">
+    <mat-form-field>
+      <mat-label>{{ "remarks" | translate }}</mat-label>
+      <textarea
+        matInput
+        placeholder="{{ 'maintenance_remarks_placeholder' | translate }}"
+        formControlName="remarks"
+      ></textarea>
+      <mat-error>
+        <app-error-message [control]="maintenanceChargeFormGrp.get('remarks')"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col buttons-wrapper">
+    <button mat-button class="btn btn-theme-green" (click)="onUpdateUnitMaintenanceCharge()">
+      {{ "common.update" | translate }}
+    </button>
+  </div>
+</form>

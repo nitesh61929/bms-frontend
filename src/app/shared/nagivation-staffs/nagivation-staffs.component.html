@@ -1,0 +1,32 @@
+<ng-container *ngIf="hasAccountUserViewOrAddAccess()">
+  <a mat-list-item [matMenuTriggerFor]="userMenu">{{ "user_label" | translate }}</a>
+  <mat-menu #userMenu="matMenu" class="is-dropdown is-dropdown--staff">
+    <ng-container *appHasAccess="hasAccountUserListAccess">
+      <ng-container *ngIf="users.length > 0">
+        <h3>{{ "active_user_label" | translate }}</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item" *ngFor="let user of users">
+            <!-- <figure class="is-rounded-image">
+        <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+      </figure> -->
+            <p>
+              <span>{{ user?.name }}</span>
+              <span>{{ user?.mobileNumber }}</span>
+              <!-- <label>Property Manger</label> -->
+            </p>
+          </a>
+        </mat-nav-list>
+      </ng-container>
+    </ng-container>
+    <mat-nav-list class="record-actions">
+      <a mat-list-item (click)="showAddStaffModal()" *appHasAccess="hasAccountUserAddAccess">
+        {{ "add_new_label" | translate }}
+      </a>
+      <ng-container *appHasAccess="hasAccountUserListAccess"
+        ><a mat-list-item (click)="onViewAllClick()" *ngIf="users.length > 0">
+          {{ "view_all_label" | translate }}
+        </a></ng-container
+      >
+    </mat-nav-list>
+  </mat-menu>
+</ng-container>

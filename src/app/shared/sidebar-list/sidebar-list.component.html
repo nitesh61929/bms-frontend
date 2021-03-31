@@ -1,0 +1,26 @@
+<mat-nav-list [ngClass]="className">
+  <ng-container *ngFor="let menu of menus">
+    <a
+      mat-list-item
+      [class.has-submenu]="menu.sub_items"
+      *appHasAccess="menu.has_access_module"
+      [class.active]="isActive(menu)"
+      (click)="onClickItem(menu)"
+    >
+      <i class="las" [ngClass]="menu.icon" [matTooltip]="menu.item | translate"></i>
+      <span>{{ menu.item | translate }}</span>
+    </a>
+
+    <mat-nav-list class="submenu">
+      <ng-container *ngFor="let subItem of menu.sub_items">
+        <a
+          mat-list-item
+          *appHasAccess="subItem.has_access_module"
+          (click)="onClickItemOfSubItem(subItem, menu)"
+          [class.active]="isActive(subItem)"
+          >{{ subItem.item | translate }}</a
+        >
+      </ng-container>
+    </mat-nav-list>
+  </ng-container>
+</mat-nav-list>

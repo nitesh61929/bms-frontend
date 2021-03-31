@@ -1,0 +1,147 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "property_staff_label" | translate }}</span>
+    <form>
+      <div class="form-field-wrapper has-no-margin">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'search_placeholder_fullname_mobilenumber' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+  <ng-container *ngIf="hasAssignStaffToPropertyAccess()">
+    <div class="records-filter">
+      <form class="staff-configuration-form" [formGroup]="assignStaffForm" #assignStaffNgForm="ngForm">
+        <h4 class="form-section-title">{{ "add_staff_label" | translate }}</h4>
+        <div class="d-flex has-3-cols">
+          <div class="col has-padding-right">
+            <div class="form-field-wrapper has-no-padding-left">
+              <mat-form-field>
+                <mat-label>{{ "common.full_name" | translate }}</mat-label>
+                <input
+                  type="text"
+                  placeholder="{{ 'common.full_name' | translate }}"
+                  matInput
+                  formControlName="user"
+                  [matAutocomplete]="auto"
+                  required
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  [displayWith]="displayName"
+                  (optionSelected)="onUserSelected($event)"
+                >
+                  <mat-option *ngFor="let staff of filteredStaffs | async" [value]="staff">
+                    <span>{{ staff.name || staff.email }}</span>
+                    <label>{{ staff.mobileNumber }}</label>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error class="mat-error">
+                  <app-error-message [control]="assignStaffForm.get('user')"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  submitted &&
+                  !assignStaffForm.get('user').hasError('required') &&
+                  assignStaffForm.get('userId').hasError('required')
+                "
+              >
+                {{ "select_valid_user" | translate }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col has-padding-right">
+            <div class="form-field-wrapper has-no-padding-left">
+              <mat-form-field>
+                <mat-label>{{ "common.role" | translate }}</mat-label>
+                <mat-select formControlName="roleId" required>
+                  <mat-option [value]="role.id" *ngFor="let role of roles">{{ role.title }}</mat-option>
+                </mat-select>
+                <mat-error>
+                  <app-error-message [control]="assignStaffForm.get('roleId')"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col">
+            <button mat-button class="btn btn-theme-green" (click)="assignStaff()">
+              {{ "common.add" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <table
+        mat-table
+        [dataSource]="propertyStaffDataSource"
+        class="records-table records-table--staffs"
+        *ngIf="propertyStaffDataSource.data.length > 0"
+        multiTemplateDataRows
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let staff; let i = dataIndex">{{ i + 1 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fullname">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.full_name" | translate }}</th>
+          <td mat-cell *matCellDef="let staff">
+            <span class="d-flex">
+              {{ staff.name }}
+              <p *ngIf="staffIsCurrentUser(staff.userId)" class="has-padding-left">
+                <span class="label-status isActive">Self</span>
+              </p>
+            </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="mobile_number">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.mobile_number" | translate }}</th>
+          <td mat-cell *matCellDef="let staff">{{ staff.mobileNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.role" | translate }}</th>
+          <td mat-cell *matCellDef="let staff">
+            <mat-form-field>
+              <mat-label>{{ "common.role" | translate }}</mat-label>
+              <mat-select
+                [value]="staff.roleId"
+                (selectionChange)="onRoleChange($event, staff.userId)"
+                [disabled]="!hasRoleUpdatePermission() || staffIsCurrentUser(staff.userId)"
+              >
+                <mat-option [value]="role.id" *ngFor="let role of roles">{{ role.title }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let staff">
+            <a
+              class="text-primary has-pointer-style"
+              *appHasAccess="hasRemoveStaffAccess"
+              (click)="onRemoveStaff(staff.userId)"
+            >
+              <i class="las la-minus-circle" *ngIf="!staffIsCurrentUser(staff.userId)"></i>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+
+  <ng-container *ngIf="propertyStaffDataSource.data.length === 0">
+    <div class="no-records-found">
+      <span>{{ "result_not_found_label" | translate }}</span>
+    </div>
+  </ng-container>
+</div>

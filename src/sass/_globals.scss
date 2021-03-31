@@ -1,0 +1,140 @@
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: $size * 1px;
+  height: 100%;
+}
+
+body {
+  color: $textColor;
+  counter-reset: countval;
+  font-family: $mainFont !important;
+  font-size: 13px;
+  height: 100%;
+  line-height: 1.45;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.app-container {
+  background-color: $primary;
+  min-height: 100%;
+}
+
+.app-icon {
+  span {
+    background: url(../assets/images/ownant-logo-white.png) no-repeat;
+    background-size: 52px;
+    display: inline-block;
+    height: 52px;
+    margin: 0 10px 0 0px;
+    vertical-align: middle;
+    width: 52px;
+  }
+  p {
+    display: inline-block;
+    font-size: 22px !important;
+    vertical-align: middle;
+    i {
+      color: $error;
+      font-style: initial;
+    }
+  }
+}
+
+iframe {
+  height: 250px;
+  max-width: 100%;
+}
+
+//notification dropdown
+.is-dropdown{
+  &.notification{
+    padding: 0 !important;
+    .mark-read-button-wrapper{
+      padding: 10px;
+    }
+    .mat-menu-content{
+      padding: 0;
+      .mat-button{
+        border-radius: 5rem !important;
+        font-size: 11px;
+        font-weight: 300 !important;
+        min-width:auto !important;
+        padding: 0px 10px !important;
+        line-height: 26px;
+        border: 0;
+        &:hover{
+          background: rgba($green, $alpha: 0.9);
+        }
+      }
+      .notification-list{
+        background: rgba($black, 0.1);
+        padding-top:0 !important;
+        a{
+          &.mat-list-item{
+            margin:0 0 1px 0!important;          
+            font-size: 11px;
+            &.seen{
+              background: $white;
+            }
+            &.unseen{
+              background: $grayLight;
+            }
+            .mat-list-item-content{
+              padding: 8px 10px !important;
+              display: flex;
+              margin-bottom: 1px;
+              border-bottom: rgba($black, $alpha: 0.1);
+              
+              p{
+                line-height: 20px;
+              } 
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.mat-badge-content{
+  right: -5px !important;
+  top: -8px !important;
+  background: $peach;
+}
+.nav{ 
+  &.nav-secondary{
+    .mat-list-item{
+      &:after {
+        display: none !important;
+      }
+    }
+  }
+}

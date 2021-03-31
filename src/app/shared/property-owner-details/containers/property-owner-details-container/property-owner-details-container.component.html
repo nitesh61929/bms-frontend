@@ -1,0 +1,7 @@
+<app-property-owner-info
+  [propertyOwner]="propertyOwnerDetails"
+  [showStatusToggle]="showStatusToggle"
+></app-property-owner-info>
+<app-owner-details [owner]="owner" *ngIf="owner"></app-owner-details>
+<app-owner-property-list [propertyList]="propertyList" [accountId]="owner?.id" *ngIf="propertyList?.length > 0">
+</app-owner-property-list>

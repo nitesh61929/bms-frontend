@@ -1,0 +1,20 @@
+.mat-paginator {
+  background: $primaryLightMedium;
+  color: $textColor;
+  border-top: 1px solid $primary;
+  &:only-child {
+    display: none;
+  }
+  button {
+    color: $peach !important;
+    &[disabled="true"] {
+      opacity: 0.25;
+    }
+  }
+}
+
+.no-records-found {
+  & + .mat-paginator {
+    display: none;
+  }
+}

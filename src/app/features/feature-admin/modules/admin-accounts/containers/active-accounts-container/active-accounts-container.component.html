@@ -1,0 +1,8 @@
+<!-- <app-admin-navigation-bar [showSidebar]="true"> -->
+  <app-active-accounts
+    [activeAccounts$]="activeAccounts$"
+    [pagination$]="pagination$"
+    (paramChanged)="onParamChange($event)"
+    (invitePropertyOwnerClicked)="showInvitePropertyOwnerModal()"
+  ></app-active-accounts>
+<!-- </app-admin-navigation-bar> -->

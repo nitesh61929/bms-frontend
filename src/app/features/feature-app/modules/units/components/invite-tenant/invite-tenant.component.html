@@ -1,0 +1,42 @@
+<div class="info tenant-invite">
+  <form [formGroup]="inviteTenantForm" #inviteTenantNgForm="ngForm">
+    <h4>
+      <span>{{ "invite_tenant_label" | translate }}</span>
+    </h4>
+    <div class="d-flex has-3-cols">
+      <div class="form-field-wrapper col">
+        <mat-form-field>
+          <input appOnlyNumber matInput formControlName="mobileNumber" #mobileNumberInput required />
+          <mat-error>
+            <app-error-message [control]="inviteTenantForm.get('mobileNumber')"></app-error-message>
+          </mat-error>
+          <mat-label>{{ "common.mobile_number" | translate }}</mat-label>
+        </mat-form-field>
+
+        <mat-nav-list class="suggestion-list" *ngIf="searchedUsers.length > 0">
+          <a mat-list-item *ngFor="let user of searchedUsers" (click)="suggestionSelectionClicked(user)">
+            <p>{{ user.name }}</p>
+            <span>{{ user.mobileNumber }}</span>
+          </a>
+        </mat-nav-list>
+      </div>
+      <div class="form-field-wrapper col" *ngIf="showNameField()">
+        <mat-form-field>
+          <input type="text" matInput required formControlName="name" required />
+          <mat-error>
+            <app-error-message [control]="inviteTenantForm.get('name')"></app-error-message>
+          </mat-error>
+          <mat-label>{{ "common.full_name" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <button mat-button class="btn btn-theme-green" (click)="onInviteTenant()" [disabled]="!showNameField()">
+          {{ "invite_label" | translate }}
+        </button>
+        <p *ngIf="!hasInvoicePrefixSetup" class="color-red">
+          {{ "set_invoice_prefix_number_message" | translate }}
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

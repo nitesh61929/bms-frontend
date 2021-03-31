@@ -1,0 +1,10 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-helpdesk-category
+  [helpdeskCategories$]="helpdeskCategories$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  (addHelpdeskCategoryClicked)="showAddHelpdeskCategoryModal()"
+  (updateHelpdeskCategoryClicked)="showUpdateHelpdeskCategoryModal($event)"
+  (deleteHelpdeskCategoryClicked)="showDeleteHelpdeskCategoryModal($event)"
+></app-helpdesk-category>
+<!-- </app-navigation-bar> -->

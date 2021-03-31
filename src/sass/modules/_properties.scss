@@ -1,0 +1,162 @@
+// Properties Tabs
+
+// Property Structure Tab
+.select-structure {
+  .mat-list-item {
+    &-content {
+      .mat-checkbox-label {
+        margin-right: 12px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.structure-config {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba($textColor, 0.1);
+}
+
+// Units Configuration Tab
+.unit-configuration-form {
+  .d-flex {
+    & + .d-flex {
+      margin-top: 20px;
+    }
+  }
+  //.col {
+   // max-width: 250px;
+  //}
+
+  .maintenance-charge-options {
+    margin: 20px 0;
+  }
+}
+
+.maintenance-charge-options {
+  border-radius: 8px;
+  border: 1px solid rgba($textColor, 0.1);
+  padding: 12px;
+  h5 {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  .mat-list {
+    &-item {
+      height: auto !important;
+      margin-top: 5px;
+      &-content {
+        padding: 0 !important;
+        .mat-checkbox {
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
+
+.features-chosen {
+  border-radius: 8px;
+  border: 1px solid rgba($textColor, 0.1);
+  max-width: 800px;
+  padding: 12px;
+  span {
+    background: rgba($textColor, 0.1);
+    border-radius: 48px;
+    font-family: $mainFont;
+    font-size: 12px;
+    margin-right: 16px;
+    padding: 8px 15px;
+    position: relative;
+    .las {
+      color: $textColor;
+      font-size: 12px;
+    }
+  }
+}
+
+// Staffs Tab
+.staff-table {
+  border-radius: 0;
+  margin: 40px -20px 0;
+  th[class*="number"],
+  td[class*="number"] {
+    width: 300px !important;
+    text-align: center !important;
+  }
+}
+
+.staff-configuration-form {
+  .col {
+    max-width: 250px;
+  }
+}
+
+// Notification Tab
+.notification-list {
+  &-item {
+    margin-bottom: 20px;
+    position: relative;
+    .mat-slide-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    p {
+      font-size: 12px;
+      font-weight: 400;
+      padding-right: 40px;
+    }
+    h5 {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.property-policy {
+  .form-field-wrapper {
+    width: 100%;
+  }
+}
+
+/*unit configuration*/
+.maintenance-charge-list{
+  border-radius: 8px;
+  border: 0;
+  padding:0px;
+  mat-list{
+    background: transparent !important;
+    border-radius: 8px;
+    &.mat-list-base{
+      padding-top: 0;
+    }
+    mat-list-item{
+      border: 0 !important;
+      border-top:0 !important;
+      padding:16px !important;
+      font-weight: 400 !important;
+      height: auto !important;
+      .mat-list-item-content{
+        padding: 0 !important;
+        /*mat-list-item-content{
+          span{
+            display: block;
+            width: 100% !important;
+          } 
+        }*/
+      }
+      &:first-child{
+        border-top: 0;
+      }
+                 
+    }         
+  }
+}
+.mat-margin{
+  margin-top: 12px;
+  display: block;
+}

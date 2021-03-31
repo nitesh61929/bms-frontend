@@ -1,0 +1,58 @@
+.mat-tree {
+  .mat-icon-button {
+    &:last-of-type {
+      margin-left: 8px !important;
+      i {
+        transform: scale(0.85);
+      }
+    }
+  }
+  &-node {
+    .mat-button {
+      margin-left: 12px !important;
+      line-height: 30px !important;
+      padding: 0 16px !important;
+    }
+  }
+}
+
+.mat-checkbox-label {
+  &:after {
+    display: inline-block;
+    content: "";
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-left: 8px;
+    border-radius: 8px;
+    .node-block & {
+      background: papayawhip;
+    }
+    .node-tower & {
+      background: peachpuff;
+    }
+    .node-floor & {
+      background: plum;
+    }
+    .node-unit & {
+      background: powderblue;
+    }
+  }
+}
+
+.tree-block {
+  margin-bottom: 4px;
+  border-radius: 4px;
+  &:nth-of-type(1) {
+    border: 3px solid papayawhip;
+  }
+  &:nth-of-type(2) {
+    border: 3px solid peachpuff;
+  }
+  &:nth-of-type(3) {
+    border: 3px solid plum;
+  }
+  &:nth-of-type(4) {
+    border: 3px solid powderblue;
+  }
+}

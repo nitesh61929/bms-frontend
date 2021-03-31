@@ -1,0 +1,7 @@
+<!-- <app-admin-navigation-bar [showSidebar]="true"> -->
+<app-admin-users
+  [adminUsers$]="adminUsers$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-admin-users>
+<!-- </app-admin-navigation-bar> -->

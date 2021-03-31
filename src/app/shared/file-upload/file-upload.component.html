@@ -1,0 +1,68 @@
+<!-- For circular File upload -->
+<div class="form-field-input is-image-field" *ngIf="fileUploadType === fileUploadTypeEnum.CIRCULAR">
+  <span class="file-upload">
+    <figure lightbox-group class="auto has-margin-bottom is-rounded-image w-130">
+      <img
+        lightbox
+        [src]="file ? file.smallFileUrl : (control?.value?.smallFileUrl | imagePath)"
+        [fullImage]="{ path: file ? file.largeFileUrl : control?.value?.largeFileUrl }"
+        [disable]="file || control?.value ? false : true"
+      />
+      <div class="hover-actions">
+        <button mat-icon-button matTooltip="{{ 'upload_label' | translate }}" *ngIf="enableUpload">
+          <input type="file" (change)="onSelectFile($event)" />
+          <i class="las la-upload"></i>
+        </button>
+        <button
+          mat-icon-button
+          *ngIf="enableRemove"
+          matTooltip="{{ 'common.delete' | translate }}"
+          (click)="onRemoveFile()"
+        >
+          <i class="las la-times"></i>
+        </button>
+      </div>
+    </figure>
+    <span *ngIf="figCaption" class="has-padding-left">{{ figCaption }}</span>
+  </span>
+  <mat-error class="text-center" *ngIf="this.errors?.invalidFileSize">
+    {{ "invalid_file_size" | translate }}
+  </mat-error>
+  <mat-error class="text-center" *ngIf="this.errors?.invalidFileFormat">
+    {{ "invalid_file_format" | translate }}
+  </mat-error>
+</div>
+
+<!-- For rectangular file upload -->
+<ng-container *ngIf="fileUploadType === fileUploadTypeEnum.RECTANGULAR">
+  <figure lightbox-group>
+    <img *ngIf="isPDF()" src="./assets/images/pdf-placeholder.jpg" alt="" />
+    <img
+      *ngIf="!isPDF()"
+      lightbox
+      [src]="file ? file.smallFileUrl : (control?.value?.smallFileUrl | imagePath)"
+      [fullImage]="{ path: file ? file.largeFileUrl : control?.value?.largeFileUrl }"
+      [disable]="file || control?.value ? false : true"
+    />
+
+    <div class="hover-actions" [hidden]="!isPDF() && !enableUpload && !enableRemove">
+      <button mat-icon-button matTooltip="{{ 'download_label' | translate }}" *ngIf="isPDF()">
+        <i class="las la-download" (click)="openPDF()"></i>
+      </button>
+      <button mat-icon-button matTooltip="{{ 'upload_label' | translate }}" *ngIf="enableUpload">
+        <input type="file" (change)="onSelectFile($event)" />
+        <i class="las la-upload"></i>
+      </button>
+      <button mat-icon-button *ngIf="enableRemove" matTooltip="{{ 'delete' | translate }}" (click)="onRemoveFile()">
+        <i class="las la-times"></i>
+      </button>
+    </div>
+  </figure>
+  <span>{{ figCaption }}</span>
+  <mat-error class="text-center" *ngIf="this.errors?.invalidFileSize">
+    {{ "invalid_file_size" | translate }}
+  </mat-error>
+  <mat-error class="text-center" *ngIf="this.errors?.invalidFileFormat">
+    {{ "invalid_file_format" | translate }}
+  </mat-error>
+</ng-container>

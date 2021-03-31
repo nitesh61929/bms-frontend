@@ -1,0 +1,57 @@
+.dialog-contains-form {
+  width: 650px;
+  .form-field-wrapper {
+    padding-left: 0;
+  }
+  .file-upload,
+  .progressbar {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  .buttons-wrapper {
+    button {
+      margin-left: 12px;
+    }
+  }
+}
+
+.mat-dialog-container {
+  max-width: 1200px;
+  background: $primaryLightMedium;
+  max-height: 75vh !important;
+  .owner-name,
+  .property-name {
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .site-images {
+    margin-top: 32px;
+  }
+  .image-holder {
+    max-width: 300px;
+  }
+  .la-times {
+    cursor: pointer;
+  }
+}
+
+.mat-dialog {
+  &-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  &-actions {
+    margin: 16px 0 0 !important;
+    padding: 0 !important;
+    min-height: inherit !important;
+    button {
+      line-height: 32px;
+    }
+  }
+}
+
+.is-large {
+  max-width: 1200px !important;
+  width: 100%;
+}

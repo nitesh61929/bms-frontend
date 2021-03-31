@@ -1,0 +1,39 @@
+<mat-drawer-container>
+  <mat-drawer-content>
+    <div class="content-inner">
+      <div class="d-flex has-padding">
+        <h2 class="module-header has-margin-bottom">
+          <span class="module-header-text">{{ "help_and_support_header" | translate }}</span>
+        </h2>
+        <div class="profile-detail-wrapper has-padding">
+          <!-- <h3 class="create-ticket-header">{{ "create_ticket_label" | translate }}</h3> -->
+          <form [formGroup]="helpAndSupportFormGroup" class="has-padding" #helpAndSupportForm="ngForm">
+            <div class="form-field-wrapper has-no-padding-left col">
+              <mat-form-field>
+                <mat-label>{{ "help_and_support_issue_summary" | translate }}</mat-label>
+                <input type="text" matInput formControlName="summary" required />
+                <mat-error>
+                  <app-error-message [control]="helpAndSupportFormGroup.get('summary')"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- <div class="form-field-wrapper has-no-padding-left col">
+              <mat-form-field>
+                <mat-label>{{ "common.description" | translate }}</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+                <mat-error>
+                  <app-error-message [control]="helpAndSupportFormGroup.get('description')"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div> -->
+            <div class="buttons-wrapper text-left">
+              <button mat-button class="btn btn-theme-green left-auto" (click)="onCreateTicket()">
+                {{ "post_label" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

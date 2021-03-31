@@ -1,0 +1,226 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">Sunrise Builder</span>
+    </h1>
+
+    <span class="nav-toggle" (click)="drawer.toggle()">
+      <i class="las la-bars"></i>
+    </span>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item>Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+      <mat-menu #propertyMenu="matMenu" class="is-dropdown">
+        <h3>My Property</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Sunrise Homes</span>
+              <label>Apartment</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+          <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="staffMenu">Staff</a>
+      <mat-menu #staffMenu="matMenu" class="is-dropdown">
+        <h3>Active Staff</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item>Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer mode="side" opened>
+        <!-- Sidebar -->
+        <section class="nav nav-sidebar">
+          <h2 class="property-name d-flex align-center">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/hero.jpg" alt="Property Image" />
+            </figure>
+            <span class="text-primary">Sunrise Homes</span>
+          </h2>
+
+          <mat-nav-list>
+            <a mat-list-item routerLink="/designs/units">
+              <i class="las la-door-open"></i>
+              <span>Units</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/tenant-active">
+              <i class="las la-user-tie"></i>
+              <span>Tenants</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/notice-board">
+              <i class="las la-newspaper"></i>
+              <span>Notice Board</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/helpdesk" class="active">
+              <i class="las la-user-astronaut"></i>
+              <span>Helpdesk</span>
+            </a>
+            <mat-nav-list class="submenu">
+              <a mat-list-item routerLink="/designs/helpdesk-category" class="active">Category</a>
+            </mat-nav-list>
+
+            <a mat-list-item>
+              <i class="las la-chart-bar"></i>
+              <span>Reports</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/settings">
+              <i class="las la-cog"></i>
+              <span>Settings</span>
+            </a>
+          </mat-nav-list>
+        </section>
+        <!-- Sidebar -->
+      </mat-drawer>
+
+      <mat-drawer-content>
+        <div class="content-inner">
+          <div class="breadcrubms">
+            <span>Sunrise Homes</span>
+            <span>Notice Board</span>
+          </div>
+
+          <h2 class="module-header d-flex align-center justify-between">
+            <span class="module-header-text">Category</span>
+            <form class="d-flex align-center">
+              <div class="form-field-wrapper has-no-margin has-padding-right">
+                <mat-form-field>
+                  <mat-label>Search by Category Title</mat-label>
+                  <input type="text" matInput />
+                  <i mat-icon-button matSuffix class="las la-search"></i>
+                </mat-form-field>
+              </div>
+              <button mat-button class="btn btn-theme-green" (click)="helpDeskAddCategoryDialog()">Add</button>
+            </form>
+          </h2>
+
+          <!-- Filters -->
+          <div class="records-filter">
+            <h3>Filter by</h3>
+            <div class="d-flex">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-select>
+                    <mat-option value="active">Published</mat-option>
+                    <mat-option value="inactive">Unpublished</mat-option>
+                  </mat-select>
+                  <mat-label>Status</mat-label>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- Filters -->
+
+          <!-- Records Table -->
+          <div class="records-wrapper">
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="dataSource" class="records-table records-table--helpdesk-category">
+                <!-- Sn Column -->
+                <ng-container matColumnDef="sn">
+                  <th mat-header-cell *matHeaderCellDef>#</th>
+                  <td mat-cell *matCellDef="let element">{{ element.sn }}</td>
+                </ng-container>
+
+                <!-- Category Name Column -->
+                <ng-container matColumnDef="category_name">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let element">{{ element.category_name }}</td>
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="created_date">
+                  <th mat-header-cell *matHeaderCellDef>Created Date</th>
+                  <td mat-cell *matCellDef="let element">{{ element.created_date }}</td>
+                </ng-container>
+
+                <!-- Category Status Column -->
+                <ng-container matColumnDef="category_status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let element"><label class="label-status active">{{ element.category_status }}</label></td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>actions</th>
+                  <td mat-cell *matCellDef="let element"><a href="#" class="category-icon has-padding-right"><i class="las la-trash-alt"></i></a> <a href="#" class="category-icon"><i class="las la-edit"></i></a></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <!-- Records Table -->
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

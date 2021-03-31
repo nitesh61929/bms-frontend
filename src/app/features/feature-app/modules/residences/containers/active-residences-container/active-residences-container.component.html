@@ -1,0 +1,8 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-active-residences
+  [activeResidences$]="activeResidences$"
+  [unitList$]="unitList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-active-residences>
+<!-- </app-navigation-bar> -->

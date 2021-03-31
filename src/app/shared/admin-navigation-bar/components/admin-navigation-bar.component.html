@@ -1,0 +1,65 @@
+<div class="app-container">
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <span class="text-primary bold">{{ "ownant_admin_label" | translate }}</span>
+    </h1>
+
+    <span class="nav-toggle" (click)="drawer.toggle()">
+      <i class="las la-bars"></i>
+    </span>
+
+    <mat-nav-list class="nav nav-primary">
+      <!-- <a mat-list-item routerLink="/admin-dashboard">{{ "dashboard.dashboard_label" | translate }}</a> -->
+      <a mat-list-item (click)="goToUsers()">{{ "users" | translate }}</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item (click)="goToSettings()" matTooltip="{{ 'settings_label' | translate }}"
+        ><i class="las la-cog"></i
+      ></a>
+      <a
+        mat-list-item
+        [matMenuTriggerFor]="notificationDropdown"
+        (click)="navigationListCmp.dropdownClicked()"
+        matBadge="{{ notificationCount$ | async }}"
+        matBadgeOverlap="false"
+        [matBadgeHidden]="(notificationCount$ | async) == 0"
+      >
+        <i class="las la-bell"></i>
+      </a>
+      <mat-menu #notificationDropdown="matMenu" class="is-dropdown notification">
+        <app-notification-list #navigationListCmp></app-notification-list>
+      </mat-menu>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown" matTooltip="{{ 'browser_titles.user_profile' | translate }}">
+        <figure class="is-rounded-image">
+          <img [src]="adminLogo?.smallFileUrl | imagePath" alt="" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="onViewProfile()">{{ "view_profile_label" | translate }}</a>
+          <a mat-list-item (click)="onLogout()">{{ "common.logout" | translate }}</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer *ngIf="showSidebar" mode="side" opened>
+        <section class="nav nav-sidebar">
+          <app-sidebar-list
+            [currentUrl]="currentUrl"
+            [className]="'ownant-sidebar'"
+            [menus]="adminMenus"
+          ></app-sidebar-list>
+        </section>
+      </mat-drawer>
+
+      <mat-drawer-content>
+        <ng-content></ng-content>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

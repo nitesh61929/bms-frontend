@@ -1,0 +1,8 @@
+<!-- <app-admin-navigation-bar [showSidebar]="true"> -->
+<app-admin-property
+  [properties$]="properties$"
+  [propertyTypes$]="propertyTypes$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-admin-property>
+<!-- </app-admin-navigation-bar> -->

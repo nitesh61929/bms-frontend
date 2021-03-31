@@ -1,0 +1,371 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">OWNANT</span>
+    </h1>
+
+    <span class="nav-toggle" (click)="drawer.toggle()">
+      <i class="las la-bars"></i>
+    </span>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="staffMenu">Staff</a>
+      <mat-menu #staffMenu="matMenu" class="is-dropdown">
+        <h3>Active Staff</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="openStaffDialog()">Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/product-admin-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/product-admin-profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer mode="side" opened>
+        <!-- Sidebar -->
+        <section class="nav nav-sidebar">
+          <mat-nav-list class="ownant-admin">
+            <a mat-list-item class="active">
+              <i class="las la-user-tie"></i>
+              <span>Owner</span>
+            </a>
+
+            <a mat-list-item>
+              <i class="las la-building"></i>
+              <span>Property</span>
+            </a>
+          </mat-nav-list>
+        </section>
+        <!-- Sidebar -->
+      </mat-drawer>
+
+      <mat-drawer-content>
+        <div class="content-inner">
+          <div class="breadcrubms">
+            <span>Dashboard</span>
+            <span>Add Property</span>
+          </div>
+
+          <h2 class="module-header d-flex align-center justify-between">
+            <span class="module-header-text">Add Property</span>
+          </h2>
+
+          <!-- Records Table -->
+          <div class="records-wrapper add-property">
+            <div class="table-wrapper">
+              <form class="property-detail-form">
+                <div class="d-flex has-3-cols justify-between">
+                  <div class="col">
+                    <div class="form-field-wrapper has-no-padding-left has-margin-bottom">
+                      <div class="form-field-input is-image-field">
+                        <span class="file-upload">
+                          <input type="file" />
+                          <label>Upload Property Logo</label>
+                          <i class="las la-camera"></i>
+                        </span>
+                        <div class="progressbar">
+                          <div class="progressbar-inner" style="width: 25%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex has-3-cols justify-between">
+                  <div class="col">
+                    <div class="form-field-wrapper has-no-padding-left">
+                      <mat-form-field>
+                        <mat-label> Property Type </mat-label>
+                        <mat-select required>
+                          <mat-option value="housing">Housing</mat-option>
+                          <mat-option value="housing">Apartment</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-field-wrapper has-no-padding-left">
+                      <mat-form-field>
+                        <mat-label> Property Name </mat-label>
+                        <input type="text" matInput required />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-field-wrapper has-no-padding-left">
+                      <mat-form-field>
+                        <mat-label> Property Email ID </mat-label>
+                        <input type="email" matInput required />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-details contact-details-site">
+                  <h5 class="form-section-title">
+                    Contact <a href=""><i class="las la-plus text-primary"></i></a>
+                  </h5>
+
+                  <div class="d-flex has-2-cols">
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left is-phone-field">
+                        <mat-form-field class="zip-code-input">
+                          <span matPrefix><i class="las la-plus"></i></span>
+                          <input type="number" matInput />
+                        </mat-form-field>
+                        <mat-form-field>
+                          <mat-label> Phone </mat-label>
+                          <input type="number" matInput />
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left is-phone-field">
+                        <mat-form-field class="zip-code-input">
+                          <span matPrefix><i class="las la-plus"></i></span>
+                          <input type="number" matInput />
+                        </mat-form-field>
+                        <mat-form-field>
+                          <mat-label> Mobile </mat-label>
+                          <input type="number" matInput />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="address-details address-details-site">
+                  <h5 class="form-section-title">Address</h5>
+                  <div class="d-flex has-3-cols justify-between">
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <mat-form-field>
+                          <mat-label>Ward No.</mat-label>
+                          <input type="text" matInput required />
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <mat-form-field>
+                          <mat-label>Zip Code</mat-label>
+                          <input type="text" matInput />
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <mat-form-field>
+                          <mat-label>Street</mat-label>
+                          <input type="text" matInput required />
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <mat-form-field>
+                          <mat-label> Country </mat-label>
+                          <mat-select required>
+                            <mat-option value="nepal">Nepal</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <mat-form-field>
+                          <mat-label> Province </mat-label>
+                          <mat-select required>
+                            <mat-option value="bagmati">Bagmati</mat-option>
+                            <mat-option value="province-1">Province 3</mat-option>
+                            <mat-option value="province-1">Province 2</mat-option>
+                            <mat-option value="province-1">Province 1</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <mat-form-field>
+                          <mat-label>City</mat-label>
+                          <input type="text" matInput required />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="documents contains-multiple-images">
+                  <h5 class="form-section-title">Documents</h5>
+
+                  <div class="d-flex has-5-cols">
+                    <div class="col image-holder">
+                      <figure>
+                        <img src="./assets/images/hero.jpg" alt="image 1" />
+                        <figcaption>Image1</figcaption>
+                        <span>
+                          <input type="file" />
+                          <i class="las la-camera"></i>
+                        </span>
+                      </figure>
+                      <div class="progressbar">
+                        <div class="progressbar-inner" style="width: 25%"></div>
+                      </div>
+                    </div>
+
+                    <div class="col image-holder">
+                      <figure>
+                        <img src="./assets/images/photo-building.jpg" alt="image 2" />
+                        <figcaption>Building</figcaption>
+                        <span>
+                          <input type="file" />
+                          <i class="las la-camera"></i>
+                        </span>
+                      </figure>
+                      <div class="progressbar">
+                        <div class="progressbar-inner" style="width: 25%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="site-images contains-multiple-images">
+                  <h5 class="form-section-title">Property images</h5>
+                  <div class="d-flex has-5-cols">
+                    <div class="col image-holder">
+                      <figure>
+                        <img src="./assets/images/hero.jpg" alt="image 1" />
+                        <figcaption>Image1</figcaption>
+                        <span>
+                          <input type="file" />
+                          <i class="las la-camera"></i>
+                        </span>
+                      </figure>
+                      <div class="progressbar">
+                        <div class="progressbar-inner" style="width: 25%"></div>
+                      </div>
+                    </div>
+
+                    <div class="col image-holder">
+                      <figure>
+                        <img src="./assets/images/photo-building.jpg" alt="image 2" />
+                        <figcaption>Building</figcaption>
+                        <span>
+                          <input type="file" />
+                          <i class="las la-camera"></i>
+                        </span>
+                      </figure>
+                      <div class="progressbar">
+                        <div class="progressbar-inner" style="width: 25%"></div>
+                      </div>
+                    </div>
+
+                    <div class="col image-holder">
+                      <figure>
+                        <img src="./assets/images/unnamed.jpg" alt="image 1" />
+                        <figcaption>Img 3</figcaption>
+                        <span>
+                          <input type="file" />
+                          <i class="las la-camera"></i>
+                        </span>
+                      </figure>
+                      <div class="progressbar">
+                        <div class="progressbar-inner" style="width: 25%"></div>
+                      </div>
+                    </div>
+
+                    <div class="col image-holder">
+                      <figure>
+                        <img src="./assets/images/external-content.duckduckgo.jpg" alt="image 1" />
+                        <figcaption>External</figcaption>
+                        <span>
+                          <input type="file" />
+                          <i class="las la-camera"></i>
+                        </span>
+                      </figure>
+                      <div class="progressbar">
+                        <div class="progressbar-inner" style="width: 25%"></div>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-field-wrapper has-no-padding-left">
+                        <div class="form-field-input is-image-field">
+                          <span class="file-upload">
+                            <input type="file" />
+                            <label>Add More</label>
+                            <i class="las la-camera"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="buttons-wrapper text-right">
+                  <button mat-button class="btn btn-theme-green">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Records Table -->
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

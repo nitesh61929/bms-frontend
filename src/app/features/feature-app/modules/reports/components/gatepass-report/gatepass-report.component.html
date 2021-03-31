@@ -1,0 +1,206 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "gatepass_label" | translate }}</span>
+    <form class="d-flex align-center">
+      <div class="form-field-wrapper has-no-margin has-padding-right">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'gatepass_search_placeholder' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "checked_in_label" | translate }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+            <input
+              matStartDate
+              placeholder="{{ 'start_date_placeholder' | translate }}"
+              formControlName="startDate"
+              (click)="picker.open()"
+            />
+            <input
+              matEndDate
+              placeholder="{{ 'end_date_placeholder' | translate }}"
+              formControlName="endDate"
+              (click)="picker.open()"
+              (dateChange)="onDateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+          <mat-datepicker-toggle matSuffix (click)="clearDateRange()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onCheckedInByFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option *ngFor="let gatekeeper of gatekeepers$ | async" [value]="gatekeeper?.userId">{{
+              gatekeeper?.name
+            }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "gatekeeper_name_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onVisitPurposeFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option *ngFor="let purpose of visitPurposes$ | async" [value]="purpose?.id">{{
+              purpose?.title
+            }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "visit_purpose_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <ng-container *ngIf="dataSource.data.length === 0">
+        <div class="no-records-found">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+      <table
+        *ngIf="dataSource.data.length > 0"
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--report-gatepass"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.serial_number_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef>{{ "visitor_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report">
+            <figure class="is-rounded-image w-32">
+              <img src="{{ report?.visitorImage?.smallFileUrl | imagePath }}" alt="" />
+            </figure>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="visitorName">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.name" | translate }}</th>
+          <td mat-cell *matCellDef="let report">{{ report?.visitorName || "na_label" | translate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="visitorMobileNumber">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.phone_number" | translate }}</th>
+          <td mat-cell *matCellDef="let report">{{ report.visitorMobileNumber || "na_label" | translate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="checkedInByName">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "gatekeeper_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report" class="text-center">
+            {{ report.checkedInByName || "na_label" | translate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="checkedInDate">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "checked_in_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report" class="text-center">
+            {{ report.checkedInDate | utcToLocalDate: "ddd, lll" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unitName">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "unit_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report" class="text-center">{{ report.unitName || "na_label" | translate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="visitPurposeName">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "visit_purpose_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report" class="text-center">
+            {{ report.visitPurposeName || "na_label" | translate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let report" [attr.colspan]="columnsToDisplay.length" class="text-left">
+            <div class="d-flex invoice-detail" [@detailExpand]="report == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="d-flex has-4-cols has-margin-top gatepass-detail">
+                <div class="col">
+                  <strong>{{ "vehicle_no_label" | translate }}:</strong><br />
+                  {{ report?.visitorVehicleNumber || "na_label" | translate }}
+                </div>
+                <div class="col">
+                  <strong>{{ "created_date_time_label" | translate }}:</strong><br />
+                  {{ report?.createdDate | utcToLocalDate: "ddd, ll" }}
+                </div>
+                <div class="col">
+                  <strong>{{ "created_by_label" | translate }}:</strong><br />
+                  {{ report.createdBy || "na_label" | translate }}
+                </div>
+                <div class="col">
+                  <strong>{{ "tenant_residence_name_label" | translate }}:</strong><br />{{
+                    report?.unitOwnerName || "na_label" | translate
+                  }}
+                </div>
+                <div class="col">
+                  <strong>{{ "tenant_phone_number_label" | translate }}:</strong><br />{{
+                    report?.unitOwnerMobileNumber || "na_label" | translate
+                  }}
+                </div>
+                <div class="col">
+                  <strong>{{ "gatepass_status_label" | translate }}:</strong><br />
+                  <label class="label-status {{ getStatusClass(report.status) }}" *ngIf="report.status">{{
+                    report.status | translate
+                  }}</label>
+                  <span *ngIf="!report.status">{{ "na_label" | translate }}</span>
+                </div>
+                <div class="col" *ngIf="report.status == 'APPROVED' || report.status == 'DECLINED'">
+                  <strong
+                    >{{
+                      report.status == "APPROVED"
+                        ? ("approved_by_label" | translate)
+                        : ("declined_by_label" | translate)
+                    }}:</strong
+                  ><br />
+                  {{ report.approverName || "na_label" | translate }}
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: columnsToDisplay"
+          class="records-row example-element-row"
+          [class.expanded]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

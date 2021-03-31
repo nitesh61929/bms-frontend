@@ -1,0 +1,39 @@
+{
+  "businesses": [
+    {
+      "id": 1,
+      "name": "CG",
+      "type": "commercial",
+      "address": "ekantakuna",
+      "owner": "chaudhary",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUx30QCJsEafkjMiEk119lP10nLc-Pt-w7Nh6qZyEhovp98pgl"
+    },
+    {
+      "id": 2,
+      "name": "axiata",
+      "type": "IT",
+      "address": "new road",
+      "owner": "ncell admin",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUx30QCJsEafkjMiEk119lP10nLc-Pt-w7Nh6qZyEhovp98pgl"
+    },
+    {
+      "id": 3,
+      "name": "bhatbhateni",
+      "type": "super market",
+      "address": "pepsi cola",
+      "owner": "ranabhat",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUx30QCJsEafkjMiEk119lP10nLc-Pt-w7Nh6qZyEhovp98pgl"
+    }
+  ],
+  "buildings": [],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

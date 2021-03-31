@@ -1,0 +1,29 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<div class="content-inner" *ngIf="propertyDetail">
+  <div class="d-flex">
+    <!-- <div class="profile-basic-info profile-basic-info--property">
+        <app-basic-property-detail
+          [propertyDetail]="propertyDetail"
+          (logoChanged)="onLogoChange($event)"
+        ></app-basic-property-detail>
+      </div> -->
+
+    <div class="profile-detail-wrapper profile-detail-wrapper--property">
+      <mat-tab-group (selectedTabChange)="tabClick($event)">
+        <mat-tab label="{{ 'property_detail_label' | translate }}" *ngIf="hasPropertyViewOrEditAccess()">
+          <app-property-detail-form
+            #propertyDetailFormCmp
+            *ngIf="propertyDetail"
+            [propertyDetail]="propertyDetail"
+          ></app-property-detail-form>
+        </mat-tab>
+        <ng-container *ngIf="isOwnerVerified()">
+          <mat-tab label="{{ 'property_structure_label' | translate }}">
+            <app-property-structure [propertyDetail]="propertyDetail"></app-property-structure>
+          </mat-tab>
+        </ng-container>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+<!-- </app-navigation-bar> -->

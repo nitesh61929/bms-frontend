@@ -1,0 +1,124 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "category_label" | translate }}</span>
+    <form class="d-flex align-center">
+      <div class="form-field-wrapper has-no-margin has-padding-right">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'helpdesk_category_search_placeholder' | translate"
+        ></app-search-input>
+      </div>
+      <button
+        mat-button
+        class="btn btn-theme-green"
+        *appHasAccess="hasAddCategoryAccess"
+        (click)="handleAddHelpdeskCategoryModal()"
+      >
+        {{ "common.add" | translate }}
+      </button>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onStatusFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="status.value" *ngFor="let status of helpdeskCategoryStatuses">{{
+              status.title
+            }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <ng-container *appHasAccess="hasListCategoryAccess">
+      <div class="table-wrapper">
+        <table
+          mat-table
+          multiTemplateDataRows
+          [dataSource]="dataSource"
+          *ngIf="dataSource.data.length > 0"
+          class="records-table records-table--help-desk-category"
+        >
+          <ng-container matColumnDef="sn">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let element; let i = dataIndex">
+              {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="thumbnail">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <figure lightbox-group class="is-rounded-image w-32">
+                <img lightbox [src]="element?.image?.smallFileUrl | imagePath" />
+              </figure>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="category_name">
+            <th mat-header-cell *matHeaderCellDef>{{ "common.name" | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="created_date">
+            <th mat-header-cell *matHeaderCellDef>{{ "created_date_label" | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.createdAt | utcToLocalDate: "ddd, ll" }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="category_status">
+            <th mat-header-cell *matHeaderCellDef>{{ "status_label" | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+              <label class="label-status" [class.isActive]="element.status === 'ACTIVE'">{{ element.status }}</label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ "common.actions" | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+              <a
+                class="text-primary has-padding-right has-pointer-style"
+                (click)="updateHelpdeskCategory(element)"
+                *appHasAccess="hasUpdateCategoryAccess"
+                ><i class="las la-pen"></i
+              ></a>
+              <ng-container *appHasAccess="hasDeleteCategoryAccess">
+                <a
+                  *ngIf="element?.status === 'INACTIVE'"
+                  class="text-primary has-pointer-style"
+                  (click)="deleteHelpdeskCategory(element)"
+                  ><i class="las la-minus-circle"></i
+                ></a>
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <ng-container *ngIf="dataSource.data.length === 0">
+          <div class="no-records-found">
+            <span>{{ "result_not_found_label" | translate }}</span>
+          </div>
+        </ng-container>
+
+        <mat-paginator
+          #paginatorCmp
+          [length]="listLength"
+          [pageSize]="perPage"
+          [pageSizeOptions]="getDefaultPageSizeOptions()"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </ng-container>
+  </div>
+</div>

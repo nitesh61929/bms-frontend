@@ -1,0 +1,235 @@
+header {
+  background: $primaryLightMedium;
+  left: 0;
+  padding: 16px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  .building-logo {
+    width: 240px;
+    figure {
+      line-height: 0;
+      width: 36px;
+    }
+    span {
+      color: $peach !important;
+      font-size: 16px;
+      margin-left: 10px;
+      text-transform: uppercase;
+      width: 190px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .mat-list-base {
+    padding-top: 0;
+  }
+}
+
+.nav {
+  $this: &;
+  &-toggle {
+    cursor: pointer;
+    margin-left: 24px;
+    .las {
+      color: $textColor;
+    }
+  }
+
+  .mat-list-item {
+    border-radius: 8px;
+    display: inline-block !important;
+    height: auto !important;
+    width: auto !important;
+    &:hover {
+      background: transparent;
+    }
+    &.mat-menu-trigger {
+      position: relative;
+      &:after {
+        color: $textColor;
+        content: "\f107";
+        font-family: "Line Awesome Free";
+        font-size: 10px;
+        font-weight: 900;
+        position: absolute;
+        right: 0;
+        top: 10px;
+      }
+      i {
+        color: $black;
+        font-size: 14px;
+      }
+    }
+
+    &.is-button {
+      a {
+        background: $green;
+        border-radius: 3rem;
+        color: $white;
+        padding: 10px 28px;
+      }
+    }
+  }
+
+  &-primary {
+    .mat-list-item {
+      font-size: 12px;
+      margin-left: 36px;
+      padding: 0 !important;
+      text-transform: uppercase;
+      &-content {
+        padding: 10px 16px !important;
+      }
+      &.active {
+        color: $peach !important;
+        &:after {
+          color: $peach !important;
+        }
+      }
+      &.is-button {
+        .mat-list-item-content {
+          background: $green;
+          border-radius: 3rem;
+          color: $white;
+          padding: 10px 28px;
+          text-transform: capitalize;
+          .mat-ripple {
+            border-radius: 3rem;
+          }
+        }
+      }
+    }
+  }
+
+  &-secondary {
+    margin-left: auto;
+    .mat-list-item {
+      margin-left: 8px;
+      &:last-of-type {
+        &:after {
+          display: none !important;
+        }
+      }
+      &-content {
+        padding: 0 4px !important;
+      }
+      .las {
+        color: $textColor;
+      }
+      figure {
+        height: 24px;
+        transform: translateY(2px);
+        width: 24px;
+      }
+    }
+  }
+}
+
+.is-dropdown {
+  border: 1px solid $primary;
+  box-shadow: none;
+  padding: 8px 0;
+  width: 270px;
+  h3 {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 0 20px;
+  }
+  .mat-list-item {
+    height: auto !important;
+  }
+  &--staff {
+    .added-records-list {
+      &-item {
+        cursor: initial !important;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.added-records-list {
+  padding-top: 0;
+  // margin-bottom: 20px;
+  padding-bottom: 20px !important;
+  position: relative;
+  &:after {
+    background: $primary;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  .mat-list-item {
+    margin-top: 20px;
+    &:hover {
+      background: transparent !important;
+    }
+    &-content {
+      background: transparent;
+      padding: 4px 20px !important;
+    }
+  }
+  figure {
+    height: 40px;
+    margin-right: 10px;
+    width: 40px;
+  }
+  p {
+    font-size: 12px;
+    font-weight: 400;
+    span {
+      display: block;
+    }
+    label {
+      font-size: 10px;
+      &:not(.label-status) {
+        color: $textColor;
+        margin-bottom: 4px;
+        display: block;
+      }
+    }
+  }
+}
+
+.record-actions {
+  // margin-top: 20px;
+  // padding-top: 20px !important;
+  // position: relative;
+  // &:before {
+  //   background: $primary;
+  //   content: "";
+  //   height: 1px;
+  //   left: 0;
+  //   position: absolute;
+  //   top: 0;
+  //   width: 100%;
+  // }
+  .mat-list-item {
+    &:hover {
+      background: transparent;
+    }
+    &-content {
+      color: $peach;
+      font-size: 12px;
+      padding: 8px 20px !important;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.user-menu-dropdown {
+  .record-actions {
+    margin-top: 0;
+    padding-top: 0 !important;
+    &:before {
+      display: none;
+    }
+  }
+}

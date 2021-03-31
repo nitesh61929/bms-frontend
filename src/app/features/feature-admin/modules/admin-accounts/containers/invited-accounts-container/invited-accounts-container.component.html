@@ -1,0 +1,11 @@
+<!-- <app-admin-navigation-bar [showSidebar]="true"> -->
+<app-invited-accounts
+  #invitedAccountsCmp
+  [pendingAccountInvitations$]="pendingAccountInvitations$"
+  (statusChange)="onUpdateStatus($event)"
+  (invitePropertyOwnerClicked)="showInvitePropertyOwnerModal()"
+  (resendInvitationClicked)="onResendInvitation($event)"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-invited-accounts>
+<!-- </app-admin-navigation-bar> -->

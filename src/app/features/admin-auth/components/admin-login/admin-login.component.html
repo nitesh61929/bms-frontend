@@ -1,0 +1,35 @@
+<app-admin-login-section>
+  <h4 class="text-center">{{ "page_titles.product_admin_login" | translate }}</h4>
+  <form class="login-form" [formGroup]="adminLoginForm" (submit)="onAdminLogin()">
+    <div class="form-field-wrapper">
+      <i class="las la-mobile"></i>
+      <mat-form-field>
+        <mat-label>
+          {{ "common.email" | translate }} {{ "or_label" | translate }} {{ "common.mobile_number" | translate }}
+        </mat-label>
+        <input type="text" matInput formControlName="mobileNumberOrEmail" required />
+        <mat-error>
+          <app-error-message [control]="adminLoginForm.get('mobileNumberOrEmail')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-field-wrapper">
+      <i class="las la-key"></i>
+      <mat-form-field>
+        <mat-label> {{ "common.password" | translate }} </mat-label>
+        <input type="password" matInput formControlName="password" required />
+        <mat-error>
+          <app-error-message [control]="adminLoginForm.get('password')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="buttons-wrapper">
+      <button mat-button class="btn-theme-green" [disabled]="adminLoginForm.invalid">
+        {{ "common.login" | translate }}
+      </button>
+    </div>
+    <div class="buttons-wrapper text-center">
+      <a class="has-pointer-style" (click)="onForgotPassword()">Forgot password?</a>
+    </div>
+  </form>
+</app-admin-login-section>

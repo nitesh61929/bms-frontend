@@ -1,0 +1,53 @@
+<form [formGroup]="invitationForm" #invitationNgForm="ngForm">
+  <div class="ng-trigger-detailExpand">
+    <div class="info owner-invite">
+      <h4>
+        <span>{{ "invite_account_label" | translate }}</span>
+      </h4>
+      <div class="d-flex has-1-cols">
+        <div class="form-field-wrapper col">
+          <mat-form-field>
+            <mat-select formControlName="accountType" required>
+              <mat-option [value]="accountType.code" *ngFor="let accountType of accountTypes">{{
+                accountType.title
+              }}</mat-option>
+            </mat-select>
+            <mat-label>{{ "account_type" | translate }}</mat-label>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex has-3-cols" *ngIf="invitationForm.get('accountType').value">
+        <div class="form-field-wrapper col" *ngIf="invitationForm.get('accountType').value === 'INDIVIDUAL'">
+          <mat-form-field>
+            <input type="text" matInput formControlName="name" required />
+            <mat-error>
+              <app-error-message [control]="invitationForm.get('name')"></app-error-message>
+            </mat-error>
+            <mat-label>{{ "common.full_name" | translate }}</mat-label>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper col" *ngIf="invitationForm.get('accountType').value === 'INDIVIDUAL'">
+          <mat-form-field>
+            <input matInput formControlName="mobileNumber" appOnlyNumber required />
+            <mat-error>
+              <app-error-message [control]="invitationForm.get('mobileNumber')"></app-error-message>
+            </mat-error>
+            <mat-label>{{ "common.mobile_number" | translate }}</mat-label>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper col">
+          <mat-form-field>
+            <input type="text" matInput formControlName="email" required />
+            <mat-error>
+              <app-error-message [control]="invitationForm.get('email')"></app-error-message>
+            </mat-error>
+            <mat-label>{{ "common.email" | translate }}</mat-label>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <button mat-button class="btn btn-theme-green" (click)="onInvite()">{{ "invite_label" | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

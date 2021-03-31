@@ -1,0 +1,39 @@
+<form class="form-helpdesk-category" [formGroup]="addHelpdeskCategoryForm">
+  <div class="form-field-wrapper">
+    <app-file-upload
+      formControlName="image"
+      [fileUploadType]="fileUploadTypeEnum.CIRCULAR"
+      [folderName]="'TICKET'"
+      [figCaption]="'category_image_caption' | translate"
+    ></app-file-upload>
+    <mat-error>
+      <app-error-message [control]="addHelpdeskCategoryForm.get('image')"></app-error-message>
+    </mat-error>
+  </div>
+
+  <div class="form-field-wrapper">
+    <mat-form-field>
+      <mat-label>{{ "category_name_label" | translate }}</mat-label>
+      <input matInput required formControlName="title" required />
+      <mat-error>
+        <app-error-message [control]="addHelpdeskCategoryForm.get('title')"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-wrapper">
+    <mat-slide-toggle [checked]="checked" (change)="setStatus($event)">
+      {{ "status_label" | translate }}
+    </mat-slide-toggle>
+    <mat-error>
+      <app-error-message [control]="addHelpdeskCategoryForm.get('status')"></app-error-message>
+    </mat-error>
+  </div>
+
+  <div class="buttons-wrapper text-right">
+    <a (click)="closeDialog()" mat-button class="btn btn-theme-white">{{ "common.cancel" | translate }}</a>
+    <button mat-button class="btn btn-theme-green" (click)="onAddOrUpdateHelpdeskCategory()">
+      <span *ngIf="!isUpdate">Save</span><span *ngIf="isUpdate">{{ "common.update" | translate }}</span>
+    </button>
+  </div>
+</form>

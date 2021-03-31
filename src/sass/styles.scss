@@ -1,0 +1,150 @@
+/* STYLE CONFIGS */
+@import "vars";
+@import "mixins";
+
+/* THEMING STYLES */
+@import "themes/light";
+
+/* COMMON STYLES */
+@import "globals";
+@import "utilities";
+@import "typography";
+@import "breadcrumbs";
+@import "buttons";
+@import "dialogs";
+@import "error";
+@import "flex";
+@import "forms";
+@import "lightbox";
+@import "navigation";
+@import "pagination";
+@import "sidebar";
+@import "spinner";
+@import "tables";
+@import "tabs";
+@import "tree";
+@import "calendar";
+@import "auth";
+@import "app_styles";
+
+/* MODULEWISE STYLES */
+@import "modules/dashboard";
+@import "modules/help_desk";
+@import "modules/notice_board";
+@import "modules/owner";
+@import "modules/product_admin";
+@import "modules/profile";
+@import "modules/properties";
+@import "modules/staffs";
+@import "modules/tenants";
+@import "modules/units";
+
+/* MEDIAQUERIES */
+@import "responsive";
+
+.records-wrapper.add-property {
+  padding: 20px;
+  margin-top: 20px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.password-input-field {
+  button {
+    transform: translate(10px, -2px);
+
+    & + input + span {
+      right: 30px;
+    }
+  }
+
+  input {
+    padding-right: 80px;
+  }
+
+  > span {
+    position: absolute;
+    top: -9px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 55px;
+    z-index: 10;
+    cursor: pointer;
+    color: $primary;
+    border-radius: 50%;
+    &:hover {
+      background: rgba($black, 0.05);
+    }
+  }
+
+  .las[class*="eye"] {
+    top: 9px !important;
+    right: 3px;
+  }
+}
+
+.password-input-field-profile {
+  .las[class*="eye"] {
+    top: 3px !important;
+    right: 10px;
+  }
+}
+
+.compare-error {
+  flex: 1 1 100%;
+  &.pwd-compare {
+    padding-left: 21%;
+    .password-form & {
+      padding-left: 33%;
+      transform: translateY(-1.75rem);
+    }
+  }
+}
+
+.no-pointer-image {
+  cursor: initial;
+}
+
+.ownant-sidebar {
+  margin-top: 0px !important;
+}
+
+.ql-editor {
+  height: 56vh !important;
+}
+
+.color-red {
+  color: red;
+}
+
+.create-ticket-header {
+  text-transform: uppercase;
+  font-weight: unset;
+  font-size: 16px;
+}
+
+.break-word {
+  word-break: break-word;
+}
+
+.isDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

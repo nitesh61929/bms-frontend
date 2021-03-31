@@ -1,0 +1,132 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "policy_label" | translate }}</span>
+    <form>
+      <div class="form-field-wrapper has-no-margin">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'common.title' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="profile-detail-wrapper property-policy has-margin-bottom" *appHasAccess="hasAddPolicyAccess">
+    <form class="property-configuration-form" [formGroup]="addPolicyForm" #addPolicyNgForm="ngForm">
+      <h4 class="form-section-title has-margin-left has-padding-top">
+        {{ !isUpdate ? ("add_policy_label" | translate) : ("update_policy_label" | translate) }}
+      </h4>
+      <div class="d-flex has-no-padding-left">
+        <div class="form-field-wrapper" style="padding-right: 30px">
+          <mat-form-field>
+            <mat-label>{{ "policy_title_label" | translate }}</mat-label>
+            <input matInput formControlName="title" required />
+            <mat-error>
+              <app-error-message [control]="addPolicyForm.get('title')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="documents contains-multiple-images">
+            <div class="d-flex has-5-cols">
+              <div class="col image-holder">
+                <app-file-upload
+                  formControlName="file"
+                  [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+                  [figCaption]="'policy_document_label' | translate"
+                  [folderName]="'PROPERTY_POLICY'"
+                ></app-file-upload>
+                <mat-error *ngIf="submitted">
+                  <app-error-message [control]="addPolicyForm.get('file')"></app-error-message>
+                </mat-error>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <mat-slide-toggle [checked]="checked" (change)="setStatus($event)">{{
+              "status_label" | translate
+            }}</mat-slide-toggle>
+            <mat-error *ngIf="submitted">
+              <app-error-message [control]="addPolicyForm.get('status')"></app-error-message>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons-wrapper text-left has-padding-bottom has-margin-left">
+        <button mat-button class="btn btn-theme-green left-auto" (click)="onAddOrUpdatePolicy()">
+          <ng-container *ngIf="!isUpdate">{{ "common.save" | translate }}</ng-container>
+          <ng-container *ngIf="isUpdate">{{ "common.update" | translate }}</ng-container>
+        </button>
+        <button mat-button class="btn btn-theme-white left-auto" (click)="onCancelEdit()" *ngIf="isUpdate">
+          {{ "common.cancel" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <ng-container *appHasAccess="hasListPolicyAccess">
+    <div class="records-wrapper policy-table has-margin-top" *ngIf="policiesDataSource.data.length > 0">
+      <table
+        mat-table
+        multiTemplateDataRows
+        [dataSource]="policiesDataSource"
+        class="records-table records-table--policies"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.title" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="policy_file">
+          <th mat-header-cell *matHeaderCellDef>{{ "policy_document_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <a class="text-primary has-pointer-style break-word" (click)="openPDF(element?.file?.originalFileUrl)"
+              >{{ getFileName(element?.file?.originalFileUrl) }} <i class="las la-download"></i
+            ></a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>{{ "status_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <label class="label-status" [class.isActive]="element.status === 'ACTIVE'">{{ element.status }}</label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.actions" | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <a
+              class="text-primary has-padding-right has-pointer-style"
+              (click)="onEditClick(element)"
+              *appHasAccess="hasUpdatePolicyAccess"
+              ><i class="las la-pen"></i
+            ></a>
+            <a
+              class="text-primary has-pointer-style"
+              (click)="onDeletePolicy(element?.id)"
+              *appHasAccess="hasRemovePolicyAccess"
+              ><i class="las la-minus-circle"></i
+            ></a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <ng-container *ngIf="policiesDataSource.data.length === 0">
+      <div class="no-records-found">
+        <span>{{ "result_not_found_label" | translate }}</span>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

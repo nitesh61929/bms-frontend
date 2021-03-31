@@ -1,0 +1,186 @@
+.app-content {
+  min-height: 100vh;
+  padding-top: 69px;
+}
+
+.content-inner {
+  padding: 20px 20px 90px 20px;
+}
+
+.records {
+  &-filter {
+    margin-top: 24px;
+    .d-flex {
+      flex-wrap: wrap;
+      & > div {
+        flex: 0 0 calc(25% - 20px);
+        margin-right: 20px;
+        max-width: 250px;
+      }
+    }
+  }
+  &-wrapper {
+    background: $primaryLight;
+    border-radius: 8px;
+    overflow: hidden;
+    &.add-property {
+      background: $primaryLightMedium;
+    }
+  }
+}
+
+.ng-trigger-detailExpand {
+  .info {
+    margin-top: 32px;
+    h4 {
+      margin-bottom: 12px;
+      > span {
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+    }
+    i,
+    span,
+    a {
+      display: inline-block;
+      vertical-align: middle;
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+    .form-field-wrapper {
+      max-width: 300px;
+      padding-left: 0;
+      padding-right: 20px;
+      .mat-form-field-underline {
+        background-color: rgba($textColor, 0.2) !important;
+      }
+    }
+    &-docs {
+      a {
+        width: calc(100% - 40px);
+        label {
+          display: block;
+          color: $textColor;
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+  .form-detail {
+    margin-top: 32px;
+    h4 {
+      margin-bottom: 12px;
+      > span {
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+    }
+    i,
+    span,
+    a {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .form-field-wrapper {
+      max-width: 100%;
+      padding-left: 0;
+      padding-right: 0px;
+      .mat-form-field-underline {
+        background-color: rgba($textColor, 0.2) !important;
+      }
+    }
+    &-docs {
+      a {
+        width: calc(100% - 40px);
+        label {
+          display: block;
+          color: $textColor;
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+}
+
+.contains-brief-info {
+  .name-location-info {
+    width: calc(100% - 1.5rem - 64px);
+  }
+}
+
+.list-actions {
+  & > label {
+    margin-right: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateY(4px);
+  }
+}
+
+.mat-menu-panel {
+  background: $primaryLightMedium !important;
+}
+
+.no-records-found {
+  padding: 8px 16px;
+  color: $error;
+  background: rgba($error, 0.05);
+  border-radius: 4px;
+}
+
+figure {
+  position: relative;
+  img {
+    cursor: pointer;
+  }
+  &:hover {
+    .hover-actions {
+      opacity: 1;
+    }
+  }
+  .hover-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background-color: rgba($black, 0.5);
+    opacity: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    button {
+      color: $primary !important;
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+    }
+    .las {
+      color: $primary !important;
+    }
+  }
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.has-padding-top-5rem {
+  padding-top: 5rem !important;
+}

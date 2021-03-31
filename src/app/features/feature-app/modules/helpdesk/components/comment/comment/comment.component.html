@@ -1,0 +1,20 @@
+<form class="has-margin-top" [formGroup]="postCommentForm" #postCommentNgForm="ngForm">
+  <h4>{{ "confirm_ticket_close" | translate }}</h4>
+  <p>{{ "comment_below" | translate }}</p>
+  <br /><br />
+  <div class="form-field-wrapper has-no-padding">
+    <mat-form-field>
+      <mat-label>{{ "comment_label" | translate }}</mat-label>
+      <textarea matInput formControlName="title" required></textarea>
+      <mat-error>
+        <app-error-message [control]="postCommentForm.get('title')"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="buttons-wrapper text-right">
+    <a (click)="closeDialog()" mat-button class="btn btn-theme-white">{{ "common.cancel" | translate }}</a>
+    <button mat-button class="btn btn-theme-green" (click)="postComment()">
+      <span>{{ "common.submit" | translate }}</span>
+    </button>
+  </div>
+</form>

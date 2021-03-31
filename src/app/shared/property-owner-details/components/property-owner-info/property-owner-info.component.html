@@ -1,0 +1,45 @@
+<div class="info info-admin">
+  <div class="d-flex has-3-cols">
+    <div class="col" *ngIf="propertyOwner?.address">
+      <i class="las la-map-marked text-primary"></i>
+      <p>
+        <label>{{ "mod_address.permanent_address_label" | translate }}</label>
+        <span>
+          {{ getAddress(propertyOwner?.address) }} <br />
+          {{ "mod_address.ward_number_label" | translate }}:
+          {{ propertyOwner?.address?.wardNo || "na_label" | translate }},
+          {{ "mod_address.zip_code_label" | translate }}:
+          {{ propertyOwner?.address?.zipCode || "na_label" | translate }}
+        </span>
+      </p>
+    </div>
+
+    <!-- <div class="col">
+      <i class="las la-transgender text-primary"></i>
+      <span>Male</span>
+    </div> -->
+
+    <!-- <div class="col">
+      <i class="las la-birthday-cake text-primary"></i>
+      <span>March 08, 1981</span>
+    </div> -->
+  </div>
+  <!-- <div flex class="d-flex has-3-cols">
+    <div class="col">
+      <i class="las la-file-alt text-primary"></i>
+      <a href="#" class="text-primary">Owner PAN ID</a>
+    </div>
+    <div flex class="col">
+      <i class="las la-file-alt text-primary"></i>
+      <a href="#" class="text-primary">Citizenship Front</a>
+    </div>
+    <div flex class="col">
+      <i class="las la-file-alt text-primary"></i>
+      <a href="#" class="text-primary">Citizenship Back</a>
+    </div>
+  </div> -->
+  <!-- <div class="status" *ngIf="showStatusToggle">
+    <label>User Status</label>
+    <mat-slide-toggle [checked]="propertyOwner?.active" [disabled]="true"></mat-slide-toggle>
+  </div> -->
+</div>

@@ -1,0 +1,5 @@
+<mat-form-field floatLabel="never">
+  <mat-label>{{ getPlaceHolder() }}</mat-label>
+  <input type="text" matInput #searchInput [placeholder]="getPlaceHolder()" [matTooltip]="getPlaceHolder()" />
+  <i mat-icon-button matSuffix class="las la-search"></i>
+</mat-form-field>

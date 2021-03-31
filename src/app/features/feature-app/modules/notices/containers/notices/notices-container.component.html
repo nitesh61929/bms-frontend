@@ -1,0 +1,9 @@
+<!-- <app-navigation-bar [showSidebar]="true" *appHasAccess="hasNoticeListAccess"> -->
+  <app-notices
+    *ngIf="activePropertyId"
+    [noticeList$]="noticeList$"
+    [pagination$]="pagination$"
+    (paramChanged)="onParamChange($event)"
+    (addNoticeClicked)="showAddNoticeModal()"
+  ></app-notices>
+<!-- </app-navigation-bar> -->

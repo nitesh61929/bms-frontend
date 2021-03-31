@@ -1,0 +1,7 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-invoice
+  [invoiceList$]="invoiceList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-invoice>
+<!-- </app-navigation-bar> -->

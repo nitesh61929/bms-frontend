@@ -1,0 +1,179 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "mod_invoice.invoice_header" | translate }}</span>
+    <form>
+      <div class="form-field-wrapper has-no-margin">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'invoice_search_placeholder' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "mod_invoice.invoice_date_range_placeholder" | translate }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+            <input matStartDate placeholder="{{ 'start_date_placeholder' | translate }}" formControlName="startDate" (click)="picker.open()" />
+            <input
+              matEndDate
+              placeholder="{{ 'end_date_placeholder' | translate }}"
+              formControlName="endDate"
+              (click)="picker.open()"
+              (dateChange)="onDateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+          <mat-datepicker-toggle matSuffix (click)="clearDateRange()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onInvoiceTypeFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option *ngFor="let type of invoiceTypes" [value]="type.value">{{ type.title }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "mod_invoice.invoice_type_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onStatusFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option *ngFor="let status of statuses" [value]="status.value">{{ status.title }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <ng-container *ngIf="dataSource.data.length === 0">
+        <div class="no-records-found">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+
+      <table
+        *ngIf="dataSource.data.length > 0"
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--invoice"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="invoiceNumber">
+          <th mat-header-cell *matHeaderCellDef>{{ "mod_invoice.invoice_number_label" | translate }}</th>
+          <td mat-cell *matCellDef="let invoice">{{ invoice.invoiceNumber || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="payerName">
+          <th mat-header-cell *matHeaderCellDef>{{ "mod_invoice.payer_name" | translate }}</th>
+          <td mat-cell *matCellDef="let invoice">{{ invoice?.payerInfo?.name || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="payerMobileNumber">
+          <th mat-header-cell *matHeaderCellDef class="text-center">
+            {{ "mod_invoice.payer_mobile_number" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let invoice" class="text-center">
+            {{ invoice?.payerInfo?.mobileNumber || ("na_label" | translate) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="invoiceType">
+          <th mat-header-cell *matHeaderCellDef class="text-center">
+            {{ "mod_invoice.invoice_type_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let invoice" class="text-center">
+            {{ invoice.invoiceType || ("na_label" | translate) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="invoiceInterval">
+          <th mat-header-cell *matHeaderCellDef class="text-center">
+            {{ "mod_invoice.invoice_period_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let invoice" class="text-center">
+            <span *ngIf="invoice.invoiceStartFrom && invoice.invoiceEndTo"
+              >{{ invoice.invoiceStartFrom | utcToLocalDate: "ddd, lll" }} -
+              {{ invoice.invoiceEndTo | utcToLocalDate: "ddd, lll" }}</span
+            >
+            <span *ngIf="!(invoice.invoiceStartFrom && invoice.invoiceEndTo)">{{ "na_label" | translate }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdDate">
+          <th mat-header-cell *matHeaderCellDef>{{ "invoice_date_label" | translate }}</th>
+          <td mat-cell *matCellDef="let invoice">
+            {{ invoice.invoiceCreatedDate | utcToLocalDate: "ddd, ll" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "amount_label" | translate }}</th>
+          <td mat-cell *matCellDef="let invoice" class="text-center">
+            {{ "npr_label" | translate }} {{ invoice.totalAmountWithTax || ("na_label" | translate) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "status_label" | translate }}</th>
+          <td mat-cell *matCellDef="let invoice" class="text-center">
+            <label class="label-status {{ getStatus(invoice.paymentStatus) }}">{{
+              getStatus(invoice.paymentStatus) | uppercase | translate
+            }}</label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length" class="text-left">
+            <div class="d-flex invoice-detail" [@detailExpand]="isRowExpanded(element) ? 'expanded' : 'collapsed'">
+              <app-invoice-detail-container
+                #invoiceDetailContainerCmp
+                [invoice]="this.currentElement"
+                *ngIf="isRowExpanded(element)"
+              ></app-invoice-detail-container>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: columnsToDisplay"
+          class="records-row example-element-row"
+          [class.expanded]="isRowExpanded(element)"
+          (click)="onClickTableRow(element)"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

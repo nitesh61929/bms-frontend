@@ -1,0 +1,7 @@
+@mixin pxtorem($fontSize) {
+  font-size: ($fontSize / $size) * 1rem;
+}
+
+@mixin linear-gradient($direction, $startColor, $stopColor) {
+  background: linear-gradient($direction, $startColor, $stopColor);
+}

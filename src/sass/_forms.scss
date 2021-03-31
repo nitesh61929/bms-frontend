@@ -1,0 +1,479 @@
+.mat-form-field {
+  $this: &;
+  font-family: "Fira Sans", sans-serif !important;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.125;
+  width: 100%;
+  &-label {
+    color: $textColor !important;
+  }
+  &-ripple {
+    background-color: $peach;
+  }
+  &-invalid {
+    margin-bottom: 24px;
+  }
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    * {
+      pointer-events: none;
+    }
+  }
+  &-appearance-legacy {
+    #{$this}-underline {
+      background-color: $primary;
+    }
+  }
+  &.mat-focused {
+    #{$this}-label {
+      color: $peach;
+    }
+    #{$this}-ripple {
+      background-color: $peach;
+    }
+  }
+}
+
+.mat-slide-toggle {
+  &-bar {
+    margin-left: 16px !important;
+    order: 2;
+  }
+  &-content {
+    order: 1;
+  }
+  &.mat-checked {
+    .mat-slide-toggle-thumb {
+      background-color: $green;
+    }
+    .mat-slide-toggle-bar {
+      background-color: $greenLight;
+    }
+  }
+}
+
+.mat-select-arrow,
+.mat-select-value {
+  color: $textColor !important;
+}
+
+.mat-checkbox {
+  &-checked {
+    &.mat-accent {
+      .mat-checkbox-background {
+        background-color: $peach;
+      }
+    }
+  }
+}
+
+input:-internal-autofill-selected {
+  background-color: transparent !important;
+}
+input[type="file"],
+input[type="file"]::-webkit-file-upload-button {
+  cursor: pointer;
+}
+
+textarea {
+  border: 0;
+  min-height: 100px;
+  width: 100%;
+}
+
+.mat-checkbox {
+  &-frame {
+    border-radius: 0 !important;
+    border-width: 1px !important;
+  }
+}
+
+.form-field {
+  &-wrapper {
+    padding-left: 30px;
+    position: relative;
+    .las {
+      left: 5px;
+      position: absolute;
+      top: 17px;
+    }
+    button {
+      &.matPrefix {
+        opacity: 0.5;
+        &.mat-icon-button {
+          height: 28px;
+          width: 28px;
+          i {
+            position: static;
+            transform: translateY(-8px) !important;
+          }
+        }
+        &.selected {
+          background: $peach;
+          opacity: 1;
+          .las {
+            color: $white;
+          }
+        }
+        &:last-of-type {
+          margin-right: 10px;
+        }
+      }
+      &.matSuffix {
+        &.mat-icon-button {
+          height: 28px;
+          width: 28px;
+          i {
+            position: static;
+          }
+        }
+      }
+    }
+    .suggestion-list {
+      background: $primaryLightMedium;
+      box-shadow: 0 3px 12px rgba($black, 0.5);
+      margin-top: -1.25em;
+      max-height: 105px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      z-index: 1;
+      &:before {
+        background: $peach;
+        content: "";
+        height: 2px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+      .mat-list-item {
+        height: auto;
+        &-content {
+          align-items: flex-start !important;
+          flex-direction: column !important;
+          justify-content: flex-start !important;
+          padding: 8px 16px !important;
+          p {
+            margin-right: 12px;
+          }
+        }
+      }
+    }
+  }
+  &-input {
+    position: relative;
+    label {
+      font-weight: 300;
+      left: 0;
+      position: absolute;
+      top: 8px;
+      transition: all 0.25s ease;
+    }
+    input {
+      border: 0;
+      display: block;
+      padding: 16px 0 6px;
+      width: 100%;
+    }
+    &.is-selected {
+      label {
+        font-size: 12px;
+        top: -6px;
+      }
+    }
+  }
+}
+
+.is-password-field {
+  .las[class*="eye"] {
+    cursor: pointer;
+    left: auto;
+    right: 5px;
+    z-index: 10;
+  }
+}
+
+.is-image-field {
+  label {
+    display: block;
+    position: relative;
+    top: 0;
+  }
+
+  .file-upload {
+    border-radius: 50%;
+    border: 2px solid $green;
+    display: inline-block;
+    height: 134px;
+    position: relative;
+    width: 134px;
+    figure {
+      height: 100%;
+    }
+    input {
+      cursor: pointer;
+      height: 100%;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+    label {
+      color: $textColor;
+      cursor: pointer;
+      font-size: 12px;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+    }
+    .las {
+      left: 50%;
+      top: 50% !important;
+      transform: translate(-50%, -50%);
+    }
+    & + .progressbar {
+      width: 134px;
+    }
+  }
+}
+
+.is-phone-field {
+  .mat-form-field {
+    // width: calc(100% - 85px);
+    width: 100%;
+    .la-plus {
+      font-size: 14px;
+      position: static;
+    }
+    &.zip-code-input {
+      display: none;
+      margin-right: 10px;
+      width: 75px !important;
+    }
+  }
+}
+
+.buttons-wrapper {
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.detail-form {
+  margin-top: 20px !important;
+  .d-flex {
+    justify-content: space-between;
+  }
+  .documents {
+    .d-flex {
+      justify-content: inherit;
+    }
+  }
+}
+
+.site-images h4 {
+  padding: 15px 0;
+  span {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 16px 0;
+    text-transform: uppercase;
+  }
+}
+
+.form-section-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 16px 0;
+  text-transform: uppercase;
+}
+
+.contact-details,
+.address-details {
+  h5 {
+    i {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+.mat-list-base {
+  .mat-list-item {
+    font-size: 12px;
+  }
+}
+
+.documents {
+  position: relative;
+  .is-image-field {
+    .file-upload {
+      background: transparent;
+      border-bottom: 2px solid $gray;
+      height: auto;
+      padding: 10px 0;
+      width: 100%;
+    }
+    .las {
+      color: $textColor !important;
+      left: auto;
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+
+.contains-multiple-images {
+  .image-holder {
+    margin: 0 16px 16px 0;
+    min-width: 200px;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    & + .form-field-wrapper {
+      min-width: 200px;
+    }
+    p {
+      margin-bottom: 12px;
+    }
+  }
+  figure {
+    border-radius: 8px;
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 75%;
+    position: relative;
+    & > span {
+      cursor: pointer;
+      height: 44px;
+      left: 50%;
+      padding: 10px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      z-index: 10;
+      input {
+        height: 100%;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+    & + span {
+      margin: 6px;
+    }
+    img {
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      width: 100%;
+    }
+    figcaption {
+      background: rgba($textColor, 0.75);
+      bottom: 0;
+      color: $white;
+      font-size: 12px;
+      left: 0;
+      padding: 5px;
+      position: absolute;
+      width: 100%;
+    }
+    & + .form-field-wrapper {
+      display: inline-block;
+    }
+  }
+}
+
+.progressbar {
+  background: $gray;
+  display: block;
+  margin-top: 6px;
+  overflow: hidden;
+  &-inner {
+    background-color: $peach;
+    height: 5px;
+  }
+}
+
+.feedback-form {
+  margin-top: 20px !important;
+}
+
+.module-header {
+  .d-flex,
+  form {
+    .form-field-wrapper {
+      padding-left: 0;
+      .las {
+        position: static;
+      }
+      .mat-form-field {
+        font-size: 14px;
+        &-underline {
+          background-color: rgba($textColor, 0.4);
+        }
+      }
+    }
+  }
+}
+
+.records-filter {
+  .form-field-wrapper {
+    flex: 0 0 calc(25% - 20px);
+    margin: 0 20px 20px 0;
+    max-width: 250px;
+    padding-left: 0;
+  }
+  .mat-form-field {
+    font-size: 14px;
+    &-underline {
+      background-color: rgba($textColor, 0.4);
+    }
+  }
+}
+
+.contact-type-options {
+  position: absolute;
+  top: 8px;
+  & + .mat-form-field {
+    margin-left: 60px;
+  }
+}
+
+.mat-option-text {
+  line-height: 1;
+  font-size: 14px;
+  overflow: unset !important;
+  span {
+    display: block;
+    margin-bottom: 2px;
+  }
+  label {
+    font-size: 12px;
+    opacity: 0.85;
+    cursor: pointer;
+  }
+}
+
+quill-editor {
+  display: block;
+}
+
+.password-mismatch {
+  text-align: left !important;
+  padding-left: 33.33%;
+  margin-left: 16px;
+}

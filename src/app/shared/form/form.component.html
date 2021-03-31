@@ -1,0 +1,44 @@
+<div class="module-wrapper">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="module-title" *ngIf="formOption?.title">
+    <h2>{{ formOption?.title }}</h2>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="16px">
+    <mat-card class="form-wrapper">
+      <form class="form business-form">
+        <ng-content></ng-content>
+
+        <div class="has-top-margin button-group text-right">
+          <button
+            class="btn-save-and-publish btn-green"
+            mat-button
+            color="primary"
+            *ngIf="formOption?.optional_button_label"
+            (click)="onOptionalButtonClick()"
+          >
+            {{ formOption?.optional_button_label }}
+          </button>
+          <button
+            class="btn-primary"
+            mat-button
+            color="primary"
+            *ngIf="formOption?.primary_button_label"
+            (click)="onPrimarytButtonClick()"
+          >
+            {{ formOption?.primary_button_label }}
+          </button>
+          <button
+            class="btn-outline-accent"
+            mat-button
+            color="accent"
+            *ngIf="formOption?.accent_button_label"
+            (click)="onAccentButtonClick()"
+            type="button"
+          >
+            {{ formOption?.accent_button_label }}
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

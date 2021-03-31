@@ -1,0 +1,22 @@
+<div class="app-container error d-flex align-center">
+  <div class="error-content">
+    <h5>{{ "sign_up_thank_you_text" | translate }}</h5>
+    <p>{{ "sign_in_from_mobile_app" | translate }}</p>
+    <ng-container *ngIf="isMobile()">
+      <p class="has-padding-top">{{ "download_app_text" | translate }}</p>
+      <div class="d-flex align-center has-1-cols has-margin-top">
+        <div class="col has-padding" *ngIf="isAndroid()">
+          <a href="{{ playStoreUrl }}" target="_blank">
+            <img src="assets/images/icon-google-play.png" alt="Google Play Store" />
+          </a>
+        </div>
+        <div class="col has-padding" *ngIf="isIOS()">
+          <a href="{{ appStoreUrl }}" target="_blank">
+            <img src="assets/images/icon-app-store.png" alt="Apple Store" />
+          </a>
+        </div>
+      </div>
+    </ng-container>
+    <!-- <button (click)="redirectToDefaultPage()" mat-button class="btn btn-theme-peach">Back to Homepage</button> -->
+  </div>
+</div>

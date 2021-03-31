@@ -1,0 +1,86 @@
+<div class="info info-admin">
+  <div class="d-flex has-3-cols">
+    <div class="col">
+      <i class="las la-map-marked text-primary"></i>
+      <p>
+        <label>{{ "mod_address.permanent_address_label" | translate }} </label>
+        <span>
+          {{ getAddress(propertyDetails?.address) }} <br />
+          {{ "mod_address.ward_number_label" | translate }}:
+          {{ propertyDetails?.address?.wardNo || "na_label" | translate }},
+          {{ "mod_address.zip_code_label" | translate }}:
+          {{ propertyDetails?.address?.zipCode || "na_label" | translate }}
+        </span>
+      </p>
+    </div>
+
+    <div class="col">
+      <i class="las la-phone text-primary"></i>
+      <span>{{ getPhones(propertyDetails?.phones) }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-mobile text-primary"></i>
+      <span>{{ getMobileNumbers(propertyDetails?.mobileNumbers) }}</span>
+    </div>
+  </div>
+  <div class="d-flex has-3-cols" *ngIf="propertyDetails?.facility">
+    <div class="col">
+      <i class="las la-tag text-primary"></i>
+      <p>
+        <label>{{ "facilities_label" | translate }}</label>
+        <span>{{ propertyDetails?.facility }}</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="info info-docs">
+  <h5 class="form-section-title">{{ "documents_label" | translate }}</h5>
+  <div flex class="d-flex has-5-cols contains-multiple-images">
+    <div class="col image-holder">
+      <app-file-upload
+        [file]="propertyDetails?.panCertificate"
+        [figCaption]="'Property PAN/VAT Registration'"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+
+    <div class="col image-holder">
+      <app-file-upload
+        [file]="propertyDetails?.registrationCertificate"
+        [figCaption]="'Property Registration Certificate'"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+  </div>
+</div>
+
+<div class="site-images contains-multiple-images">
+  <h5 class="form-section-title">{{ "property_images_label" | translate }}</h5>
+  <div lightbox-group class="d-flex has-5-cols">
+    <div class="col image-holder" *ngFor="let image of propertyDetails?.images">
+      <figure>
+        <img [src]="image?.smallFileUrl | imagePath" lightbox />
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="list-actions" *ngIf="showStatusUpdateForm()">
+  <div flex class="d-flex has-2-cols">
+    <div class="form-field-wrapper col" [formGroup]="statusUpdateForm">
+      <mat-form-field class="is-dropdown-field">
+        <mat-label>{{ "status_label" | translate }}</mat-label>
+        <mat-select floatLabel="never" formControlName="statusSelect" (selectionChange)="onUpdateStatus($event)">
+          <mat-option *ngFor="let status of propertyStatuses" [value]="status.value">{{ status.title }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-field-wrapper col">
+      <p *ngIf="isUpdateDisabled()">{{ "owner_not_verified_message" | translate }}</p>
+    </div>
+  </div>
+</div>

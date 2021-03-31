@@ -1,0 +1,123 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "panic_alert_report" | translate }}</span>
+    <form class="d-flex align-center">
+      <div class="form-field-wrapper has-no-margin has-padding-right">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'unit_name_label' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "date_range_placeholder" | translate }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+            <input
+              matStartDate
+              placeholder="{{ 'start_date_placeholder' | translate }}"
+              formControlName="startDate"
+              (click)="picker.open()"
+            />
+            <input
+              matEndDate
+              placeholder="{{ 'end_date_placeholder' | translate }}"
+              formControlName="endDate"
+              (click)="picker.open()"
+              (dateChange)="onDateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+          <mat-datepicker-toggle matSuffix (click)="clearDateRange()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <ng-container *ngIf="!listLength || listLength === 0">
+        <div class="no-records-found">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+      <table
+        *ngIf="listLength > 0"
+        matSort
+        (matSortChange)="sortData($event)"
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--panic-alert-report"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.serial_number_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tenantName">
+          <th mat-header-cell *matHeaderCellDef>{{ "owner_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report">{{ report?.tenantName || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="unitName">
+          <th mat-header-cell *matHeaderCellDef>{{ "unit_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report">{{ report.unitName || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdDateTime">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "created_date_time_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report" class="text-center">
+            {{ report.createdDateTime | utcToLocalDate: "ddd, lll" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="responseInterval">
+          <th mat-header-cell *matHeaderCellDef>{{ "response_time_interval" | translate }}</th>
+          <td mat-cell *matCellDef="let report">
+            <span *ngIf="report?.responseIntervalInMilliSeconds">
+              {{ toMinuteSecond(report?.responseIntervalInMilliSeconds) }}
+            </span>
+            <span *ngIf="!report?.responseIntervalInMilliSeconds">{{ "na_label" | translate }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gateKeeperName">
+          <th mat-header-cell *matHeaderCellDef>{{ "response_by_label" | translate }}</th>
+          <td mat-cell *matCellDef="let report">{{ report.gateKeeperName || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="getGateKeeperMobileNumber">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "common.phone_number" | translate }}</th>
+          <td mat-cell *matCellDef="let report" class="text-center">
+            {{ report.getGateKeeperMobileNumber || ("na_label" | translate) }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

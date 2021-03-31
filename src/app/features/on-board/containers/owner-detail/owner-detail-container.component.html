@@ -1,0 +1,17 @@
+<app-owner-company
+  *ngIf="ownerType === 'company'"
+  [pathName]="pathName"
+  (previousClicked)="onPreviousClick()"
+  (nextClicked)="onNextClick($event)"
+  [ownerDetail]="ownerDetail"
+  [error$]="error$"
+></app-owner-company>
+
+<app-owner-individual
+  *ngIf="ownerType === 'individual'"
+  [pathName]="pathName"
+  (previousClicked)="onPreviousClick()"
+  (nextClicked)="onNextClick($event)"
+  [ownerDetail]="ownerDetail"
+  [error$]="error$"
+></app-owner-individual>

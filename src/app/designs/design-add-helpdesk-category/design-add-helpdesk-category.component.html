@@ -1,0 +1,35 @@
+<form class="form-notice">
+    <div class="form-field-wrapper">
+      <div class="form-field-input is-image-field">
+        <span class="file-upload">
+          <figure class="auto is-rounded-image w-130">
+            <img src="./assets/images/placeholder-img.jpg" alt="" />
+          </figure>
+          <input type="file" />
+          <label style="display: none">Upload Image</label>
+          <i class="las la-camera"></i>
+        </span>
+        <div class="progressbar" style="display: none">
+          <div class="progressbar-inner" style="width: 25%"></div>
+        </div>
+        <mat-error class="text-center"> Invalid file </mat-error>
+      </div>
+    </div>
+  
+    <div class="form-field-wrapper">
+      <mat-form-field>
+        <mat-label>Category Name</mat-label>
+        <input matInput required />
+      </mat-form-field>
+    </div>
+  
+    <div class="form-field-wrapper">
+      <mat-slide-toggle>Publish</mat-slide-toggle>
+    </div>
+  
+    <div class="buttons-wrapper text-right">
+      <a (click)="closeDialog()" mat-button class="btn btn-theme-white">Cancel</a>
+      <button mat-button class="btn btn-theme-green">Save</button>
+    </div>
+  </form>
+  

@@ -1,0 +1,58 @@
+<div class="content-inner">
+  <div class="records-filter">
+    <form class="staff-configuration-form" [formGroup]="paymentMethodConfigForm" #paymentMethodConfigNgForm="ngForm">
+      <h4 class="form-section-title">{{ "payment_method_config_label" | translate }}</h4>
+      <div class="d-flex align-center has-3-col">
+        <div class="col has-padding-right">
+          <mat-checkbox
+            class="example-margin"
+            formControlName="paymentMethodEnabled"
+            (change)="onKhaltiOptionSelection($event)"
+            >{{ "khalti_label" | translate }}</mat-checkbox
+          >
+        </div>
+        <ng-container *ngIf="paymentMethodConfigForm.get('paymentMethodEnabled').value">
+          <div class="col has-padding-right">
+            <mat-form-field>
+              <mat-label>{{ "public_key_label" | translate }}</mat-label>
+              <input type="text" matInput formControlName="publicKey" required />
+              <mat-error>
+                <app-error-message [control]="paymentMethodConfigForm.get('publicKey')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col has-padding-right">
+            <mat-form-field>
+              <mat-label>{{ "private_key_label" | translate }}</mat-label>
+              <input type="text" matInput formControlName="privateKey" required />
+              <mat-error>
+                <app-error-message [control]="paymentMethodConfigForm.get('privateKey')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </div>
+      <p
+        class="d-flex align-center color-black"
+        *ngIf="!hasSetKeys() && paymentMethodConfigForm.get('paymentMethodEnabled').value"
+      >
+        <i class="las la-info-circle"></i>{{ "khalti_keys_required" | translate }}
+      </p>
+
+      <p class="d-flex align-center color-black" *ngIf="hasSetKeys()">
+        <i class="las la-info-circle"></i>{{ "khalti_key_already_set" | translate }}
+      </p>
+
+      <div class="col has-padding-top">
+        <button
+          mat-button
+          class="btn btn-theme-green"
+          (click)="savePaymentMethodConfiguration()"
+          [disabled]="!paymentMethodConfigForm.get('paymentMethodEnabled').value"
+        >
+          {{ hasSetKeys() ? ("common.update" | translate) : ("common.save" | translate) }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

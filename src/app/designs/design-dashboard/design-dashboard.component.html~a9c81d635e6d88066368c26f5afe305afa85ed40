@@ -1,0 +1,106 @@
+<div class="app-container">
+    <!-- Header -->
+    <header class="d-flex align-center">
+      <h1 class="building-logo d-flex align-center">
+        <figure>
+          <img src="./assets/images/favicon.png" alt="Building Logo" />
+        </figure>
+        <span class="text-primary bold">OWNANT</span>
+      </h1>
+  
+      <mat-nav-list class="nav nav-primary">
+        <a mat-list-item routerLink="/designs/dashboard" class="active">Dashboard</a>
+  
+        <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+        <mat-menu #propertyMenu="matMenu" class="is-dropdown">
+          <h3>My Property</h3>
+          <mat-nav-list class="added-records-list">
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Sunrise Homes</span>
+                <label>Apartment</label>
+              </p>
+            </a>
+          </mat-nav-list>
+          <mat-nav-list class="record-actions">
+            <a mat-list-item>Add New</a>
+            <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+          </mat-nav-list>
+        </mat-menu>
+  
+        <a mat-list-item [matMenuTriggerFor]="staffMenu">Staff</a>
+        <mat-menu #staffMenu="matMenu" class="is-dropdown">
+          <h3>Active Staff</h3>
+          <mat-nav-list class="added-records-list">
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Ghanashyam Kushwaha</span>
+                <label>Property Manger</label>
+              </p>
+            </a>
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Kanti Lal Shah</span>
+                <label>Gate Keeper</label>
+              </p>
+            </a>
+          </mat-nav-list>
+          <mat-nav-list class="record-actions">
+            <a mat-list-item>Add New</a>
+            <a mat-list-item routerLink="/designs/staff">View All</a>
+          </mat-nav-list>
+        </mat-menu>
+  
+        <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+      </mat-nav-list>
+  
+      <mat-nav-list class="nav nav-secondary">
+        <a mat-list-item><i class="las la-question-circle"></i></a>
+        <a mat-list-item><i class="las la-cog"></i></a>
+        <a mat-list-item><i class="las la-bell"></i></a>
+        <a mat-list-item [matMenuTriggerFor]="userDropDown">
+          <figure class="is-rounded-image">
+            <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+          </figure>
+        </a>
+  
+        <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+          <mat-nav-list class="record-actions">
+            <a mat-list-item routerLink="/designs/profile">View Profile</a>
+            <a mat-list-item>Logout</a>
+          </mat-nav-list>
+        </mat-menu>
+      </mat-nav-list>
+    </header>
+    <!-- Header -->
+  
+    <div class="app-content">
+      <mat-drawer-container>
+        
+        <mat-drawer-content>
+          <div class="content-inner">
+            
+  
+            <h2 class="module-header d-flex align-center justify-between">
+              <span class="module-header-text">Dashboard</span>
+              <form class="d-flex align-center">
+                
+              </form>
+            </h2>
+  
+            
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  </div>
+  

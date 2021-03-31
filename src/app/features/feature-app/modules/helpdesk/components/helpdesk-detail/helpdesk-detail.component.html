@@ -1,0 +1,139 @@
+<div class="col info ticket-details">
+  <div class="d-flex">
+    <div class="col ticket-detail-content has-padding-right">
+      <p>
+        {{ helpdeskDetail?.description }}
+      </p>
+
+      <div lightbox-group class="ticket-images has-margin-top d-flex" *ngIf="helpdeskDetail?.files">
+        <figure class="w-64" *ngFor="let image of helpdeskDetail?.files">
+          <img
+            src="{{ image?.smallFileUrl | imagePath }}"
+            lightbox
+            [fullImage]="{ path: image?.largeFileUrl }"
+            alt=""
+          />
+        </figure>
+      </div>
+
+      <form
+        [formGroup]="postCommentForm"
+        #postCommentNgForm="ngForm"
+        *appHasAccess="hasTicketCommentAddAccess"
+        class="has-margin-top"
+      >
+        <div class="form-field-wrapper has-no-padding">
+          <mat-form-field>
+            <mat-label>{{ "comment_label" | translate }}</mat-label>
+            <textarea matInput formControlName="title" required></textarea>
+            <mat-error>
+              <app-error-message [control]="postCommentForm.get('title')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button mat-button class="btn btn-theme-green" (click)="postComment()">
+          {{ "common.submit" | translate }}
+        </button>
+      </form>
+
+      <div class="comments has-margin-top">
+        <ng-container *appHasAccess="hasTicketCommentListAccess">
+          <ng-container *ngIf="helpdeskComments?.length > 0">
+            <h5 class="has-margin-top">{{ "comments" | translate }}</h5>
+            <ul>
+              <li class="d-flex" *ngFor="let comment of helpdeskComments">
+                <figure class="is-rounded-image w-32" *ngIf="comment?.imageUrl">
+                  <img src="{{ comment?.imageUrl | imagePath }}" alt="" />
+                </figure>
+                <figure class="is-rounded-image w-32" *ngIf="!comment?.imageUrl">
+                  <img src="./assets/images/placeholder-img.jpg" alt="" />
+                </figure>
+                <div>
+                  <p>{{ comment?.title }}</p>
+                  <span>{{ comment?.createdBy }}</span>
+                  <label>{{ comment?.createdAt | utcToLocalDate: "ddd, lll" }}</label>
+                </div>
+              </li>
+            </ul>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col ticket-actions">
+      <div
+        class="form-field-wrapper has-no-padding-left"
+        [formGroup]="assigneeUpdateForm"
+        *appHasAccess="hasTicketAssigneeUpdateAccess"
+      >
+        <mat-form-field>
+          <mat-label>{{ "assigned_to_label" | translate }}</mat-label>
+          <mat-select
+            #matSelect
+            formControlName="assigneeSelect"
+            (selectionChange)="onAssigneeChange($event, helpdeskDetail?.assigneeId)"
+          >
+            <mat-option [value]="assignee.id" *ngFor="let assignee of possibleAssignees">{{
+              assignee.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="form-field-wrapper has-no-padding-left"
+        [formGroup]="dueDateUpdateForm"
+        *appHasAccess="hasTicketDueDateUpdateAccess"
+      >
+        <mat-form-field>
+          <mat-label>{{ "due_date_label" | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dueDateSelect"
+            (click)="picker.open()"
+            (dateChange)="onDueDateUpdate($event)"
+            [min]="minDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="form-field-wrapper has-no-padding-left"
+        [formGroup]="statusUpdateForm"
+        *appHasAccess="hasTicketStatusUpdateAccess"
+      >
+        <mat-form-field>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+          <mat-select
+            #matSelect
+            formControlName="statusSelect"
+            (selectionChange)="onStatusChange($event, helpdeskDetail?.status)"
+          >
+            <mat-option [value]="status.value" *ngFor="let status of helpdeskStatuses">{{ status.title }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="created-by has-margin-top">
+        <h5 class="has-margin-bottom">{{ "created_by_label" | translate }}</h5>
+        <mat-list class="has-no-padding">
+          <mat-list-item>
+            <i class="las la-user text-primary"></i> {{ helpdeskDetail?.createdBy || "na_label" | translate }}
+          </mat-list-item>
+          <mat-list-item>
+            <i class="las la-mobile text-primary"></i>
+            {{ helpdeskDetail?.createdByMobileNumber || "na_label" | translate }}
+          </mat-list-item>
+          <mat-list-item>
+            <i class="las la-envelope text-primary"></i> {{ helpdeskDetail?.createdByEmail || "na_label" | translate }}
+          </mat-list-item>
+          <mat-list-item>
+            <i class="lab la-buffer text-primary"></i> {{ helpdeskDetail?.createdByUnitName || "na_label" | translate }}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>

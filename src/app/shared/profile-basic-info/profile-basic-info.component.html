@@ -1,0 +1,33 @@
+<div class="profile-image-and-name" [formGroup]="profilePictureForm">
+  <div class="form-field-wrapper">
+    <app-file-upload
+      [file]="userProfile.profileFile"
+      formControlName="profilePicture"
+      [fileUploadType]="fileUploadTypeEnum.CIRCULAR"
+      [folderName]="'USER_LOGO'"
+      (fileUpload)="onFileUpload($event)"
+    ></app-file-upload>
+    <mat-error>
+      <app-error-message [control]="profilePictureForm.get('profilePicture')"></app-error-message>
+    </mat-error>
+  </div>
+  <p class="text-center">
+    <span>{{ userProfile?.name }}</span>
+    <label>{{ userType }}</label>
+  </p>
+</div>
+
+<div class="profile-contact-info">
+  <p class="d-flex align" *ngIf="userProfile?.email">
+    <i class="las la-envelope"></i>
+    {{ userProfile?.email }}
+  </p>
+  <p class="d-flex align" *ngIf="userProfile?.mobileNumber">
+    <i class="las la-mobile"></i>
+    <span>{{ userProfile?.mobileNumber }}</span>
+  </p>
+  <p class="d-flex align" *ngIf="getAddress(userProfile?.address)">
+    <i class="las la-location-arrow"></i>
+    <span>{{ getAddress(userProfile?.address) }}</span>
+  </p>
+</div>

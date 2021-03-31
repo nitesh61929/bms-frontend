@@ -1,0 +1,161 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "helpdesk_label" | translate }}</span>
+    <form class="d-flex align-center">
+      <div class="form-field-wrapper has-no-margin has-padding-right">
+        <app-search-input (searched)="onSearch($event)" [placeholder]="'common.title' | translate"></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "date_range_placeholder" | translate }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+            <input
+              matStartDate
+              placeholder="{{ 'start_date_placeholder' | translate }}"
+              formControlName="startDate"
+              (click)="picker.open()"
+            />
+            <input
+              matEndDate
+              placeholder="{{ 'end_date_placeholder' | translate }}"
+              formControlName="endDate"
+              (click)="picker.open()"
+              (dateChange)="onDateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix (click)="clearDateRange()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onStatusFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="status.value" *ngFor="let status of helpdeskStatuses">{{ status.title }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onPriorityFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="priority.value" *ngFor="let priority of helpdeskPriorities">{{
+              priority.title
+            }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "priority_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onCategoryFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category?.code">{{ category?.title }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "category_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <div class="col ticket-lists">
+        <ng-container *ngIf="listLength === 0">
+          <div class="no-records-found">
+            <span>{{ "result_not_found_label" | translate }}</span>
+          </div>
+        </ng-container>
+
+        <table
+          mat-table
+          matSort
+          (matSortChange)="sortData($event)"
+          [dataSource]="dataSource"
+          multiTemplateDataRows
+          class="records-table records-table--help-desk"
+          *ngIf="listLength > 0"
+        >
+          <ng-container matColumnDef="ticket_ID">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let helpdesk; let i = dataIndex">
+              {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="title">
+            <th mat-header-cell mat-sort-header="title" *matHeaderCellDef>{{ "common.title" | translate }}</th>
+            <td mat-cell *matCellDef="let helpdesk">{{ helpdesk?.title }}</td>
+          </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>{{ "category_label" | translate }}</th>
+            <td mat-cell *matCellDef="let helpdesk">{{ helpdesk?.ticketCategoryCode }}</td>
+          </ng-container>
+          <ng-container matColumnDef="priority">
+            <th mat-header-cell *matHeaderCellDef>{{ "priority_label" | translate }}</th>
+            <td mat-cell *matCellDef="let helpdesk">
+              <label class="label-status {{ helpdesk.priority | lowercase }}">{{ helpdesk?.priority }}</label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ "status_label" | translate }}</th>
+            <td mat-cell *matCellDef="let helpdesk">
+              <label class="label-status {{ getStatusClass(helpdesk.status) }}">{{
+                getStatus(helpdesk?.status)
+              }}</label>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="created_date">
+            <th mat-header-cell *matHeaderCellDef>{{ "created_date_label" | translate }}</th>
+            <td mat-cell *matCellDef="let helpdesk">{{ helpdesk?.createdAt | timeAgo }}</td>
+          </ng-container>
+          <ng-container matColumnDef="due_date">
+            <th mat-header-cell *matHeaderCellDef>{{ "due_date_label" | translate }}</th>
+            <td mat-cell *matCellDef="let helpdesk">
+              {{ helpdesk?.dueDate | utcToLocalDate: "ddd, ll" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="text-left">
+              <div class="d-flex help-desk-records" [@detailExpand]="isRowExpanded(element) ? 'expanded' : 'collapsed'">
+                <app-helpdesk-detail-container
+                  [helpdesk]="this.currentElement"
+                  *ngIf="isRowExpanded(element)"
+                ></app-helpdesk-detail-container>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: displayedColumns"
+            class="records-row"
+            [class.expanded]="isRowExpanded(element)"
+            (click)="onClickTableRow(element)"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+        </table>
+        <mat-paginator
+          #paginatorCmp
+          [length]="listLength"
+          [pageSize]="perPage"
+          [pageSizeOptions]="getDefaultPageSizeOptions()"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

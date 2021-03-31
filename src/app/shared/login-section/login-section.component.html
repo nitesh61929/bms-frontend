@@ -1,0 +1,26 @@
+<div class="app-container auth d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="app-info">
+      <h1 class="app-icon">
+        <span></span>
+        <p>{{ "page_titles.ownant" | translate }}</p>
+      </h1>
+      <h2>{{ "login_section_header_text" | translate }}</h2>
+      <p>{{ "login_section_description_text" | translate }}</p>
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="estateCloud" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <span
+        class="wizard-logout"
+        matTooltip="{{ 'common.logout' | translate }}"
+        (click)="onLogout()"
+        *ngIf="showLogoutIcon"
+        ><i class="las la-sign-out-alt"></i
+      ></span>
+      <!-- <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p> -->
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

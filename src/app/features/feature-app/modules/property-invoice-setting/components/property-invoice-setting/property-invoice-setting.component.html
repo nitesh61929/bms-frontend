@@ -1,0 +1,59 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "mod_invoice.invoice_header" | translate }}</span>
+  </h2>
+  <div class="records-filter">
+    <form class="staff-configuration-form" [formGroup]="invoiceSettingForm">
+      <h4 class="form-section-title">{{ "invoice_number_setting" | translate }}</h4>
+      <div class="d-flex has-3-cols">
+        <div class="col has-padding-right">
+          <div class="form-field-wrapper has-no-padding-left">
+            <mat-form-field>
+              <mat-label>{{ "prefix_label" | translate }}</mat-label>
+              <input type="text" matInput formControlName="prefix" />
+              <mat-error>
+                <app-error-message [control]="invoiceSettingForm.get('prefix')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col has-padding-right">
+          <div class="form-field-wrapper has-no-padding-left">
+            <mat-form-field>
+              <mat-label>{{ "seperator_label" | translate }}</mat-label>
+              <mat-select formControlName="identifier">
+                <mat-option value="">{{ "select_all" | translate }}</mat-option>
+                <mat-option [value]="seperator.value" *ngFor="let seperator of seperators">{{
+                  seperator.title
+                }}</mat-option>
+              </mat-select>
+              <mat-error>
+                <app-error-message [control]="invoiceSettingForm.get('identifier')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col has-padding-right">
+          <div class="form-field-wrapper has-no-padding-left">
+            <mat-form-field>
+              <mat-label>{{ "invoice_starting_number_label" | translate }}</mat-label>
+              <input matInput formControlName="startingInvoiceNumber" required appOnlyNumber />
+              <mat-error>
+                <app-error-message [control]="invoiceSettingForm.get('startingInvoiceNumber')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <p>{{ getTypedInvoiceNumberSettingValue() }}</p>
+      <div class="col has-padding-top" *ngIf="!invoiceNumberSetting">
+        <button mat-button class="btn btn-theme-green" (click)="setInvoiceNumberSetting()">
+          {{ "common.save" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

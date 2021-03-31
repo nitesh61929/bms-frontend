@@ -1,0 +1,69 @@
+<div class="d-flex has-2-cols has-margin-top justify-between">
+  <div class="col unit-settings">
+    <mat-list>
+      <mat-list-item>
+        <span>{{ "unit_name_label" | translate }}:</span> {{ invoice?.unitName }}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{ "pan_no" | translate }}.:</span> {{ "na_label" | translate }}
+      </mat-list-item>
+      <mat-list-item
+        ><span>{{ "mod_invoice.payment_mode" | translate }}:</span>
+        {{ getPaymentMethod(paymentDetail?.paymentType) }}</mat-list-item
+      >
+      <mat-list-item
+        ><span>{{ "mod_invoice.txn_id" | translate }}:</span> {{ getTransactionId() }}</mat-list-item
+      >
+      <mat-list-item>
+        <span>{{ "mod_invoice.payment_received_date" | translate }}:</span>
+        {{ paymentDetail?.paidAt | utcToLocalDate: "ddd, lll" }}
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="col">
+    <div class="transaction-table-wrapper">
+      <table class="transaction">
+        <tr class="mat-row">
+          <td class="mat-cell" class="item">{{ "mod_invoice.total_label" | translate }}</td>
+          <td class="mat-cell" class="cost">{{ "npr_label" | translate }} {{ invoice?.initialAmount || "0.00" }}</td>
+        </tr>
+
+        <tr class="mat-row">
+          <td class="mat-cell" class="item">{{ "mod_invoice.fine_label" | translate }}</td>
+          <td class="mat-cell" class="cost">{{ "npr_label" | translate }} {{ invoice?.totalFineAmount || "0.00" }}</td>
+        </tr>
+
+        <tr class="mat-row">
+          <td class="mat-cell" class="item">{{ "mod_invoice.taxable_amount_label" | translate }}</td>
+          <td class="mat-cell" class="cost">
+            {{ "npr_label" | translate }} {{ invoice?.totalAmountWithoutTax || "0.00" }}
+          </td>
+        </tr>
+
+        <tr class="mat-row">
+          <td class="mat-cell" class="item">
+            {{ "mod_invoice.vat_label" | translate }} {{ invoice?.taxPercent || "0" }}%
+          </td>
+          <td class="mat-cell" class="cost">
+            {{ "npr_label" | translate }} {{ invoice?.totalTaxAmountOnly || "0.00" }}
+          </td>
+        </tr>
+
+        <tr class="mat-row">
+          <td class="mat-cell" class="item">{{ "mod_invoice.total_amount_label" | translate }}</td>
+          <td class="mat-cell" class="cost">
+            {{ "npr_label" | translate }} {{ invoice?.totalAmountWithTax || "0.00" }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <ng-container *appHasAccess="hasDownloadInvoiceAccess">
+    <div class="col has-padding-top" *ngIf="invoice?.paymentStatus == 'PAID'">
+      <button mat-button class="btn btn-theme-green" (click)="downloadInvoice()">
+        {{ "download_invoice_label" | translate }}
+      </button>
+    </div>
+  </ng-container>
+</div>

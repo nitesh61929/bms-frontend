@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../owner-detail/owner-detail-container.component.scss"
+    ],
+    "names": [],
+    "file": "owner-detail-container.component.css"
+}

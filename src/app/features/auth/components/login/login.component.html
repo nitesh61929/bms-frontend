@@ -1,0 +1,23 @@
+<app-login-section [showLogoutIcon]="false">
+  <h4 class="text-center">{{ "enter_otp_label" | translate }}</h4>
+  <form class="login-form" [formGroup]="loginForm">
+    <div class="form-field-wrapper">
+      <i class="las la-mobile"></i>
+      <mat-form-field>
+        <mat-label>{{ "otp_label" | translate }}</mat-label>
+        <input matInput formControlName="otpToken" appOnlyNumber required />
+        <mat-error>
+          <app-error-message [control]="loginForm.get('otpToken')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="buttons-wrapper">
+      <button mat-button class="btn-theme-green" (click)="onSubmitLoginForm()">
+        {{ "common.submit" | translate }}
+      </button>
+    </div>
+    <div class="buttons-wrapper text-center">
+      <a class="text-center has-pointer-style" (click)="onResendOtp()">{{ "login.resend_otp" | translate }}</a>
+    </div>
+  </form>
+</app-login-section>

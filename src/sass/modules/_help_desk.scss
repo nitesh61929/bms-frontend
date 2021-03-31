@@ -1,0 +1,175 @@
+// Help-desk list styles
+.records-table--help-desk {
+  tr {
+    th {
+      text-align: left;
+      &:first-of-type {
+        width: 100px;
+      }
+      &:nth-of-type(3) {
+        width: 140px;
+      }
+      &:nth-of-type(4) {
+        width: 105px;
+      }
+      &:nth-of-type(5) {
+        width: 140px;
+      }
+      &:nth-of-type(6) {
+        width: 120px;
+      }
+      &:last-child {
+        width: 140px;
+      }
+    }
+  }
+  .help-desk-records {
+    padding-left: 0 !important;
+  }
+}
+
+// Help-desk detail styles
+.help-desk-records {
+  .ticket {
+    &-lists {
+      flex: 1 1 35%;
+    }
+    &-details {
+      flex: 1 1 calc(65% - 16px);
+      margin-left: 16px;
+    }
+    &-detail-content {
+      border-radius: 8px;
+      flex: 1 1 calc(80% - 48px);
+      margin-right: 16px;
+      padding: 16px;
+      h5 {
+        font-size: 14px;
+      }
+      .ticket-category,
+      .ticket-creator-details {
+        i,
+        span {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      .ticket-images {
+        figure {
+          border-radius: 8px;
+          line-height: 1;
+          margin: 12px 12px 0 0;
+          overflow: hidden;
+          img {
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+          }
+        }
+      }
+      .mat-tab-body-wrapper {
+        max-height: 345px;
+        overflow: auto;
+      }
+      .form-field-wrapper {
+        max-width: inherit !important;
+      }
+    }
+    &-linked {
+      button {
+        & + button {
+          margin-left: 12px;
+        }
+      }
+    }
+    &-actions {
+      border-radius: 8px;
+      flex: 1 1 calc(20% - 32px);
+      max-height: 600px;
+      overflow: auto;
+      padding: 16px;
+    }
+    &-history {
+      h5 {
+        font-size: 14px;
+      }
+      ul {
+        position: relative;
+        &:after {
+          background: $peach;
+          content: "";
+          height: 100%;
+          left: 6px;
+          position: absolute;
+          top: 0;
+          width: 1px;
+        }
+        li {
+          font-family: $mainFont !important;
+          padding-left: 24px;
+          position: relative;
+          &:after {
+            background-color: $peach;
+            border-radius: 50%;
+            content: "";
+            height: 12px;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 12px;
+          }
+          span {
+            font-size: 11px;
+            opacity: 0.8;
+          }
+          & + li {
+            margin-top: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.comments {
+  font-family: $mainFont !important;
+  figure {
+    height: 42px !important;
+    margin-right: 12px;
+    width: 42px !important;
+  }
+  li {
+    figure {
+      img {
+        cursor: initial;
+      }
+    }
+    & + li {
+      margin-top: 20px;
+    }
+    p {
+      margin-bottom: 6px;
+    }
+    span {
+      font-weight: bold;
+      margin-right: 10px;
+      opacity: 0.8;
+    }
+    label {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+  }
+}
+
+.created-by {
+  h5 {
+    font-size: 14px;
+  }
+  .mat-list-item-content {
+    padding: 0 !important;
+    i {
+      margin-right: 4px;
+    }
+  }
+}

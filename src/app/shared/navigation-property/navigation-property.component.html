@@ -1,0 +1,32 @@
+<a mat-list-item [matMenuTriggerFor]="propertyMenu" (click)="fetchProperties()">{{ "property_label" | translate }}</a>
+<mat-menu #propertyMenu="matMenu" class="is-dropdown--property is-dropdown">
+  <h3>{{ "my_property_label" | translate }}</h3>
+
+  <mat-nav-list class="added-records-list">
+    <a
+      mat-list-item
+      class="d-flex align-center added-records-list-item"
+      *ngFor="let property of properties$ | async"
+      (click)="onSelectProperty(property)"
+    >
+      <figure class="is-rounded-image">
+        <img [src]="property?.logo?.smallFileUrl | imagePath" />
+      </figure>
+      <p>
+        <span>{{ property.name }}</span>
+        <label>{{ property.propertyTypeName }}</label>
+        <label
+          class="label-status {{ property.status | lowercase }}"
+          *ngIf="property.status.toLowerCase() !== 'verified'"
+        >
+          {{ "mod_status." + property.status | translate }}
+        </label>
+      </p>
+    </a>
+  </mat-nav-list>
+  <ng-container *ngIf="isOwnerVerified()">
+    <mat-nav-list class="record-actions" *appHasAccess="hasPropertyAddAccess" (click)="onAddProperty()">
+      <a mat-list-item>{{ "add_property_label" | translate }}</a>
+    </mat-nav-list>
+  </ng-container>
+</mat-menu>

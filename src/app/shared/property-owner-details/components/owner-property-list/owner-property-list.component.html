@@ -1,0 +1,45 @@
+<div class="info table-wrapper" *ngIf="propertyList?.length > 0">
+  <h4 class="d-flex align-center justify-between">
+    <span>{{ "property_label" | translate }}</span>
+    <button mat-button class="btn btn-theme-green" (click)="onAddProperty()">
+      {{ "add_property_label" | translate }}
+    </button>
+  </h4>
+  <table mat-table [dataSource]="propertyList" class="records-table records-table--properties">
+    <ng-container matColumnDef="sn">
+      <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="logo">
+      <td mat-cell *matCellDef="let element">
+        <figure class="is-rounded-image"><img [src]="element?.logo?.smallFileUrl | imagePath" alt="" /></figure>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <td mat-cell *matCellDef="let element">{{ element?.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <td mat-cell *matCellDef="let element">
+        {{ getAddress(element?.address) }}<br />
+        {{ "mod_address.ward_number_label" | translate }}: {{ element?.address?.wardNo || ("na_label" | translate) }},
+        {{ "mod_address.zip_code_label" | translate }}:
+        {{ element?.address?.zipCode || ("na_label" | translate) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="text-center">{{ "status_label" | translate }}</th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <label class="label-status {{ element?.status | lowercase }}">{{
+          "mod_status." + element?.status | translate
+        }}</label>
+      </td>
+    </ng-container>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columnsToDisplayProperties; let element"
+      (click)="openPropertyDetailDialog(element.id)"
+    ></tr>
+  </table>
+</div>

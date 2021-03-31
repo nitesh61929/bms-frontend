@@ -1,0 +1,47 @@
+<div class="profile-image-and-name" [formGroup]="basicPropertyDetailForm">
+  <div class="form-field-wrapper has-margin-bottom">
+    <app-file-upload
+      [file]="propertyDetail?.logo"
+      formControlName="logo"
+      [fileUploadType]="fileUploadTypeEnum.CIRCULAR"
+      [folderName]="'PROPERTY_LOGO'"
+      (fileUpload)="onFileUpload($event)"
+    ></app-file-upload>
+    <mat-error>
+      <app-error-message [control]="basicPropertyDetailForm.get('logo')"></app-error-message>
+    </mat-error>
+  </div>
+  <p class="text-center">
+    <span>{{ propertyDetail?.name }}</span>
+    <label>{{ propertyDetail?.propertyType?.title }}</label>
+    <label
+      class="label-status {{ propertyDetail.status | lowercase }}"
+      *ngIf="propertyDetail.status.toLowerCase() !== 'verified'"
+    >
+      {{ "mod_status." + propertyDetail.status | translate }}
+    </label>
+  </p>
+</div>
+
+<div class="profile-contact-info">
+  <p class="d-flex align">
+    <i class="las la-envelope"></i>
+    <a>{{ propertyDetail?.email }}</a>
+  </p>
+  <p class="d-flex align" *ngIf="getMobiles(propertyDetail?.mobileNumbers)">
+    <i class="las la-mobile"></i>
+    <span>{{ getMobiles(propertyDetail?.mobileNumbers) }}</span>
+  </p>
+  <p class="d-flex align" *ngIf="getPhones(propertyDetail?.phones)">
+    <i class="las la-phone"></i>
+    <span>{{ getPhones(propertyDetail?.phones) }}</span>
+  </p>
+  <p class="d-flex align">
+    <i class="las la-location-arrow"></i>
+    <span>
+      {{ propertyDetail?.address?.addressLine1 }}, {{ propertyDetail?.address?.street }}, <br />
+      {{ propertyDetail?.address?.province }}, {{ propertyDetail?.address?.city }},
+      {{ propertyDetail?.address?.country }}
+    </span>
+  </p>
+</div>

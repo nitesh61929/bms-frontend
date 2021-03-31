@@ -1,0 +1,135 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "notice_board_header" | translate }}</span>
+    <div class="d-flex align-center">
+      <div class="form-field-wrapper has-no-margin has-padding-right">
+        <app-search-input (searched)="onSearch($event)" [placeholder]="'common.title' | translate"></app-search-input>
+      </div>
+      <button
+        mat-button
+        class="btn btn-theme-green"
+        (click)="handleAddNoticeModal()"
+        *appHasAccess="hasNoticeAddAccess"
+      >
+        {{ "common.add" | translate }}
+      </button>
+    </div>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>{{ "date_range_placeholder" | translate }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+            <input
+              matStartDate
+              placeholder="{{ 'start_date_placeholder' | translate }}"
+              formControlName="startDate"
+              (click)="picker.open()"
+            />
+            <input
+              matEndDate
+              placeholder="{{ 'end_date_placeholder' | translate }}"
+              formControlName="endDate"
+              (click)="picker.open()"
+              (dateChange)="onDateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+          <mat-datepicker-toggle matSuffix (click)="clearDateRange()"
+            ><mat-icon matDatepickerToggleIcon>clear</mat-icon></mat-datepicker-toggle
+          >
+
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onStatusFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option value="1">{{ "published" | translate }}</mat-option>
+            <mat-option value="0">{{ "unpublished" | translate }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="records-wrapper">
+      <div class="table-wrapper">
+        <ng-container *ngIf="listLength === 0">
+          <div class="no-records-found">
+            <span>{{ "result_not_found_label" | translate }}</span>
+          </div>
+        </ng-container>
+
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          multiTemplateDataRows
+          class="records-table records-table--notice-board"
+          *ngIf="listLength > 0"
+        >
+          <ng-container matColumnDef="sn">
+            <th mat-header-cell *matHeaderCellDef class="cell-sn">#</th>
+            <td mat-cell *matCellDef="let notice; let i = dataIndex">
+              {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>{{ "common.title" | translate }}</th>
+            <td mat-cell *matCellDef="let notice">{{ notice?.title }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="updated_date">
+            <th mat-header-cell *matHeaderCellDef>{{ "updated_date_label" | translate }}</th>
+            <td mat-cell *matCellDef="let notice">{{ notice?.updatedAt | utcToLocalDate: "ddd, ll" }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ "status_label" | translate }}</th>
+            <td mat-cell *matCellDef="let notice">
+              <label class="label-status {{ getNoticeStatus(notice?.published) }}">{{
+                getNoticeStatus(notice.published)
+              }}</label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="text-left">
+              <div class="notice-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <app-notice-detail-container
+                  [notice]="element"
+                  *ngIf="element == expandedElement"
+                ></app-notice-detail-container>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: displayedColumns"
+            class="records-row has-detail-row"
+            [class.expanded]="expandedElement === element"
+            (click)="onClickTableRow(element)"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+        </table>
+        <mat-paginator
+          #paginatorCmp
+          [length]="listLength"
+          [pageSize]="perPage"
+          [pageSizeOptions]="getDefaultPageSizeOptions()"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

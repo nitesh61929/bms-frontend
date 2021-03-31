@@ -1,0 +1,11 @@
+<div class="content-inner">
+  <div class="profile-detail-wrapper profile-detail-wrapper--property">
+    <mat-tab-group>
+      <ng-container *ngIf="hasMaintenanceChargeConfigDetailAccess">
+        <mat-tab label="{{ 'maintenance_configuration_label' | translate }}">
+          <app-maintenance-charge (saveMaintenanceCharge)="saveMaintenanceCharge($event)"></app-maintenance-charge>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
+  </div>
+</div>

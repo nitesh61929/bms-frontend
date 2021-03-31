@@ -1,0 +1,37 @@
+<form class="detail-form" [formGroup]="addOrUpdatePrivacyPolicyForm">
+  <div class="d-flex">
+    <div class="form-field-wrapper col full-width has-no-padding-left">
+      <mat-form-field>
+        <mat-label> {{ "common.title" | translate }} </mat-label>
+        <input type="text" matInput formControlName="title" required />
+        <mat-error>
+          <app-error-message [control]="addOrUpdatePrivacyPolicyForm.get('title')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-wrapper col full-width has-no-padding-left">
+      <mat-label>{{ "common.description" | translate }}</mat-label>
+      <quill-editor
+        [placeholder]="'privacy_policy_description_placeholder' | translate"
+        formControlName="description"
+        required
+      ></quill-editor>
+      <mat-error *ngIf="submitted">
+        <app-error-message [control]="addOrUpdatePrivacyPolicyForm.get('description')"></app-error-message>
+      </mat-error>
+    </div>
+    <div class="form-field-wrapper col full-width has-no-padding-left has-margin-top" *ngIf="privacyPolicy?.updatedAt">
+      <mat-label
+        ><strong>{{ "common.updated_at" | translate }}</strong></mat-label
+      >
+      <p>{{ privacyPolicy?.updatedAt | utcToLocalDate: "ddd, lll" }}</p>
+    </div>
+
+    <div class="buttons-wrapper d-flex">
+      <button mat-button class="btn btn-theme-green" (click)="onAddOrUpdatePrivacyPolicy()">
+        {{ "common.save" | translate }}
+      </button>
+    </div>
+  </div>
+</form>

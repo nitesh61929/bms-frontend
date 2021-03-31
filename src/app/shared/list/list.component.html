@@ -1,0 +1,99 @@
+<!-- if only search filter is given, classname will be 'contains-lists has-search-filter-only'-->
+<!-- if no filters or search is given, classname will be 'contains-lists'-->
+<!-- if multiple filters and search is given, classname will be 'contains-lists has-multiple-filters'-->
+
+<div [class]="getClass()">
+  <div class="search-lists" *ngIf="enableSearch">
+    <mat-card>
+      <app-search-input (searched)="onSearch($event)"></app-search-input>
+      <mat-icon>search</mat-icon>
+    </mat-card>
+  </div>
+  <div class="filters" *ngIf="enableFilters">
+    <button mat-button [matMenuTriggerFor]="filters" #clickMenuTrigger="matMenuTrigger" class="has-more-filters">
+      <mat-icon>tune</mat-icon>
+      <span>{{ "more_filters_label" | translate }}</span>
+    </button>
+
+    <mat-menu #filters="matMenu" class="records-filter-options">
+      <a (click)="$event.stopPropagation(); $event.preventDefault()">
+        <div class="form-field-wrapper" *ngIf="filterOptions?.status">
+          <mat-icon>toggle_off</mat-icon>
+          <mat-form-field>
+            <mat-label class="field-label">{{ "filter_by_status_label" | translate }}</mat-label>
+            <mat-select (selectionChange)="onStatusChange($event)">
+              <mat-option [value]="null">{{ "all_status_label" | translate }}</mat-option>
+              <mat-option *ngFor="let statusFilterOption of statusFilterOptions" [value]="statusFilterOption.value">{{
+                statusFilterOption?.title
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-wrapper" *ngIf="filterOptions?.type">
+          <mat-icon>toggle_off</mat-icon>
+          <mat-form-field>
+            <mat-label class="field-label">{{ "filter_by_type_label" | translate }}</mat-label>
+            <mat-select (selectionChange)="onTypeChange($event)">
+              <mat-option [value]="null">{{ "all_type_label" | translate }}</mat-option>
+              <mat-option *ngFor="let typeFilterOption of typeFilterOptions" [value]="typeFilterOption.title">{{
+                typeFilterOption?.title
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-wrapper" *ngIf="filterOptions?.dateRange">
+          <mat-icon>date_range</mat-icon>
+          <mat-form-field>
+            <mat-label class="field-label">{{ "filter_by_date_label" | translate }}</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+              <input
+                matStartDate
+                placeholder="{{ 'start_date_placeholder' | translate }}"
+                formControlName="startDate"
+                (click)="picker.open()"
+              />
+              <input
+                matEndDate
+                placeholder="{{ 'end_date_placeholder' | translate }}"
+                formControlName="endDate"
+                (click)="picker.open()"
+              />
+            </mat-date-range-input>
+
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+            <mat-datepicker-toggle matSuffix (click)="clearDateRange()"
+              ><mat-icon matDatepickerToggleIcon>clear</mat-icon></mat-datepicker-toggle
+            >
+
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-error>
+              <app-error-message [control]="dateRangeForm.get('startDate')"></app-error-message>
+            </mat-error>
+            <mat-error>
+              <app-error-message
+                [control]="dateRangeForm.get('endDate')"
+                [customValidationErrorMessages]="customValidationErrorMessages"
+              ></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <button mat-button class="btn-primary" (click)="onApplyFilters()">
+          {{ "apply_filters_label" | translate }}
+        </button>
+      </a>
+    </mat-menu>
+  </div>
+  <div class="no-records-found" *ngIf="items.length === 0">
+    <mat-icon>subtitles_off</mat-icon>
+    <span>{{ "no_records_found" | translate }}</span>
+  </div>
+  <div class="lists-inner">
+    <div class="data-lists-item" [class.active]="getActiveItem(item)" *ngFor="let item of items">
+      <template [ngTemplateOutletContext]="{ item: item }" [ngTemplateOutlet]="templateVariable"></template>
+    </div>
+  </div>
+</div>

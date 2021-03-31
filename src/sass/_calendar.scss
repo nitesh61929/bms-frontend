@@ -1,0 +1,16 @@
+.mat-calendar {
+  &-body-selected {
+    background-color: $peach;
+  }
+  &-body-in-range {
+    &::before {
+      background: rgba($peach, 0.25);
+    }
+  }
+}
+
+.mat-datepicker {
+  &-toggle-active {
+    color: $peach;
+  }
+}

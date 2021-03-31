@@ -1,0 +1,26 @@
+<div class="content-inner">
+  <div class="records-filter">
+    <form class="staff-configuration-form" [formGroup]="propertyCurrencyConfigForm">
+      <h4 class="form-section-title">{{ "property_currency_setting_label" | translate }}</h4>
+      <div class="d-flex align-center has-3-col">
+        <div class="col has-padding-right">
+          <mat-form-field>
+            <mat-label>{{ "currency_label" | translate }}</mat-label>
+            <mat-select formControlName="currency" required>
+              <mat-option [value]="currency.value" *ngFor="let currency of currencies">{{ currency.title }}</mat-option>
+            </mat-select>
+            <mat-error>
+              <app-error-message [control]="propertyCurrencyConfigForm.get('currency')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col has-padding-top">
+        <button mat-button class="btn btn-theme-green" (click)="savePropertyCurrencyConfiguration()">
+          {{ hasSetCurrency() ? ("common.update" | translate) : ("common.save" | translate) }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

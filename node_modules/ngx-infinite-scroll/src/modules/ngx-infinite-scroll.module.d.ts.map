@@ -1,0 +1,1 @@
+{"version":3,"file":"ngx-infinite-scroll.module.d.ts","sources":["ngx-infinite-scroll.module.d.ts"],"names":[],"mappings":";;AAAA;;;AACA","sourcesContent":["export declare class InfiniteScrollModule {\n}\n"]}

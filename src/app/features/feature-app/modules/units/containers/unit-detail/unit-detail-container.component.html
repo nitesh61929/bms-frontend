@@ -1,0 +1,11 @@
+<app-rent-config
+  #rentConfigCmp
+  [unitDetail]="unitDetail"
+  [activePropertyId]="activePropertyId"
+  (unitRentConfigUpdated)="onUnitRentConfigUpdated()"
+></app-rent-config>
+
+<app-unit-detail-maintenance-charge
+  [unitDetail]="unitDetail"
+  [unitArea]="rentConfigCmp.areaAndOccupyForm.get('area').value"
+></app-unit-detail-maintenance-charge>

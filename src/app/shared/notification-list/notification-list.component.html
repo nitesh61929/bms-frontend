@@ -1,0 +1,43 @@
+<ng-container *ngIf="(notificationList$ | async).length > 0">
+  <div class="mark-read-button-wrapper">
+    <button
+      class="mat-button btn-theme-green"
+      *ngIf="(notificationCount$ | async) > 0"
+      (click)="onMarkAllAsRead($event)"
+    >
+      {{ "mark_all_as_read" | translate }}
+    </button>
+  </div>
+  <mat-nav-list
+    class="notification-list"
+    infiniteScroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScrollDown()"
+    [scrollWindow]="false"
+    style="max-height: 25rem; overflow-y: scroll"
+  >
+    <a mat-list-item *ngFor="let notification of notifications" [ngClass]="notification.seen ? 'seen' : 'unseen'">
+      <!--<figure class="is-rounded-image">
+          <img src="/assets/images/placeholder-img.jpg" />
+        </figure>-->
+      <div>
+        <p>{{ notification?.message }}</p>
+        <button
+          class="mat-button btn-theme-green {"
+          (click)="onMarkAsRead(notification?.id)"
+          *ngIf="!notification.seen"
+        >
+          {{ "mark_as_read" | translate }}
+        </button>
+      </div>
+    </a>
+  </mat-nav-list>
+  <mat-progress-spinner
+    *ngIf="loading$ | async"
+    color="primary"
+    mode="indeterminate"
+    style="transform: translate(-50%, -140%)"
+  ></mat-progress-spinner>
+</ng-container>
+<span *ngIf="(notificationList$ | async).length === 0">{{ "no_notifications_label" | translate }}</span>

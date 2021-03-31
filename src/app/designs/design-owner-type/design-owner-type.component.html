@@ -1,0 +1,47 @@
+<div class="app-container auth setup d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="setup-wizard">
+      <h1 class="app-icon">
+        <span></span>
+        <p>OWNANT</p>
+      </h1>
+
+      <mat-nav-list class="setup-wizard-steps">
+        <a mat-list-item class="current-step" routerLink="/designs/owner-type">Owner Type</a>
+        <a mat-list-item routerLink="/designs/individual-owner-detail">Owner Detail</a>
+        <a mat-list-item routerLink="/designs/site-type">Property Type</a>
+        <a mat-list-item routerLink="/designs/site-detail">Property Detail</a>
+      </mat-nav-list>
+
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="OWNANT" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p>
+      <form>
+        <h4>Owner Type</h4>
+        <mat-nav-list class="lists lists-owner-type">
+          <a mat-list-item routerLink="/designs/company-owner-detail" class="d-flex lists-item selected">
+            <figure>
+              <i class="las la-city"></i>
+            </figure>
+            <div class="lists-item-content">
+              <h5>Company</h5>
+              <span>Company with multiple sites</span>
+            </div>
+          </a>
+          <a mat-list-item routerLink="/designs/individual-owner-detail" class="d-flex lists-item">
+            <figure>
+              <i class="las la-building"></i>
+            </figure>
+            <div class="lists-item-content">
+              <h5>Individual</h5>
+              <span>Individual complex</span>
+            </div>
+          </a>
+        </mat-nav-list>
+      </form>
+    </div>
+  </div>
+</div>

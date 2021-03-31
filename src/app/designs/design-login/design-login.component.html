@@ -1,0 +1,35 @@
+<div class="app-container auth d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="app-info">
+      <h1 class="app-icon">
+        <span></span>
+        <p>OWNANT</p>
+      </h1>
+      <h2>You are few clicks away from adding your first site</h2>
+      <p>Add your site in minutes and enjoy managing it efficiently</p>
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="estateCloud" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p>
+      <h4 class="text-center">Enter your mobile number to receive OTP</h4>
+      <form class="login-form">
+        <div class="form-field-wrapper is-phone-field">
+          <i class="las la-mobile"></i>
+          <mat-form-field class="zip-code-input">
+            <span matPrefix><i class="las la-plus"></i></span>
+            <input type="number" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label> Mobile Number </mat-label>
+            <input type="text" matInput required />
+          </mat-form-field>
+        </div>
+        <div class="buttons-wrapper">
+          <button mat-button class="btn-theme-green" (click)="onClickRedirectTo()">Generate OTP</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

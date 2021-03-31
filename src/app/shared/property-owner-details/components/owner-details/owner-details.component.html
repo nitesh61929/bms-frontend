@@ -1,0 +1,107 @@
+<div class="info info-admin">
+  <h4>
+    <span>{{ "company_information_label" | translate }}</span>
+  </h4>
+  <div class="d-flex has-3-cols">
+    <div class="col">
+      <figure class="w-64 is-rounded-image">
+        <img [src]="owner?.logo?.mediumFileUrl | imagePath" alt="" />
+      </figure>
+    </div>
+
+    <div class="col">
+      <i class="las la-building text-primary"></i>
+      <span>{{ owner?.name }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-envelope text-primary"></i>
+      <a>{{ owner?.email }}</a>
+    </div>
+
+    <div class="col">
+      <i class="las la-map-marked text-primary"></i>
+      <p>
+        <label>{{ "company_address" | translate }}</label>
+        <span>
+          {{ getAddress(owner?.address) }} <br />
+          {{ "mod_address.ward_number_label" | translate }}: {{ owner?.address?.wardNo || "na_label" | translate }},
+          {{ "mod_address.zip_code_label" | translate }}: {{ owner?.address?.zipCode || "na_label" | translate }}
+        </span>
+      </p>
+    </div>
+
+    <div class="col">
+      <i class="las la-phone text-primary"></i>
+      <span>{{ getPhones(owner?.phones) }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-mobile text-primary"></i>
+      <span>{{ getPhones(owner?.mobileNumbers) }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="info info-admin">
+  <div class="d-flex has-3-cols">
+    <div class="col" *ngIf="owner?.panNumber">
+      <p>
+        <label>{{ "pan_number" | translate | uppercase }}: </label>
+        <span>{{ owner?.panNumber }}</span>
+      </p>
+    </div>
+    <div class="col" *ngIf="owner?.registrationNumber">
+      <p>
+        <label>{{ "reg_number" | translate | uppercase }}: </label>
+        <span>{{ owner?.registrationNumber }}</span>
+      </p>
+    </div>
+    <div class="col" *ngIf="owner?.citizenshipNumber">
+      <p>
+        <label>{{ "citizenship_number_label" | translate | uppercase }}: </label>
+        <span>{{ owner?.citizenshipNumber }}</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="info info-docs">
+  <div flex class="d-flex has-5-cols contains-multiple-images">
+    <div class="col image-holder">
+      <app-file-upload
+        [file]="owner?.panCertificate"
+        [figCaption]="'company_pan_registration_caption' | translate"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+
+    <div class="col image-holder" *ngIf="getOwnerType() === 'COMPANY'">
+      <app-file-upload
+        [file]="owner?.registrationCertificate"
+        [figCaption]="'company_reg_cert_caption' | translate"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+
+    <div class="col image-holder" *ngIf="getOwnerType() === 'INDIVIDUAL'">
+      <app-file-upload
+        [file]="owner?.citizenshipFront"
+        [figCaption]="'citizenship_front_caption' | translate"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+
+    <div class="col image-holder" *ngIf="getOwnerType() === 'INDIVIDUAL'">
+      <app-file-upload
+        [file]="owner?.citizenshipBack"
+        [figCaption]="'citizenship_back_caption' | translate"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+  </div>
+</div>

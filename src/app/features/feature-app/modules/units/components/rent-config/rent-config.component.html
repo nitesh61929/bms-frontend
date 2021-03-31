@@ -1,0 +1,281 @@
+<div class="form-detail info-units-info">
+  <div class="d-flex has-3-cols" [formGroup]="areaAndOccupyForm">
+    <div class="form-field-wrapper has-margin-right col">
+      <mat-form-field>
+        <mat-label>{{ "unit_area_label" | translate }}</mat-label>
+        <input matInput formControlName="area" appOnlyNumber required />
+        <mat-error>
+          <app-error-message [control]="areaAndOccupyForm.get('area')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-wrapper col" *ngIf="!unitDetail?.hasTenantInvited">
+      <mat-form-field>
+        <mat-label>{{ "occupancy_label" | translate }}</mat-label>
+        <mat-select formControlName="occupy" required>
+          <mat-option [value]="occupancy.value" *ngFor="let occupancy of unitOccupancy">{{
+            occupancy.title
+          }}</mat-option>
+        </mat-select>
+        <mat-error>
+          <app-error-message [control]="areaAndOccupyForm.get('occupy')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <ng-container [formGroup]="rentConfigForm" *ngIf="areaAndOccupyForm.get('occupy').value === 'RENTED'">
+    <h4>
+      <span>{{ "rent_configuration_label" | translate }}</span>
+    </h4>
+    <div
+      class="d-flex justify-between"
+      [class.has-3-cols]="!showRentTotalAmountField()"
+      [class.has-4-cols]="showRentTotalAmountField()"
+    >
+      <div class="form-field-wrapper col" *ngIf="rentAmountChargeTypes && rentAmountChargeTypes.length > 0">
+        <mat-form-field>
+          <mat-label>{{ "select_charge_type" | translate }}</mat-label>
+          <mat-select formControlName="amountChargeTypeId" required>
+            <mat-option [value]="rentAmountChargeType.id" *ngFor="let rentAmountChargeType of rentAmountChargeTypes">{{
+              rentAmountChargeType.amountChargeTypeName | translate
+            }}</mat-option>
+          </mat-select>
+          <mat-error>
+            <app-error-message [control]="rentConfigForm.get('amountChargeTypeId')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper col" *ngIf="selectedRentAmountChargeType?.amountChargeTypeName">
+        <mat-form-field>
+          <input matInput formControlName="amount" appOnlyNumber decimal="true" required />
+          <mat-label>{{
+            showRentTotalAmountField() ? ("rate_label" | translate) : ("amount_label" | translate)
+          }}</mat-label>
+          <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+          <mat-error>
+            <app-error-message [control]="rentConfigForm.get('amount')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <ng-container *ngIf="showRentTotalAmountField()">
+        <div class="form-field-wrapper col" *ngIf="selectedRentAmountChargeType?.amountChargeTypeName">
+          <mat-form-field>
+            <input matInput appOnlyNumber disabled [value]="getRentTotalAmount()" decimal="true" required />
+            <mat-label>{{ "amount_label" | translate }}</mat-label>
+            <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+            <mat-error>
+              <app-error-message [control]="rentConfigForm.get('amount')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </ng-container>
+
+      <div class="col" *ngIf="selectedRentAmountChargeType?.amountChargeTypeName">
+        <div class="form-field-wrapper">
+          <mat-form-field>
+            <mat-label>{{ "invoice_generation_interval_label" | translate }}</mat-label>
+            <mat-select formControlName="rentChargeFrequencyInterval" required>
+              <mat-option [value]="paymentTerm.value" *ngFor="let paymentTerm of paymentTerms">
+                {{ paymentTerm.title }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <app-error-message [control]="rentConfigForm.get('rentChargeFrequencyInterval')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex has-3-col">
+      <div class="col form-field-wrapper has-padding-right">
+        <mat-checkbox class="mat-margin" formControlName="includeTax">{{ "include_tax" | translate }}</mat-checkbox>
+      </div>
+      <div class="col form-field-wrapper has-padding-right" *ngIf="rentConfigForm.get('includeTax').value">
+        <mat-form-field>
+          <mat-label>{{ "percent" | translate }}</mat-label>
+          <input matInput formControlName="taxPercent" appOnlyNumber decimal="true" required />
+          <span matSuffix class="text-primary">%</span>
+          <mat-error>
+            <app-error-message [control]="rentConfigForm.get('taxPercent')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col form-field-wrapper has-padding-right" *ngIf="rentConfigForm.get('includeTax').value">
+        <mat-form-field>
+          <mat-label>{{ "amount_label" | translate }}</mat-label>
+          <input matInput appOnlyNumber disabled #rentTaxAmount [value]="getAmount()" decimal="true" />
+          <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="d-flex has-4-col">
+      <div class="col form-field-wrapper has-padding-right">
+        <mat-checkbox class="mat-margin" formControlName="includeFine">{{ "include_fine" | translate }}</mat-checkbox>
+      </div>
+      <div class="col has-padding-right" *ngIf="this.rentConfigForm.get('includeFine').value">
+        <mat-form-field class="form-field-wrapper">
+          <mat-label>{{ "select_fine_type" | translate }}</mat-label>
+          <mat-select formControlName="fineChargeFrequency" required>
+            <mat-option [value]="type.value" *ngFor="let type of fineTypes">{{ type.title }}</mat-option>
+          </mat-select>
+          <mat-error>
+            <app-error-message [control]="rentConfigForm.get('fineChargeFrequency')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col has-padding-right" *ngIf="this.rentConfigForm.get('includeFine').value">
+        <mat-form-field class="form-field-wrapper">
+          <mat-label>{{ "amount_label" | translate }}</mat-label>
+          <input matInput formControlName="fineAmount" appOnlyNumber decimal="true" required />
+          <span matPrefix class="text-primary">{{ "amount_prefix_nrs" | translate }} &nbsp;</span>
+          <mat-error>
+            <app-error-message [control]="rentConfigForm.get('fineAmount')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col has-padding-right" *ngIf="this.rentConfigForm.get('includeFine').value">
+        <div class="col form-field-wrapper">
+          <mat-form-field>
+            <mat-label>{{ "due_days_label" | translate }}</mat-label>
+            <input
+              matInput
+              formControlName="dueDays"
+              placeholder="{{ 'days_placeholder' | translate }}"
+              appOnlyNumber
+              required
+            />
+            <span matSuffix>{{ "days_label" | translate }}</span>
+            <mat-hint>
+              <strong>{{ "due_days_description" | translate }}</strong>
+            </mat-hint>
+            <mat-error>
+              <app-error-message [control]="rentConfigForm.get('dueDays')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex has-padding-top">
+      <div class="form-field-wrapper has-margin-right col">
+        <mat-form-field>
+          <mat-label>{{ "invoice_issue_date_label" | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="invoiceStartDatepicker"
+            formControlName="invoiceStartDate"
+            (click)="invoiceStartDatepicker.open()"
+            [min]="minDate"
+            required
+          />
+          <mat-datepicker-toggle
+            style="font-size: 18px"
+            matSuffix
+            [for]="invoiceStartDatepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #invoiceStartDatepicker></mat-datepicker>
+          <mat-error>
+            <app-error-message [control]="rentConfigForm.get('invoiceStartDate')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="info info-docs contains-multiple-images" [formGroup]="unitDocumentForm">
+  <h4>
+    <span>{{ "documents_label" | translate }}</span>
+  </h4>
+  <div class="d-flex has-5-cols">
+    <div class="col image-holder">
+      <app-file-upload
+        formControlName="bluePrintFile"
+        [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+        [figCaption]="'unit_blue_print_caption' | translate"
+        [folderName]="'UNIT_BLUEPRINT'"
+      ></app-file-upload>
+      <mat-error *ngIf="this.submitted">
+        <app-error-message [control]="unitDocumentForm.get('bluePrintFile')"></app-error-message>
+      </mat-error>
+    </div>
+
+    <div class="col image-holder">
+      <app-file-upload
+        formControlName="contractFileForResidence"
+        [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+        [figCaption]="'contract_file_caption' | translate"
+        [folderName]="'CONTRACT_RESIDENCE'"
+      ></app-file-upload>
+      <mat-error *ngIf="submitted">
+        <app-error-message [control]="unitDocumentForm.get('contractFileForResidence')"></app-error-message>
+      </mat-error>
+    </div>
+  </div>
+  <mat-error *ngIf="this.errors?.invalidFileSize && submitted">
+    {{ "invalid_file_size" | translate }}
+  </mat-error>
+  <mat-error *ngIf="this.errors?.invalidFileFormat && submitted">
+    {{ "invalid_file_format" | translate }}
+  </mat-error>
+</div>
+
+<div class="form-detail" [formGroup]="contractForm">
+  <div class="d-flex has-3-cols">
+    <div class="form-field-wrapper has-margin-right col">
+      <mat-form-field>
+        <mat-label>{{ "contract_start_date_label" | translate }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="contractStartDatepicker"
+          formControlName="contractStartDate"
+          (click)="contractStartDatepicker.open()"
+          (dateChange)="onContractStartDate()"
+          readonly
+          required
+        />
+        <mat-datepicker #contractStartDatepicker></mat-datepicker>
+        <mat-datepicker-toggle
+          style="font-size: 18px"
+          matSuffix
+          [for]="contractStartDatepicker"
+        ></mat-datepicker-toggle>
+        <mat-error>
+          <app-error-message [control]="contractForm.get('contractStartDate')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-wrapper has-margin-right col">
+      <mat-form-field>
+        <mat-label>{{ "contract_end_date_label" | translate }}</mat-label>
+        <input
+          matInput
+          [matDatepickerFilter]="endDateFilter"
+          [matDatepicker]="contractEndDatepicker"
+          formControlName="contractEndDate"
+          (click)="contractEndDatepicker.open()"
+          readonly
+          required
+        />
+        <mat-datepicker #contractEndDatepicker [disabled]="disableEndDate"></mat-datepicker>
+        <mat-datepicker-toggle style="font-size: 18px" matSuffix [for]="contractEndDatepicker"></mat-datepicker-toggle>
+        <mat-error>
+          <app-error-message [control]="contractForm.get('contractEndDate')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div class="col buttons-wrapper">
+  <button mat-button class="btn btn-theme-green" (click)="onUpdateRentConfig()">
+    {{ "common.update" | translate }}
+  </button>
+</div>

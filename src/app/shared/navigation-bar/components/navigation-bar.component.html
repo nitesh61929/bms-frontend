@@ -1,0 +1,94 @@
+<div class="app-container">
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center has-pointer-style" (click)="goToDashboard()">
+      <figure>
+        <img [src]="ownerLogo?.smallFileUrl | imagePath" class="no-pointer-image" />
+      </figure>
+      <span class="text-primary bold">{{ ownerName }}</span>
+    </h1>
+
+    <ng-container *ngIf="showSidebar">
+      <span class="nav-toggle" (click)="onClickToggle()">
+        <i class="las la-bars"></i>
+      </span>
+    </ng-container>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item (click)="goToDashboard()">{{ "browser_titles.dashboard" | translate }}</a>
+
+      <app-navigation-property *appHasAccess="hasPropertyListAccess"></app-navigation-property>
+
+      <app-nagivation-staffs *ngIf="isOwnerVerified()"></app-nagivation-staffs>
+
+      <ng-container *ngIf="isOwnerVerified()">
+        <a mat-list-item class="is-button" *appHasAccess="hasPropertyAddAccess" (click)="onAddProperty()">{{
+          "add_property_label" | translate
+        }}</a>
+      </ng-container>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item (click)="goToHelpAndSupport()" matTooltip="{{ 'help_and_support_header' | translate }}">
+        <i class="las la-question-circle"></i>
+      </a>
+
+      <a
+        mat-list-item
+        [matMenuTriggerFor]="notificationDropdown"
+        (click)="navigationListCmp.dropdownClicked()"
+        matBadge="{{ notificationCount$ | async }}"
+        matBadgeOverlap="false"
+        [matBadgeHidden]="(notificationCount$ | async) == 0"
+      >
+        <i class="las la-bell"></i>
+      </a>
+      <mat-menu #notificationDropdown="matMenu" class="is-dropdown notification">
+        <app-notification-list #navigationListCmp></app-notification-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="userDropDown" matTooltip="{{ 'browser_titles.user_profile' | translate }}">
+        <figure class="is-rounded-image">
+          <img [src]="userLogo?.smallFileUrl | imagePath" alt="" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="goToProfile()">{{ "view_profile_label" | translate }}</a>
+          <a mat-list-item (click)="onLogout()">{{ "common.logout" | translate }}</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer *ngIf="showSidebar" mode="side" opened>
+        <section class="nav nav-sidebar">
+          <div class="property-name d-flex align-center" *ngIf="propertyDetail">
+            <figure class="is-rounded-image">
+              <img [src]="propertyDetail?.logo?.smallFileUrl | imagePath" class="no-pointer-image" />
+            </figure>
+            <p class="d-flex is-column-layout">
+              <span class="text-primary">{{ propertyDetail?.name }}</span>
+              <label
+                class="label-status {{ propertyDetail?.status | lowercase }}"
+                *ngIf="propertyDetail?.status?.toLowerCase() !== 'verified'"
+              >
+                {{ "mod_status." + propertyDetail?.status | translate }}
+              </label>
+            </p>
+          </div>
+          <app-sidebar-list
+            *ngIf="propertyDetail?.status?.toLowerCase() === 'verified'"
+            [currentUrl]="currentUrl"
+            [menus]="menus"
+          ></app-sidebar-list>
+        </section>
+      </mat-drawer>
+      <mat-drawer-content>
+        <ng-content></ng-content>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

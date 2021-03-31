@@ -1,0 +1,129 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "properties_label" | translate }}</span>
+    <form>
+      <div class="form-field-wrapper has-no-margin">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'property_name_label' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select floatLabel="never" (selectionChange)="onPropertyTypeFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="propertyType.code" *ngFor="let propertyType of propertyTypes$ | async">{{
+              propertyType.title
+            }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "property_type_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select floatLabel="never" (selectionChange)="onStatusFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="status.value" *ngFor="let status of propertyStatuses">{{ status.title }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <ng-container *ngIf="listLength === 0">
+        <div class="no-records-found">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+      <table
+        *ngIf="listLength > 0"
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--product-admin-property"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="propertyName">
+          <th mat-header-cell *matHeaderCellDef>{{ "property_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "common.phone" | translate }}</th>
+          <td mat-cell *matCellDef="let element" class="text-center">{{ getPhones(element.phones) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="propertyEmail">
+          <th mat-header-cell *matHeaderCellDef>{{ "property_email_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="propertyType">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "property_type_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element" class="text-center">{{ element.propertyType }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ownername">
+          <th mat-header-cell *matHeaderCellDef>{{ "owner_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.ownerName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "status_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <label class="label-status {{ element.status | lowercase }}">{{
+              "mod_status." + element?.status | translate
+            }}</label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length" class="text-left">
+            <div class="owner-active-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <app-admin-property-details
+                #adminPropertyDetailCmp
+                [propertyId]="element.id"
+                *ngIf="element == expandedElement"
+              ></app-admin-property-details>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: columnsToDisplay"
+          class="records-row example-element-row"
+          [class.expanded]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,167 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "invited_accounts" | translate }}</span>
+    <div class="d-flex align-center">
+      <div class="form-field-wrapper has-no-margin has-padding-right">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'search_placeholder_fullname_mobile_email' | translate"
+        ></app-search-input>
+      </div>
+      <button mat-button class="btn btn-theme-green" (click)="handleInviteOwnerModal()">
+        {{ "invite_label" | translate }}
+      </button>
+    </div>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onStatusFilter($event)" [(value)]="initialStatusSelected">
+            <mat-option [value]="status.value" *ngFor="let status of invitationStatuses">{{ status.title }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "status_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper has-margin-top">
+    <div class="table-wrapper">
+      <ng-container *ngIf="dataSource?.data.length === 0">
+        <div class="no-records-found">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+      <table
+        *ngIf="dataSource?.data.length > 0"
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--product-admin-owner-invited"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fullname">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.full_name" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.name || "na_label" | translate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.mobile_number" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.mobileNumber || "na_label" | translate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.email" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.email || "na_label" | translate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ownerType">
+          <th mat-header-cell *matHeaderCellDef>{{ "account_type" | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ownerType || element.accountType || "na_label" | translate | uppercase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userStatus">
+          <th mat-header-cell *matHeaderCellDef>{{ "status_label" | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <label class="label-status {{ element.status | lowercase }}">{{
+              "mod_status." + element.status | translate
+            }}</label>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let element; let i = dataIndex"
+            [attr.colspan]="columnsToDisplay.length"
+            class="text-left"
+          >
+            <div class="owner-active-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <app-property-owner-details-container
+                [propertyOwnerId]="element?.userId"
+                [showStatusToggle]="false"
+                *ngIf="element == expandedElement && element.status !== 'INVITED'"
+                (disableStatusChange)="changeStatusDisability($event)"
+              ></app-property-owner-details-container>
+
+              <div class="list-actions">
+                <div class="form-field-wrapper" [formGroup]="statusSelectForm">
+                  <mat-form-field>
+                    <mat-label>{{ "status_label" | translate }}</mat-label>
+
+                    <mat-select
+                      #matSelect
+                      formControlName="statusSelect"
+                      (selectionChange)="onStatusChange($event, i, element)"
+                    >
+                      <mat-select-trigger>
+                        {{ "mod_status." + statusSelectForm.get("statusSelect").value | translate }}
+                      </mat-select-trigger>
+                      <mat-option value="INVITED" *ngIf="element.status === 'INVITED'">
+                        {{ "mod_status.INVITED" | translate }}
+                      </mat-option>
+                      <mat-option value="PENDING_VERIFICATION" *ngIf="element.status === 'PENDING_VERIFICATION'">
+                        {{ "mod_status.PENDING_VERIFICATION" | translate }}
+                      </mat-option>
+                      <mat-option
+                        value="IN_VERIFICATION"
+                        *ngIf="element.status === 'PENDING_VERIFICATION' || element.status === 'IN_VERIFICATION'"
+                        >{{ "mod_status.IN_VERIFICATION" | translate }}</mat-option
+                      >
+                      <mat-option
+                        value="VERIFIED"
+                        *ngIf="element.status === 'IN_VERIFICATION' || element.status === 'VERIFIED'"
+                        >{{ "mod_status.VERIFIED" | translate }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="form-field-wrapper col" *ngIf="disableStatusChange && element.status !== 'INVITED'">
+                  <p class="color-red">{{ "onboarding_incomplete_message" | translate }}</p>
+                </div>
+
+                <button
+                  mat-button
+                  class="btn btn-theme-peach"
+                  *ngIf="allowResend(element)"
+                  (click)="resendInvitation(element.invitationId)"
+                >
+                  {{ "resend_invitation" | translate }}
+                </button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: columnsToDisplay"
+          class="records-row example-element-row"
+          [class.expanded]="expandedElement === element"
+          (click)="onClickTableRow(element)"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

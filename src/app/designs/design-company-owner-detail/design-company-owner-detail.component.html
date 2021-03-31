@@ -1,0 +1,173 @@
+<div class="app-container auth setup d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="setup-wizard">
+      <h1 class="app-icon">
+        <span></span>
+        <p>OWNANT</p>
+      </h1>
+
+      <mat-nav-list class="setup-wizard-steps">
+        <a mat-list-item class="completed-step" routerLink="/designs/owner-type">Owner Type</a>
+        <a mat-list-item class="current-step" routerLink="/designs/individual-owner-detail">Owner Detail</a>
+        <a mat-list-item routerLink="/designs/site-type">Site Type</a>
+        <a mat-list-item routerLink="/designs/site-detail">Site Detail</a>
+      </mat-nav-list>
+
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="OWNANT" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p>
+      <h4>Company Detail as owner</h4>
+      <form class="detail-form">
+        <div class="form-field-wrapper">
+          <div class="form-field-input is-image-field">
+            <label>Company Logo</label>
+            <span class="file-upload">
+              <input type="file" />
+              <label>Upload</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-field-wrapper">
+          <mat-form-field>
+            <mat-label> Company Name </mat-label>
+            <input type="text" matInput required />
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-wrapper">
+          <mat-form-field>
+            <mat-label> Company Registration Number </mat-label>
+            <input type="text" matInput required />
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-wrapper">
+          <mat-form-field>
+            <mat-label> Company PAN Number </mat-label>
+            <input type="text" matInput required />
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-wrapper">
+          <mat-form-field>
+            <mat-label> Comapny Email </mat-label>
+            <input type="email" matInput required />
+          </mat-form-field>
+        </div>
+
+        <div class="contact-details contact-details-company">
+          <h5 class="form-section-title">Company Contact <i class="las la-plus"></i></h5>
+          <div class="d-flex">
+            <div class="form-field-wrapper col is-phone-field">
+              <mat-form-field class="zip-code-input">
+                <span matPrefix><i class="las la-plus"></i></span>
+                <input type="number" matInput />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> Phone </mat-label>
+                <input type="number" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="address-details address-details-company">
+          <h5 class="form-section-title">Address</h5>
+          <div class="d-flex has-2-cols">
+            <div class="form-field-wrapper col full-width">
+              <mat-form-field>
+                <mat-label> Address Line 1 </mat-label>
+                <input type="text" matInput />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper col full-width">
+              <mat-form-field>
+                <mat-label> Address Line 2 </mat-label>
+                <input type="text" matInput />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper col">
+              <mat-form-field>
+                <mat-label> Country </mat-label>
+                <mat-select>
+                  <mat-option value="nepal">Nepal</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper col">
+              <mat-form-field>
+                <mat-label> Province </mat-label>
+                <mat-select>
+                  <mat-option value="bagmati">Bagmati</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper col">
+              <mat-form-field>
+                <mat-label> City </mat-label>
+                <input type="text" matInput />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper col">
+              <mat-form-field>
+                <mat-label> Zip Code </mat-label>
+                <input type="number" matInput />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper col">
+              <mat-form-field>
+                <mat-label> Ward No. </mat-label>
+                <input type="number" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="documents contains-multiple-images">
+          <h5 class="form-section-title">Documents</h5>
+
+          <div class="d-flex has-2-cols">
+            <div class="col image-holder">
+              <figure>
+                <img src="./assets/images/hero.jpg" alt="" />
+                <figcaption>Company Registration Certificate</figcaption>
+                <span>
+                  <input type="file" />
+                  <i class="las la-camera"></i>
+                </span>
+              </figure>
+              <div class="progressbar">
+                <div class="progressbar-inner" style="width: 25%"></div>
+              </div>
+            </div>
+
+            <div class="col image-holder">
+              <figure>
+                <img src="./assets/images/hero.jpg" alt="" />
+                <figcaption>Company PAN Certificate</figcaption>
+              </figure>
+              <div class="progressbar">
+                <div class="progressbar-inner" style="width: 25%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="buttons-wrapper d-flex">
+          <a href="/designs/owner-type" mat-button class="btn btn-theme-white">Previous</a>
+          <button mat-button class="btn btn-theme-green" (click)="onClickRedirectTo()">Next</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

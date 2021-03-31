@@ -1,0 +1,169 @@
+<!-- Owner Information -->
+<div class="info info-admin">
+  <div class="d-flex has-3-cols">
+    <div class="col">
+      <figure class="w-64 is-rounded-image">
+        <img [src]="residenceDetail?.profileFile?.smallFileUrl | imagePath" />
+      </figure>
+    </div>
+
+    <div class="col">
+      <i class="las la-birthday-cake text-primary"></i>
+      <span>{{ residenceDetail?.dob | utcToLocalDate: "MMMM D, YYYY" }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-transgender text-primary"></i>
+      <span>{{ residenceDetail?.gender || ("na_label" | translate) }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-map-marked text-primary"></i>
+      <p>
+        <label>{{ "mod_address.permanent_address_label" | translate }} </label>
+        <span
+          >{{ getAddress(residenceDetail?.address) }} <br />{{ "mod_address.ward_number_label" | translate }}:
+          {{ residenceDetail?.address?.wardNo || ("na_label" | translate) }},
+          {{ "mod_address.zip_code_label" | translate }}:
+          {{ residenceDetail?.address?.zipCode || ("na_label" | translate) }}</span
+        >
+      </p>
+    </div>
+
+    <div class="col">
+      <i class="las la-envelope text-primary"></i>
+      <a>{{ residenceDetail?.email || ("na_label" | translate) }}</a>
+    </div>
+
+    <div class="col">
+      <i class="las la-mobile text-primary"></i>
+      <a>{{ residenceDetail?.mobileNumber || ("na_label" | translate) }}</a>
+    </div>
+  </div>
+</div>
+<!-- Owner Information -->
+
+<!-- Documents -->
+<div class="info info-docs" *ngIf="residenceDetail?.documents && residenceDetail?.documents.length > 0">
+  <h4>
+    <span>{{ "documents_label" | translate }}</span>
+  </h4>
+  <div lightbox-group class="d-flex has-5-cols contains-multiple-images">
+    <div class="col image-holder" *ngFor="let document of residenceDetail?.documents">
+      <app-file-upload
+        [file]="document?.file"
+        [figCaption]="document?.type"
+        [fileUploadType]="'rectangular'"
+        [enableUpload]="false"
+      ></app-file-upload>
+    </div>
+  </div>
+</div>
+<!-- Documents -->
+
+<!-- Family Members -->
+<div class="info info-family" *ngIf="residenceDetail?.familyMembers && residenceDetail?.familyMembers.length > 0">
+  <h4>
+    <i class="las la-users text-primary"></i>
+    <span>{{ "family_members_label" | translate }}</span>
+  </h4>
+  <div class="d-flex has-3-cols">
+    <div class="col d-flex" *ngFor="let family of residenceDetail?.familyMembers">
+      <figure lightbox-group class="is-rounded-image">
+        <img lightbox [src]="family?.profileFile?.smallFileUrl | imagePath" />
+      </figure>
+      <p>
+        <span>{{ family?.name }}</span>
+        <label>{{ family?.relationship }}</label>
+      </p>
+    </div>
+  </div>
+</div>
+<!-- Family Members -->
+
+<!-- Vehicles-->
+<div class="info info-vehicles" *ngIf="residenceDetail?.vehicles && residenceDetail?.vehicles.length > 0">
+  <h4>
+    <span>{{ "vehicles_label" | translate }}</span>
+  </h4>
+  <div class="d-flex has-3-cols">
+    <div class="col cars" *ngIf="residenceFourWheelerVehicles.length > 0">
+      <h4>
+        <i class="las la-car-side text-primary"></i>
+        <span>{{ "four_wheelers_label" | translate }}</span>
+      </h4>
+      <ol>
+        <li *ngFor="let fourWheeler of residenceFourWheelerVehicles">
+          {{ fourWheeler.vehicleNumber || ("na_label" | translate) }}
+        </li>
+      </ol>
+    </div>
+
+    <div class="col motorcycles" *ngIf="residenceTwoWheelerVehicles.length > 0">
+      <h4>
+        <i class="las la-motorcycle text-primary"></i>
+        <span>{{ "two_wheelers_label" | translate }}</span>
+      </h4>
+      <ol>
+        <li *ngFor="let twoWheeler of residenceTwoWheelerVehicles">
+          {{ twoWheeler.vehicleNumber || ("na_label" | translate) }}
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+<!-- Vehicles-->
+
+<!-- TENANT INFO : SHOW ONLY IF TYPE IS SUBTENANT-->
+<div class="info info-admin info-tenant" *ngIf="residenceDetail?.unitOwner">
+  <h4>
+    <i class="las la-user-tie text-primary"></i>
+    <span>{{ "unit_owner_label" | translate }}</span>
+  </h4>
+  <div class="d-flex has-3-cols">
+    <div class="col">
+      <i class="las la-user text-primary"></i>
+      <span>{{ residenceDetail?.unitOwner?.name || ("na_label" | translate) }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-mobile text-primary"></i>
+      <span>{{ residenceDetail?.unitOwner?.mobileNumber || ("na_label" | translate) }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-envelope text-primary"></i>
+      <a>{{ residenceDetail?.unitOwner?.email || ("na_label" | translate) }}</a>
+    </div>
+
+    <div class="col">
+      <i class="las la-birthday-cake text-primary"></i>
+      <span>{{ residenceDetail?.unitOwner?.dob | utcToLocalDate: "MMMM D, YYYY" }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-transgender text-primary"></i>
+      <span>{{ residenceDetail?.unitOwner?.gender || ("na_label" | translate) }}</span>
+    </div>
+
+    <div class="col">
+      <i class="las la-map-marked text-primary"></i>
+      <p>
+        <label>{{ "mod_address.permanent_address_label" | translate }} </label>
+        <span
+          >{{ getAddress(residenceDetail?.unitOwner?.address) }} <br />{{
+            "mod_address.ward_number_label" | translate
+          }}: {{ residenceDetail?.unitOwner?.address?.wardNo || ("na_label" | translate) }},
+          {{ "mod_address.zip_code_label" | translate }}:
+          {{ residenceDetail?.unitOwner?.address?.zipCode || ("na_label" | translate) }}</span
+        >
+      </p>
+    </div>
+  </div>
+</div>
+<!-- TENANT INFO : SHOW ONLY IF TYPE IS SUBTENANT-->
+
+<!-- <div class="list-actions">
+  <label>{{ "status_label" | translate }}</label>
+  <mat-slide-toggle></mat-slide-toggle>
+</div> -->

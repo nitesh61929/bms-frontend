@@ -1,0 +1,135 @@
+.mat-drawer {
+  background: $primaryLight;
+  visibility: visible !important;
+  transform: none !important;
+  transition: all 0.25s ease;
+  width: 75px;
+  &-side {
+    border: 0 !important;
+  }
+  & ~ .mat-drawer-content {
+    margin-left: 75px !important;
+  }
+  &-container {
+    height: calc(100vh - 69px);
+    background: transparent;
+    color: $textColor !important;
+  }
+  .nav-sidebar {
+    padding: 15px 20px;
+    transition: all 0.25s ease;
+    .property-name {
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      figure {
+        flex: 0 0 36px;
+        height: 36px;
+        margin-right: 10px;
+      }
+      p {
+        display: none;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 500;
+        transition: all 0.25s ease;
+      }
+    }
+
+    .mat-nav-list {
+      margin-top: 22px;
+      i {
+        vertical-align: middle;
+        display: inline-block;
+        transform: translateX(6px);
+      }
+    }
+    .mat-list-base {
+      padding-top: 0;
+    }
+    .ownant-admin {
+      margin-top: 0;
+    }
+    .mat-list-item {
+      margin-bottom: 4px;
+      position: relative;
+      display: block !important;
+      white-space: nowrap;
+      color: $textColor !important;
+      font-family: $mainFont;
+      text-transform: uppercase;
+      font-size: 12px;
+      &:after {
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        transform: translateY(-50%);
+        content: "\f105";
+        font-size: 14px;
+        font-family: "Line Awesome Free";
+        font-weight: 900;
+        display: none;
+        transition: all 0.25s ease;
+      }
+      span {
+        display: none;
+        transition: all 0.25s ease;
+      }
+      &.has-submenu {
+      &.active {
+        &:after {
+          transform: rotate(90deg);
+          margin-top: -10px;
+        }
+      }
+      }
+      &.active {
+        color: $peach !important;
+        & + .submenu {
+          height: auto;
+          opacity: 1;
+          max-height: 10000px;
+          transition: all 0.3s ease;
+        }
+      }
+      &-content {
+        padding: 8px 0 !important;
+      }
+    }
+    .submenu {
+      max-height: 0px;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+  }
+  &-opened {
+    width: 255px;
+    .nav-sidebar {
+      .property-name {
+        p {
+          display: flex;
+        }
+      }
+      .mat-nav-list {
+        a {
+          i {
+            margin-right: 24px;
+          }
+          span {
+            display: inline-block;
+          }
+          &:after {
+            display: inline-block;
+          }
+        }
+      }
+    }
+    & ~ .mat-drawer-content {
+      margin-left: 255px !important;
+    }
+  }
+}
+
+.submenu {
+  margin: 0 0 0 48px !important;
+}

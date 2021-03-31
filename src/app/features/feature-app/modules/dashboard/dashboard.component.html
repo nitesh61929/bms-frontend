@@ -1,0 +1,38 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between" *ngIf="propertyList.length > 0">
+    <span class="module-header-text">{{ "properties_label" | translate }}</span>
+  </h2>
+  <div class="property-listings d-flex has-3-cols">
+    <div class="col has-margin-bottom" *ngFor="let property of propertyList" (click)="onPropertySelect(property.id)">
+      <mat-card class="has-no-shadow">
+        <mat-card-header>
+          <mat-card-title>{{ property.name }} </mat-card-title>
+          <span>
+            <label
+              class="label-status {{ property.status | lowercase }}"
+              *ngIf="property.status.toLowerCase() !== 'verified'"
+            >
+              {{ "mod_status." + property.status | translate }}
+            </label>
+          </span>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>
+            <i class="las la-building text-primary"></i>
+            <span>{{ property.propertyTypeName }}</span>
+          </p>
+          <p>
+            <i class="lab la-buffer text-primary"></i>
+            <span>{{ "active_units_label" | translate }}: </span>
+            <label>{{ property?.totalActiveUnits || 0 }}</label>
+          </p>
+          <p>
+            <i class="las la-map-marker text-primary"></i>
+            <span>{{ getAddress(property.address) }}</span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

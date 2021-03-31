@@ -1,0 +1,1 @@
+{"version":3,"file":"mock_state.d.ts","sources":["mock_state.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;;;AACA","sourcesContent":["import { BehaviorSubject } from 'rxjs';\nexport declare class MockState<T extends {}> extends BehaviorSubject<T> {\n    constructor();\n}\n"]}

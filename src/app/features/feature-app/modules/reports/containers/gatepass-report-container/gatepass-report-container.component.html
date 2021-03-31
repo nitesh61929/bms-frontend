@@ -1,0 +1,9 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-gatepass-report
+  [gatepassReports$]="gatepassReports$"
+  [visitPurposes$]="visitPurposes$"
+  [gatekeepers$]="gatekeepers$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-gatepass-report>
+<!-- </app-navigation-bar> -->

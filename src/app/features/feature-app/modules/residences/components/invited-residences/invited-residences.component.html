@@ -1,0 +1,97 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "invited_residences_label" | translate }}</span>
+    <form>
+      <div class="form-field-wrapper has-no-margin">
+        <app-search-input
+          #searchInputCmp
+          (searched)="onSearch($event)"
+          [placeholder]="'search_placeholder_fullname_mobilenumber' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div class="form-field-wrapper">
+        <mat-form-field>
+          <mat-select (selectionChange)="onUnitNameFilter($event)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="unit.unitName" *ngFor="let unit of unitList$ | async">{{ unit.unitName }}</mat-option>
+          </mat-select>
+          <mat-label>{{ "unit_name_label" | translate }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <ng-container *ngIf="listLength === 0">
+        <div class="no-records-found">
+          <p>{{ "result_not_found_label" | translate }}</p>
+        </div>
+      </ng-container>
+
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--tenants-invited"
+        *ngIf="listLength > 0"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef class="cell-sn">#</th>
+          <td mat-cell *matCellDef="let residence; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="full_name">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.full_name" | translate }}</th>
+          <td mat-cell *matCellDef="let residence">{{ residence.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobile_number">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.mobile_number" | translate }}</th>
+          <td mat-cell *matCellDef="let residence">{{ residence.mobileNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit_name">
+          <th mat-header-cell *matHeaderCellDef>{{ "unit_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let residence">{{ residence.unitName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>{{ "common.actions" | translate }}</th>
+          <td mat-cell *matCellDef="let residence">
+            <a (click)="resendInvitation(residence.invitationId)"
+              ><i class="las la-redo-alt" matTooltip="{{ 'resend_invitation_label' | translate }}"></i
+            ></a>
+            <a (click)="cancelInvitation(residence.invitationId)"
+              ><i class="las la-times has-margin-left" matTooltip="{{ 'cancel_invitation_label' | translate }}"></i
+            ></a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td colspan="5" mat-cell *matCellDef="let element" class="text-left"></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="records-row"></tr>
+        <tr></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

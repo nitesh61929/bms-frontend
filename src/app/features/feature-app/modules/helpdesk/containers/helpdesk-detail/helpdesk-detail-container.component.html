@@ -1,0 +1,13 @@
+<app-helpdesk-detail
+  #helpdeskDetailCmp
+  [helpdeskDetail]="helpdeskDetail"
+  [helpdeskComments]="helpdeskComments"
+  [possibleAssignees]="possibleAssignees"
+  (statusChange)="onUpdateStatus($event)"
+  (dueDateChange)="onUpdateDueDate($event)"
+  (assigneeChange)="onUpdateAssignee($event)"
+  [postCommentError$]="postCommentError$"
+  [updateHelpdeskStatusError$]="updateHelpdeskStatusError$"
+  [updateHelpdeskDueDateError$]="updateHelpdeskDueDateError$"
+  [updateHelpdeskAssigneeError$]="updateHelpdeskAssigneeError$"
+></app-helpdesk-detail>

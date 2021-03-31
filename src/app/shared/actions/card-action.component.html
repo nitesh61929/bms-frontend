@@ -1,0 +1,33 @@
+<mat-card-actions>
+  <a
+    mat-icon-button
+    class="icon-edit-records"
+    *ngIf="canEdit"
+    matTooltip="{{ 'edit' | translate }}"
+    [matTooltipPosition]="'above'"
+    (click)="onEdit()"
+  >
+    <i class="las la-pen"></i>
+  </a>
+  <a
+    mat-icon-button
+    class="icon-view-records"
+    *ngIf="canView"
+    matTooltip="{{ 'view_detail' | translate }}"
+    [matTooltipPosition]="'above'"
+    (click)="onView()"
+  >
+    <i class="las la-eye"></i>
+  </a>
+  <a
+    mat-icon-button
+    class="icon-delete-records"
+    *ngIf="canDelete"
+    matTooltip="{{ 'delete' | translate }}"
+    [matTooltipPosition]="'above'"
+    (click)="onDelete()"
+    color="warn"
+  >
+    <i class="las la-trash-alt"></i>
+  </a>
+</mat-card-actions>

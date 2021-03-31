@@ -1,0 +1,6 @@
+<ng-container *ngIf="errorMessage !== null">
+  {{ errorMessage }}
+</ng-container>
+<ng-container *ngIf="control?.errors?.serverError">
+  {{ control?.errors?.serverError }}
+</ng-container>

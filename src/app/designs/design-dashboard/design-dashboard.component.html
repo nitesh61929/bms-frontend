@@ -1,0 +1,127 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">OWNANT</span>
+    </h1>
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+      <mat-menu #propertyMenu="matMenu" class="is-dropdown">
+        <h3>My Property</h3>
+        <mat-nav-list class="added-records-list added-records-list--property">
+          <a mat-list-item class="d-flex align-center added-records-list-item" routerLink="/designs/units">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Sunrise Homes</span>
+              <label>Apartment</label>
+              <label class="label-status in_verification">Pending</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+          <a mat-list-item routerLink="/designs/dashboard">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="staffMenu">Staff</a>
+      <mat-menu #staffMenu="matMenu" class="is-dropdown">
+        <h3>Active Staff</h3>
+        <mat-nav-list class="added-records-list added-records-list--staff">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="openStaffDialog()">Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer-content>
+        <div class="content-inner">
+          <h2 class="module-header d-flex align-center justify-between">
+            <span class="module-header-text">Property</span>
+          </h2>
+          <div class="property-listings d-flex has-3-cols">
+            <div class="col has-margin-bottom" *ngFor="let property of properties">
+              <mat-card routerLink="/designs/units" class="has-no-shadow">
+                <mat-card-header>
+                  <mat-card-title>{{ property.name }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    <i class="las la-building text-primary"></i>
+                    <span>{{ property.type }}</span>
+                  </p>
+                  <p>
+                    <i class="lab la-buffer text-primary"></i>
+                    <span>{{ property.units }}</span>
+                  </p>
+                  <p>
+                    <i class="las la-map-marker text-primary"></i>
+                    <span>{{ property.location }}</span>
+                  </p>
+                  <p>
+                    <i class="las la-user-astronaut text-primary"></i>
+                    <span>Open Tickets</span>
+                    <label>{{ property.open_tickets }}</label>
+                  </p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

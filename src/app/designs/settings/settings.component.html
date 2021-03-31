@@ -1,0 +1,486 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">Sunrise Builder</span>
+    </h1>
+
+    <span class="nav-toggle" (click)="drawer.toggle()">
+      <i class="las la-bars"></i>
+    </span>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+      <mat-menu #propertyMenu="matMenu" class="is-dropdown property-dropdown-menu">
+        <h3>My Property</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Sunrise Homes</span>
+              <label>Apartment</label>
+              <label class="label-status in_verification">Pending</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+          <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="userMenu">User</a>
+      <mat-menu #userMenu="matMenu" class="is-dropdown">
+        <h3>Active User</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="openStaffDialog()">Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer mode="side" opened>
+        <!-- Sidebar -->
+        <section class="nav nav-sidebar">
+          <h2 class="property-name d-flex align-center">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/hero.jpg" alt="Property Image" />
+            </figure>
+            <span class="text-primary">Sunrise Homes</span>
+          </h2>
+
+          <mat-nav-list>
+            <a mat-list-item routerLink="/designs/units">
+              <i class="las la-door-open"></i>
+              <span>Units</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/tenant-active">
+              <i class="las la-user-tie"></i>
+              <span>Tenants</span>
+            </a>
+            <mat-nav-list class="submenu">
+              <a mat-list-item routerLink="/designs/tenant-active">Active</a>
+              <a mat-list-item routerLink="/designs/tenant-invited">Invited</a>
+            </mat-nav-list>
+
+            <a mat-list-item routerLink="/designs/notice-board">
+              <i class="las la-newspaper"></i>
+              <span>Notice Board</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/helpdesk">
+              <i class="las la-user-astronaut"></i>
+              <span>Helpdesk</span>
+            </a>
+            <a mat-list-item routerLink="/designs/invoices">
+              <i class="las la-file-invoice"></i>
+              <span>Invoice</span>
+            </a>
+            <a mat-list-item routerLink="/designs/property-staff">
+              <i class="las la-users-cog"></i>
+              <span>Staff</span>
+            </a>
+            <a mat-list-item routerLink="/designs/committee-member" >
+              <i class="las la-users"></i>
+              <span>Committee Member</span>
+            </a>
+            <a mat-list-item routerLink="/designs/property-policy">
+              <i class="las la-file-alt"></i>
+              <span>Policy</span>
+            </a>
+            <a mat-list-item>
+              <i class="las la-chart-bar"></i>
+              <span>Reports</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/settings" class="has-submenu active">
+              <i class="las la-cog"></i>
+              <span>Settings</span>
+            </a>
+            <mat-nav-list class="submenu">
+              <a mat-list-item routerLink="/designs/settings" class="active">Property</a>
+              <a mat-list-item routerLink="/designs/unit-configuration">Units</a>
+              <a mat-list-item routerLink="/designs/notification">Notification</a>
+              <a mat-list-item routerLink="/designs/invoice-setting">Invoice</a>
+            </mat-nav-list>
+          </mat-nav-list>
+        </section>
+        <!-- Sidebar -->
+      </mat-drawer>
+
+      <mat-drawer-content>
+        <div class="content-inner">
+          <div class="d-flex">
+            <div class="profile-detail-wrapper profile-detail-wrapper--property">
+              <mat-tab-group>
+                <!-- Property Details Tab-->
+                <mat-tab label="Property Detail">
+                  <form class="property-detail-form">
+                    <div class="d-flex has-3-cols justify-between">
+                      <div class="col">
+                        <div class="form-field-wrapper has-no-padding-left">
+                          <mat-form-field>
+                            <mat-label> Property Type </mat-label>
+                            <mat-select>
+                              <mat-option value="housing">Housing</mat-option>
+                              <mat-option value="housing">Apartment</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-field-wrapper has-no-padding-left">
+                          <mat-form-field>
+                            <mat-label> Property Name </mat-label>
+                            <input type="text" matInput />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-field-wrapper has-no-padding-left">
+                          <mat-form-field>
+                            <mat-label> Property Email ID </mat-label>
+                            <input type="email" matInput />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="contact-details contact-details-site">
+                      <h5 class="form-section-title">Contact <i class="las la-plus text-primary"></i></h5>
+                      <div class="d-flex has-2-cols">
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label> Phone </mat-label>
+                              <input type="number" matInput />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label> Mobile </mat-label>
+                              <input type="number" matInput />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="address-details address-details-site">
+                      <h5 class="form-section-title">Address</h5>
+                      <div class="d-flex has-3-cols justify-between">
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label>Ward No.</mat-label>
+                              <input type="text" matInput />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label>Zip Code</mat-label>
+                              <input type="text" matInput />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label>Street</mat-label>
+                              <input type="text" matInput />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label>City</mat-label>
+                              <input type="text" matInput />
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label> Province </mat-label>
+                              <mat-select>
+                                <mat-option value="bagmati">Bagmati</mat-option>
+                                <mat-option value="province-1">Province 3</mat-option>
+                                <mat-option value="province-1">Province 2</mat-option>
+                                <mat-option value="province-1">Province 1</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <mat-form-field>
+                              <mat-label> Country </mat-label>
+                              <mat-select>
+                                <mat-option value="nepal">Nepal</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="documents contains-multiple-images">
+                      <h5 class="form-section-title">Documents</h5>
+
+                      <div class="d-flex has-5-cols">
+                        <div class="col image-holder">
+                          <figure>
+                            <img src="./assets/images/hero.jpg" alt="image 1" />
+                            <figcaption>Image1</figcaption>
+                            <span>
+                              <input type="file" />
+                              <i class="las la-camera"></i>
+                            </span>
+                          </figure>
+                          <div class="progressbar">
+                            <div class="progressbar-inner" style="width: 25%"></div>
+                          </div>
+                        </div>
+
+                        <div class="col image-holder">
+                          <figure>
+                            <img src="./assets/images/photo-building.jpg" alt="image 2" />
+                            <figcaption>Building</figcaption>
+                            <span>
+                              <input type="file" />
+                              <i class="las la-camera"></i>
+                            </span>
+                          </figure>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="site-images contains-multiple-images">
+                      <h5 class="form-section-title">Site images</h5>
+                      <div class="d-flex has-5-cols">
+                        <div class="col image-holder">
+                          <figure>
+                            <img src="./assets/images/hero.jpg" alt="image 1" />
+                            <figcaption>Image1</figcaption>
+                            <span>
+                              <input type="file" />
+                              <i class="las la-camera"></i>
+                            </span>
+                          </figure>
+                        </div>
+
+                        <div class="col image-holder">
+                          <figure>
+                            <img src="./assets/images/photo-building.jpg" alt="image 2" />
+                            <figcaption>Building</figcaption>
+                            <span>
+                              <input type="file" />
+                              <i class="las la-camera"></i>
+                            </span>
+                          </figure>
+                        </div>
+
+                        <div class="col image-holder">
+                          <figure>
+                            <img src="./assets/images/unnamed.jpg" alt="image 1" />
+                            <figcaption>Img 3</figcaption>
+                            <span>
+                              <input type="file" />
+                              <i class="las la-camera"></i>
+                            </span>
+                          </figure>
+                        </div>
+
+                        <div class="col image-holder">
+                          <figure>
+                            <img src="./assets/images/external-content.duckduckgo.jpg" alt="image 1" />
+                            <figcaption>External</figcaption>
+                            <span>
+                              <input type="file" />
+                              <i class="las la-camera"></i>
+                            </span>
+                          </figure>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-field-wrapper has-no-padding-left">
+                            <div class="form-field-input is-image-field">
+                              <span class="file-upload">
+                                <input type="file" />
+                                <label>Add More</label>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="buttons-wrapper text-right">
+                      <button mat-button class="btn btn-theme-green">Update</button>
+                    </div>
+                  </form>
+                </mat-tab>
+                <!-- Property Details Tab-->
+
+                <!-- Property Structure Tab-->
+                <mat-tab label="Property Structure">
+                  <form class="property-structure-form">
+                    <div class="select-structure">
+                      <p>Select the Division structure applicable to your property</p>
+                      <mat-list class="has-margin-bottom">
+                        <mat-list-item class="node-block">
+                          <mat-checkbox>Block</mat-checkbox>
+                        </mat-list-item>
+
+                        <mat-list-item class="node-tower">
+                          <mat-checkbox>Tower</mat-checkbox>
+                        </mat-list-item>
+
+                        <mat-list-item class="node-floor">
+                          <mat-checkbox>Floor</mat-checkbox>
+                        </mat-list-item>
+
+                        <mat-list-item class="node-unit">
+                          <mat-checkbox>Unit</mat-checkbox>
+                        </mat-list-item>
+                      </mat-list>
+
+                      <button mat-button class="btn-theme-green">Create</button>
+                    </div>
+
+                    <div class="structure-config">
+                      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                          <button mat-icon-button disabled></button>
+                          <mat-checkbox
+                            class="checklist-leaf-node"
+                            [checked]="checklistSelection.isSelected(node)"
+                            (change)="todoLeafItemSelectionToggle(node)"
+                            >{{ node.item }}</mat-checkbox
+                          >
+                        </mat-tree-node>
+
+                        <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                          <button mat-icon-button disabled></button>
+                          <div class="d-flex align-center">
+                            <div class="form-field-wrapper">
+                              <mat-form-field>
+                                <mat-label>Prefix</mat-label>
+                                <input matInput #itemValue />
+                              </mat-form-field>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                              <mat-form-field>
+                                <mat-label>From</mat-label>
+                                <input matInput #itemValue />
+                              </mat-form-field>
+                            </div>
+
+                            <div class="form-field-wrapper">
+                              <mat-form-field>
+                                <mat-label>To</mat-label>
+                                <input matInput #itemValue />
+                              </mat-form-field>
+                            </div>
+                            <div class="has-margin-left">
+                              <button mat-button class="btn btn-theme-green has-margin-right">Save</button>
+                              <button mat-button>Cancel</button>
+                            </div>
+                          </div>
+                        </mat-tree-node>
+
+                        <mat-tree-node class="tree-block" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.item">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                              {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+                            </mat-icon>
+                          </button>
+                          <mat-checkbox
+                            [checked]="descendantsAllSelected(node)"
+                            [indeterminate]="descendantsPartiallySelected(node)"
+                            (change)="todoItemSelectionToggle(node)"
+                          >
+                            {{ node.item }}
+                          </mat-checkbox>
+                          <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
+                        </mat-tree-node>
+                      </mat-tree>
+                    </div>
+                  </form>
+                </mat-tab>
+                <!-- Property Structure Tab-->
+                
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

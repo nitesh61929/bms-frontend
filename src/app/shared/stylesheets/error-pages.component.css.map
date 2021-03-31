@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../error-pages/error-pages.component.scss"
+    ],
+    "names": [],
+    "file": "error-pages.component.css"
+}

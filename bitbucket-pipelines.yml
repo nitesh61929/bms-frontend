@@ -1,0 +1,130 @@
+image: node:12.16.2
+
+clone:
+  depth: full
+
+definitions:
+  caches:
+    sonar: ~/.sonar/cache # Caching SonarCloud artifacts will speed up your build
+  services:
+    docker:
+      memory: 3072
+  steps:
+    - step: &build-run-lint
+        name: Build and run lint
+        caches:
+          - node
+        script:
+          - npm i -g @angular/cli
+          - npm run lint
+    - step: &build-test-sonarcloud
+        name: Analyze on SonarCloud
+        caches:
+          - sonar
+          - node
+        script:
+          - npm i -g @angular/cli
+          - npm install
+          - npm run lint
+          - pipe: sonarsource/sonarcloud-scan:1.2.1
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: "-Dsonar.sources=src -Dsonar.projectVersion=1.0"
+
+pipelines:
+  pull-requests:
+    "**":
+      - step: *build-test-sonarcloud
+
+  branches:
+    development:
+      - parallel:
+          - step: *build-test-sonarcloud
+          - step:
+              name: Build and deploy
+              deployment: QA
+              caches:
+                - node
+              script:
+                - apt update
+                - apt install -y zip unzip
+                - apt-get install -y build-essential git-core curl ssh ruby
+                - gem install bundler
+                - gem install capistrano -v 3.11.0
+                - npm install
+                - npm run build -- --configuration=qa --aot --outputHashing=all
+                - cd dist
+                - zip -r dist.zip *
+                - cap dev deploy
+    uat:
+      - parallel:
+          - step: *build-test-sonarcloud
+          - step:
+              name: Build and deploy
+              deployment: UAT
+              caches:
+                - node
+              script:
+                - apt update
+                - apt install -y zip unzip
+                - apt-get install -y build-essential git-core curl ssh ruby
+                - gem install bundler
+                - gem install capistrano -v 3.11.0
+                - npm install
+                - npm run build -- --configuration=uat --aot --outputHashing=all
+                - cd dist
+                - zip -r dist.zip *
+                - cap uat deploy
+    master:
+      - step:
+          name: Build and deploy
+          deployment: Production
+          caches:
+            - node
+          script:
+            - apt update
+            - apt install -y zip unzip
+            - apt-get install -y build-essential git-core curl ssh ruby
+            - gem install bundler
+            - gem install capistrano -v 3.11.0
+            - npm install
+            # - npm test
+            - npm run build -- --configuration=production --aot --outputHashing=all
+            - cd dist
+            - zip -r dist.zip *
+            - cap prod deploy
+  custom:
+    deployment-to-qa:
+      - step:
+          name: Install - Test - Build - Upload
+          deployment: QA
+          caches:
+            - node
+          script:
+            - apt update
+            - apt install -y zip unzip
+            - apt-get install -y build-essential git-core curl ssh ruby
+            - gem install bundler
+            - gem install capistrano -v 3.11.0
+            - npm install
+            - npm run build -- --configuration=qa --aot --outputHashing=all
+            - cd dist
+            - zip -r dist.zip *
+            - cap dev deploy
+    deployment-to-live-test:
+      - step:
+          name: Install - Test - Build - Upload
+          deployment: Production
+          caches:
+            - node
+          script:
+            - apt update
+            - apt install -y zip unzip
+            - apt-get install -y build-essential git-core curl ssh ruby
+            - gem install bundler
+            - gem install capistrano -v 3.11.0
+            - npm install
+            - npm run build -- --configuration=production --aot --outputHashing=all
+            - cd dist
+            - zip -r dist.zip *
+            - cap prod deploy

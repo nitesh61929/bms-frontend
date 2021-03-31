@@ -1,0 +1,632 @@
+<div class="app-container">
+    <!-- Header -->
+    <header class="d-flex align-center">
+      <h1 class="building-logo d-flex align-center">
+        <figure>
+          <img src="./assets/images/favicon.png" alt="Building Logo" />
+        </figure>
+        <span class="text-primary bold">Sunrise Builder</span>
+      </h1>
+  
+      <span class="nav-toggle" (click)="drawer.toggle()">
+        <i class="las la-bars"></i>
+      </span>
+  
+      <mat-nav-list class="nav nav-primary">
+        <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+  
+        <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+        <mat-menu #propertyMenu="matMenu" class="is-dropdown property-dropdown-menu">
+          <h3>My Property</h3>
+          <mat-nav-list class="added-records-list">
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Sunrise Homes</span>
+                <label>Apartment</label>
+                <label class="label-status in_verification">Pending</label>
+              </p>
+            </a>
+          </mat-nav-list>
+          <mat-nav-list class="record-actions">
+            <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+            <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+          </mat-nav-list>
+        </mat-menu>
+  
+        <a mat-list-item [matMenuTriggerFor]="userMenu">User</a>
+        <mat-menu #userMenu="matMenu" class="is-dropdown">
+          <h3>Active User</h3>
+          <mat-nav-list class="added-records-list">
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Ghanashyam Kushwaha</span>
+                <label>Property Manger</label>
+              </p>
+            </a>
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Kanti Lal Shah</span>
+                <label>Gate Keeper</label>
+              </p>
+            </a>
+          </mat-nav-list>
+          <mat-nav-list class="record-actions">
+            <a mat-list-item (click)="openStaffDialog()">Add New</a>
+            <a mat-list-item routerLink="/designs/staff">View All</a>
+          </mat-nav-list>
+        </mat-menu>
+  
+        <a mat-list-item routerLink="/designs/users">Users</a>
+  
+        <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+      </mat-nav-list>
+  
+      <mat-nav-list class="nav nav-secondary">
+        <a mat-list-item><i class="las la-question-circle"></i></a>
+        <a mat-list-item><i class="las la-cog"></i></a>
+        <a mat-list-item><i class="las la-bell"></i></a>
+        <a mat-list-item [matMenuTriggerFor]="userDropDown">
+          <figure class="is-rounded-image">
+            <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+          </figure>
+        </a>
+  
+        <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+          <mat-nav-list class="record-actions">
+            <a mat-list-item routerLink="/designs/profile">View Profile</a>
+            <a mat-list-item>Logout</a>
+          </mat-nav-list>
+        </mat-menu>
+      </mat-nav-list>
+    </header>
+    <!-- Header -->
+  
+    <div class="app-content">
+      <mat-drawer-container>
+        <mat-drawer #drawer mode="side" opened>
+          <!-- Sidebar -->
+          <section class="nav nav-sidebar">
+            <h2 class="property-name d-flex align-center">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/hero.jpg" alt="Property Image" />
+              </figure>
+              <span class="text-primary">Sunrise Homes</span>
+            </h2>
+  
+            <mat-nav-list>
+              <a mat-list-item routerLink="/designs/units">
+                <i class="las la-door-open"></i>
+                <span>Units</span>
+              </a>
+  
+              <a mat-list-item routerLink="/designs/tenant-active">
+                <i class="las la-user-tie"></i>
+                <span>Tenants</span>
+              </a>
+              <mat-nav-list class="submenu">
+                <a mat-list-item routerLink="/designs/tenant-active">Active</a>
+                <a mat-list-item routerLink="/designs/tenant-invited">Invited</a>
+              </mat-nav-list>
+  
+              <a mat-list-item routerLink="/designs/notice-board">
+                <i class="las la-newspaper"></i>
+                <span>Notice Board</span>
+              </a>
+  
+              <a mat-list-item routerLink="/designs/helpdesk">
+                <i class="las la-user-astronaut"></i>
+                <span>Helpdesk</span>
+              </a>
+              <a mat-list-item routerLink="/designs/property-staff">
+                <i class="las la-users-cog"></i>
+                <span>Staff</span>
+              </a>
+              <a mat-list-item routerLink="/designs/committee-member">
+                <i class="las la-users"></i>
+                <span>Committee Member</span>
+              </a>
+              <a mat-list-item routerLink="/designs/property-policy">
+                <i class="las la-file-alt"></i>
+                <span>Policy</span>
+              </a>
+              <a mat-list-item>
+                <i class="las la-chart-bar"></i>
+                <span>Reports</span>
+              </a>
+  
+              <a mat-list-item routerLink="/designs/settings" class="has-submenu active">
+                <i class="las la-cog"></i>
+                <span>Settings</span>
+              </a>
+              <mat-nav-list class="submenu">
+                <a mat-list-item routerLink="/designs/property-configuration">Property</a>
+                <a mat-list-item routerLink="/designs/unit-configuration" class="active">Units</a>
+                <a mat-list-item routerLink="/designs/notification">Notification</a>
+                
+              </mat-nav-list>
+            </mat-nav-list>
+          </section>
+          <!-- Sidebar -->
+        </mat-drawer>
+  
+        <mat-drawer-content>
+          <div class="content-inner">
+            <div class="d-flex">
+              <div class="profile-detail-wrapper profile-detail-wrapper--property">
+                <mat-tab-group>
+                  <!-- Maintenance-->
+                  <mat-tab label="Maintenance">
+                    <form class="unit-configuration-form">
+                        <h3>Maintenance Charge</h3>
+                        <div class="d-flex has-4-cols justify-between">
+                          <div class="col">
+                            <div class="">
+                              <mat-form-field>
+                                <mat-label>Select</mat-label>
+                                <mat-select>
+                                  <mat-option value="one-time">One Time Fixed</mat-option>
+                                  <mat-option value="one-time">Recurring</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+    
+                          <div class="col">
+                            <div class="">
+                              <mat-form-field>
+                                <mat-label>Type</mat-label>
+                                <mat-select>
+                                  <mat-option value="monthly-per-sq-ft">Monthly</mat-option>
+                                  <mat-option value="monthly-per-sq-ft">Per Sq. Ft.</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="">
+                              <mat-form-field>
+                                <mat-label>Amount</mat-label>
+                                <input type="number" matInput />
+                                <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="">
+                              <mat-form-field>
+                                <mat-label>Invoice Generation Interval</mat-label>
+                                <mat-select>
+                                  <mat-option value="one-time">Monthly</mat-option>
+                                  <mat-option value="one-time">Quaterly</mat-option>
+                                  <mat-option value="one-time">Half Yearly</mat-option>
+                                  <mat-option value="yearly">Yearly</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-center has-3-col">
+                          <div class="col has-padding-right">
+                            <mat-checkbox class="example-margin">Include Tax</mat-checkbox>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Percent</mat-label>
+                              <input type="number" matInput />
+                              <span matSuffix class="text-primary">%</span>
+                            </mat-form-field>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Amount</mat-label>
+                              <input type="number" matInput />
+                              <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!--Fine-->
+                        <div class="d-flex align-center has-3-col">
+                          <div class="col has-padding-right">
+                            <mat-checkbox>Fine</mat-checkbox>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Select</mat-label>
+                              <mat-select>
+                                <mat-option value="one-time">Daily</mat-option>
+                                <mat-option value="one-time">Weekly</mat-option>
+                                <mat-option value="one-time">Monthly</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Amount</mat-label>
+                              <input type="number" matInput />
+                              <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!--Fine-->
+
+                        <!--Fine Due Date-->
+                        <div class="d-flex has-2-cols align-center">
+                          <div class="col">
+                            <mat-form-field>
+                              <mat-label>Due Days</mat-label>
+                              <input matInput placeholder="Enter Number of Days" type="number">
+                              <span matSuffix>Days</span>
+                              <mat-hint><strong>Fine will be charged after the number of days from Invoiced date</strong> </mat-hint>                             
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <!--Fine Due Date-->
+
+                        <!--Maintenance Charge Includes-->
+                        <div class="maintenance-charge-options">
+                          <div class="options-lists">
+                            <h5>Maintenance Charge Includes</h5>
+                            <div class="d-flex align center has-3-cols justify-between">
+                              <div class="col has-padding-right">
+                                <mat-list>
+                                  <mat-list-item>
+                                    <span>Lift Charge</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Water</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Garden Maintenance</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Security</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Parking</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Club</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+                                  <mat-list-item>
+                                    <span>Lift Charge</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Water</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Garden Maintenance</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Security</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Parking</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Club</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+                                </mat-list>
+                              </div>
+                              <div class="col has-padding-right">
+                                <mat-list>
+                                  <mat-list-item>
+                                    <span>Lift Charge</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Water</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Garden Maintenance</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Security</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Parking</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Club</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+                                  <mat-list-item>
+                                    <span>Lift Charge</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Water</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Garden Maintenance</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Security</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Parking</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Club</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+                                </mat-list>
+                              </div>
+                              <div class="col has-padding-right">
+                                <mat-list>
+                                  <mat-list-item>
+                                    <span>Lift Charge</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Water</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Garden Maintenance</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Security</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Parking</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Club</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+                                  <mat-list-item>
+                                    <span>Lift Charge</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Water</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Garden Maintenance</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Security</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Parking</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+        
+                                  <mat-list-item>
+                                    <span>Club</span>
+                                    <mat-checkbox></mat-checkbox>
+                                  </mat-list-item>
+                                </mat-list>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <div class="d-flex">
+                          <mat-form-field class="">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput placeholder="Ex. As per the committee decision, your maintenance demand charges be total sqft. areas X NRs.5."></textarea>
+                            <mat-hint><strong>Remarks will be displayed at the bottom of Invoice</strong> </mat-hint>
+                          </mat-form-field>
+                        </div>
+    
+                        <div class="buttons-wrapper d-flex">
+                          <button mat-button class="btn btn-theme-green left-auto">Save</button>
+                        </div>
+                      </form>
+                </mat-tab>
+                  <!-- Maintenance-->
+  
+                  <!-- Electricity-->
+                  <mat-tab label="Electricity">
+                    <form>
+                        <h3>Electricity Charge</h3>
+                        <div class="d-flex align-center has-3-cols">
+                          
+                          <div class="col has-padding-right">
+                            <div class="form-field-wrapper has-no-padding-left">
+                              <mat-form-field>
+                                <mat-label>Per Unit Charge</mat-label>
+                                <input type="number" matInput />
+                                <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-center has-2-col">
+                          <div class="col has-padding-right">
+                            <mat-checkbox class="example-margin">Electrical Load Demand Charges</mat-checkbox>
+                          </div>
+                        </div>
+                        <div class="d-flex align-center has-3-col">
+                          
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>KVA Load Demand</mat-label>
+                              <input type="number" matInput />
+                              <span matSuffix class="text-primary">X</span>
+                            </mat-form-field>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Amount</mat-label>
+                              <input type="number" matInput />
+                              <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="d-flex align-center has-3-col">
+                          <div class="col has-padding-right">
+                            <mat-checkbox class="example-margin">Fine</mat-checkbox>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Select</mat-label>
+                              <mat-select>
+                                <mat-option value="one-time">Daily</mat-option>
+                                <mat-option value="one-time">Weekly</mat-option>
+                                <mat-option value="one-time">Monthly</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Amount</mat-label>
+                              <input type="number" matInput />
+                              <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="d-flex">
+                          <mat-form-field class="">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput placeholder="Ex. Please pay the per month bill within the end of same month."></textarea>
+                          </mat-form-field>
+                        </div>
+    
+                        <div class="buttons-wrapper d-flex">
+                          <button mat-button class="btn btn-theme-green left-auto">Save</button>
+                        </div>
+                      </form>
+                  </mat-tab>
+                  <!-- Electricity-->
+
+                  <!--Water-->
+                  <mat-tab label="Water">
+                    <form>
+                        <h3>Electricity Charge</h3>
+                        <div class="d-flex align-center has-3-cols">
+                          
+                          <div class="col has-padding-right">
+                            <div class="form-field-wrapper has-no-padding-left">
+                              <mat-form-field>
+                                <mat-label>Select</mat-label>
+                                <mat-select>
+                                  <mat-option value="one-time">Per Unit Charge</mat-option>
+                                  <mat-option value="one-time">Fixed</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="col has-padding-right">
+                            <div class="form-field-wrapper has-no-padding-left">
+                              <mat-form-field>
+                                <mat-label>Amount</mat-label>
+                                <input type="number" matInput />
+                                <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="d-flex align-center has-3-col">
+                          <div class="col has-padding-right">
+                            <mat-checkbox class="example-margin">Fine</mat-checkbox>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Select</mat-label>
+                              <mat-select>
+                                <mat-option value="one-time">Daily</mat-option>
+                                <mat-option value="one-time">Weekly</mat-option>
+                                <mat-option value="one-time">Monthly</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col has-padding-right">
+                            <mat-form-field>
+                              <mat-label>Amount</mat-label>
+                              <input type="number" matInput />
+                              <span matPrefix class="text-primary">NRs. &nbsp;</span>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="d-flex">
+                          <mat-form-field class="">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput placeholder="Ex. Please pay the per month bill within the end of same month."></textarea>
+                          </mat-form-field>
+                        </div>
+    
+                        <div class="buttons-wrapper d-flex">
+                          <button mat-button class="btn btn-theme-green left-auto">Save</button>
+                        </div>
+                      </form>
+                  </mat-tab>
+                  <!-- Water-->
+                </mat-tab-group>
+              </div>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  </div>
+  

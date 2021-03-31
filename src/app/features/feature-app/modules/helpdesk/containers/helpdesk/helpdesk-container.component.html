@@ -1,0 +1,9 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-helpdesk
+  *ngIf="activePropertyId"
+  [helpdeskList$]="helpdeskList$"
+  [categories$]="categories$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+></app-helpdesk>
+<!-- </app-navigation-bar> -->

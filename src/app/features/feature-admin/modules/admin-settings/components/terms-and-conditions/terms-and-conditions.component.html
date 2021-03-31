@@ -1,0 +1,39 @@
+<form class="detail-form" [formGroup]="addOrUpdateTermsAndConditionsForm">
+  <div class="d-flex">
+    <div class="form-field-wrapper col full-width has-no-padding-left">
+      <mat-form-field>
+        <mat-label>{{ "common.title" | translate }}</mat-label>
+        <input type="text" matInput formControlName="title" required />
+        <mat-error>
+          <app-error-message [control]="addOrUpdateTermsAndConditionsForm.get('title')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-field-wrapper col full-width has-no-padding-left">
+      <mat-label>{{ "common.description" | translate }}</mat-label>
+      <quill-editor
+        [placeholder]="'terms_and_conditions_description_placeholder' | translate"
+        formControlName="description"
+        required
+      ></quill-editor>
+      <mat-error *ngIf="submitted">
+        <app-error-message [control]="addOrUpdateTermsAndConditionsForm.get('description')"></app-error-message>
+      </mat-error>
+    </div>
+    <div
+      class="form-field-wrapper col full-width has-no-padding-left has-margin-top"
+      *ngIf="termsAndConditions?.updatedAt"
+    >
+      <mat-label
+        ><strong>{{ "common.updated_at" | translate }}</strong></mat-label
+      >
+      <p>{{ termsAndConditions?.updatedAt | utcToLocalDate: "ddd, lll" }}</p>
+    </div>
+
+    <div class="buttons-wrapper">
+      <button mat-button class="btn btn-theme-green" (click)="onAddOrUpdateTermsAndConditions()">
+        {{ "common.save" | translate }}
+      </button>
+    </div>
+  </div>
+</form>

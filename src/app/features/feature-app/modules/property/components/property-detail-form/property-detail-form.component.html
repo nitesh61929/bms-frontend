@@ -1,0 +1,264 @@
+<form class="property-detail-form" [formGroup]="propertyDetailForm">
+  <div class="d-flex justify-between">
+    <div class="col">
+      <div class="form-field-wrapper has-margin-bottom">
+        <app-file-upload
+          formControlName="logo"
+          [fileUploadType]="fileUploadTypeEnum.CIRCULAR"
+          [folderName]="'PROPERTY_LOGO'"
+          [figCaption]="'property_logo_caption' | translate"
+        ></app-file-upload>
+        <mat-error>
+          <app-error-message [control]="propertyDetailForm.get('logo')"></app-error-message>
+        </mat-error>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex has-3-cols justify-between">
+    <div class="col">
+      <div class="form-field-wrapper has-no-padding-left isDisabled">
+        <mat-form-field>
+          <mat-label>{{ "property_type_label" | translate }}</mat-label>
+
+          <mat-select formControlName="propertyType" required>
+            <mat-option [value]="propertyType.code" *ngFor="let propertyType of propertyTypes$ | async">{{
+              propertyType.title
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-field-wrapper has-no-padding-left">
+        <mat-form-field>
+          <mat-label>{{ "property_name_label" | translate }}</mat-label>
+          <input type="text" matInput formControlName="name" required />
+          <mat-error>
+            <app-error-message [control]="propertyDetailForm.get('name')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-field-wrapper has-no-padding-left">
+        <mat-form-field>
+          <mat-label>{{ "property_email_label" | translate }}</mat-label>
+          <input type="email" matInput formControlName="email" required />
+          <mat-error>
+            <app-error-message [control]="propertyDetailForm.get('email')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-details contact-details-site">
+    <h5 class="form-section-title">
+      Contact <button mat-icon-button (click)="addContact()"><i class="las la-plus text-primary"></i></button>
+    </h5>
+    <ng-container formArrayName="contacts" *ngFor="let contact of contactsFormArray.controls; let i = index">
+      <div class="d-flex has-2-cols" [formGroupName]="i">
+        <div class="form-field-wrapper col has-no-padding-left">
+          <div class="contact-type-options">
+            <button
+              mat-icon-button
+              matPrefix
+              class="matPrefix"
+              [class.selected]="contact.value.type === 'phone'"
+              (click)="onPhoneIconClick(i)"
+            >
+              <i class="las la-phone text-primary"></i>
+            </button>
+            <button
+              mat-icon-button
+              matPrefix
+              class="matPrefix"
+              [class.selected]="contact.value.type === 'mobile'"
+              (click)="onMobileIconClick(i)"
+            >
+              <i class="las la-mobile text-primary"></i>
+            </button>
+          </div>
+          <mat-form-field>
+            <mat-label>{{ contact.value.type | titlecase }} </mat-label>
+            <input matInput appOnlyNumber formControlName="number" required />
+            <button class="matSuffix" mat-icon-button matSuffix *ngIf="contactsFormArray.controls.length > 1">
+              <i class="las la-minus-circle text-primary" (click)="removeContact(i)"></i>
+            </button>
+            <mat-error>
+              <app-error-message [control]="contactsFormArray.controls[i].get('number')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="address-details address-details-site" formGroupName="address">
+    <h5 class="form-section-title">{{ "address" | translate }}</h5>
+    <div class="d-flex has-3-cols justify-between">
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>{{ "mod_address.ward_number_label" | translate }}</mat-label>
+            <input matInput formControlName="wardNo" appOnlyNumber required />
+            <mat-error>
+              <app-error-message [control]="propertyDetailForm.get('address').get('wardNo')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>{{ "mod_address.zip_code_label" | translate }}</mat-label>
+            <input matInput formControlName="zipCode" appOnlyNumber required />
+            <mat-error>
+              <app-error-message [control]="propertyDetailForm.get('address').get('zipCode')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>{{ "mod_address.street_label" | translate }}</mat-label>
+            <input matInput formControlName="street" required />
+            <mat-error>
+              <app-error-message [control]="propertyDetailForm.get('address').get('street')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>{{ "mod_address.city_label" | translate }}</mat-label>
+            <input type="text" matInput formControlName="city" required />
+            <mat-error>
+              <app-error-message [control]="propertyDetailForm.get('address').get('city')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>{{ "mod_address.province_label" | translate }}</mat-label>
+            <input
+              type="text"
+              placeholder="{{ 'province_placeholder' | translate }}"
+              matInput
+              formControlName="province"
+              [matAutocomplete]="auto"
+              required
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let province of filteredProvinces | async" [value]="province.value">
+                {{ province.name }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error>
+              <app-error-message [control]="propertyDetailForm.get('address').get('province')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-field-wrapper has-no-padding-left">
+          <mat-form-field>
+            <mat-label>{{ "mod_address.country_label" | translate }}</mat-label>
+            <mat-select formControlName="country" required>
+              <mat-option [value]="country.value" *ngFor="let country of countries">{{ country.value }}</mat-option>
+            </mat-select>
+            <mat-error>
+              <app-error-message [control]="propertyDetailForm.get('address').get('country')"></app-error-message>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-field-wrapper has-no-padding-left">
+    <mat-form-field>
+      <mat-label>{{ "facilities_label" | translate }}</mat-label>
+      <textarea matInput formControlName="facility" placeholder="{{ 'facilities_placeholder' | translate }}"></textarea>
+      <mat-error>
+        <app-error-message [control]="propertyDetailForm.get('facility')"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="documents contains-multiple-images">
+    <h5 class="form-section-title">{{ "documents_label" | translate }}</h5>
+
+    <div class="d-flex has-5-cols">
+      <div class="col image-holder">
+        <app-file-upload
+          formControlName="registrationCertificate"
+          [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+          [figCaption]="'property_reg_cert_caption' | translate"
+          [folderName]="'PROPERTY_REGISTRATION'"
+        ></app-file-upload>
+        <mat-error>
+          <app-error-message [control]="propertyDetailForm.get('registrationCertificate')"></app-error-message>
+        </mat-error>
+      </div>
+
+      <div class="col image-holder">
+        <app-file-upload
+          formControlName="panCertificate"
+          [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+          [figCaption]="'property_pan_cert_caption' | translate"
+          [folderName]="'PROPERTY_PAN'"
+        ></app-file-upload>
+        <mat-error>
+          <app-error-message [control]="propertyDetailForm.get('panCertificate')"></app-error-message>
+        </mat-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-images contains-multiple-images">
+    <h5 class="form-section-title d-flex align-center justify-start">
+      <span>{{ "site_images_label" | translate }}</span>
+      <button
+        class="btn-theme-green-outline has-margin-left"
+        mat-button
+        color="primary"
+        (click)="onAddSiteImages()"
+        *ngIf="imagesFormArray.value.length < 5"
+      >
+        {{ "add_image_label" | translate }}
+      </button>
+    </h5>
+    <div class="d-flex has-5-cols">
+      <ng-container formArrayName="images" *ngFor="let image of imagesFormArray.controls; let i = index">
+        <div class="col image-holder">
+          <app-file-upload
+            [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+            [formControl]="imagesFormArray.controls[i]"
+            [folderName]="'PROPERTY_IMAGES'"
+            [enableRemove]="imagesFormArray.length <= 1 ? false : true"
+            (fileRemoved)="onFileRemove(i)"
+          ></app-file-upload>
+          <mat-error>
+            <app-error-message [control]="image"></app-error-message>
+          </mat-error>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="buttons-wrapper text-right">
+    <button mat-button class="btn btn-theme-green" (click)="onUpdate()" *appHasAccess="hasPropertyEditAccess">
+      {{ "common.update" | translate }}
+    </button>
+  </div>
+</form>

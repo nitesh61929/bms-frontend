@@ -1,0 +1,38 @@
+<div class="app-container auth setup d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="setup-wizard">
+      <h1 class="app-icon d-flex align-center">
+        <img src="../../../assets/images/ownant-logo.png" height="60" alt="" />
+        <p>
+          {{ "estate_label" | translate }}<em>{{ "cloud_label" | translate }}</em>
+        </p>
+      </h1>
+
+      <ul class="setup-wizard-steps">
+        <li class="current-step">
+          <a href="owner-type.html">{{ "owner_type_header" | translate }}</a>
+        </li>
+        <li>
+          <a href="owner-detail-individual.html">{{ "owner_detail_label" | translate }}</a>
+        </li>
+        <li>
+          <a href="site-type.html">{{ "size_type_label" | translate }}</a>
+        </li>
+        <li>
+          <a href="site-detail.html">{{ "size_detail_label" | translate }}</a>
+        </li>
+      </ul>
+
+      <figure class="text-center">
+        <img src="assets/images/bms-wizard-footer-img.png" alt="" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <p class="help-text">
+        {{ "having_troubles_label" | translate }}?
+        <a href="#" class="text-primary bold">{{ "get_help_label" | translate }}</a>
+      </p>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

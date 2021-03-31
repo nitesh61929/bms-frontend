@@ -1,0 +1,28 @@
+<div class="d-flex has-no-wrap align-center has-top-margin">
+  <div lightbox-group class="has-margin-bottom has-margin-top">
+    <figure class="is-rounded-image w-64 has-margin-right" *ngIf="noticeDetail?.file">
+      <img lightbox src="{{ noticeDetail?.file?.largeFileUrl | imagePath }}" alt="" />
+    </figure>
+  </div>
+
+  <div class="description">{{ noticeDetail?.description }}</div>
+</div>
+
+<div class="d-flex align-center justify-between has-margin-top">
+  <div class="list-actions has-margin-right">
+    <label>{{ "status_label" | translate }}</label>
+    <mat-slide-toggle
+      [checked]="noticeDetail?.published"
+      (change)="updateStatus(noticeDetail?.id, $event)"
+    ></mat-slide-toggle>
+  </div>
+
+  <div class="has-margin-left">
+    <a mat-icon-button class="text-green" *ngIf="!noticeDetail?.published" (click)="updateNotice()">
+      <i class="las la-pen" matTooltip="{{ 'common.edit' | translate }}"> </i>
+    </a>
+    <a mat-icon-button class="text-primary" (click)="deleteNotice(noticeDetail?.id)" *ngIf="!noticeDetail?.published">
+      <i class="las la-trash" matTooltip="{{ 'common.delete' | translate }}"></i>
+    </a>
+  </div>
+</div>

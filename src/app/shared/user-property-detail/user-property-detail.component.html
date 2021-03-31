@@ -1,0 +1,115 @@
+<div class="ng-trigger-detailExpand">
+  <h4 class="property-name">{{ propertyDetails?.name }}</h4>
+  <label class="label-status {{ propertyDetails?.status | lowercase }}">
+    {{ "mod_status." + propertyDetails?.status | translate }}
+  </label>
+  <div class="owner-active-detail">
+    <div class="info info-admin">
+      <div class="d-flex has-4-cols">
+        <div class="col">
+          <figure class="w-60 is-rounded-image">
+            <img [src]="propertyDetails?.logo?.mediumFileUrl | imagePath" alt="" />
+          </figure>
+        </div>
+        <div class="col">
+          <i class="las la-map-marked text-primary"></i>
+          <p>
+            <label>{{ "mod_address.permanent_address_label" | translate }}</label>
+            <span>
+              {{ getAddress(propertyDetails?.address) }} <br />
+              {{ "mod_address.ward_number_label" | translate }}:{{
+                propertyDetails?.address?.wardNo || "na_label" | translate
+              }}, {{ "mod_address.zip_code_label" | translate }}:{{
+                propertyDetails?.address?.zipCode || "na_label" | translate
+              }}
+            </span>
+          </p>
+        </div>
+
+        <div class="col">
+          <i class="las la-phone text-primary"></i>
+          <span>{{ getPhones(propertyDetails?.phones) }}</span>
+        </div>
+
+        <div class="col">
+          <i class="las la-mobile text-primary"></i>
+          <span>{{ getMobileNumbers(propertyDetails?.mobileNumbers) }}</span>
+        </div>
+      </div>
+      <div class="d-flex has-3-cols" *ngIf="propertyDetails?.facility">
+        <div class="col">
+          <i class="las la-tag text-primary"></i>
+          <p>
+            <label>{{ "facilities_label" | translate }}</label>
+            <span>{{ propertyDetails?.facility }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info info-docs">
+      <div flex class="d-flex has-5-cols contains-multiple-images">
+        <div class="col image-holder">
+          <app-file-upload
+            [file]="propertyDetails?.panCertificate"
+            [figCaption]="'company_pan_registration_caption' | translate"
+            [fileUploadType]="'rectangular'"
+            [enableUpload]="false"
+          ></app-file-upload>
+        </div>
+
+        <div class="col image-holder">
+          <app-file-upload
+            [file]="propertyDetails?.registrationCertificate"
+            [figCaption]="'company_reg_cert_caption' | translate"
+            [fileUploadType]="'rectangular'"
+            [enableUpload]="false"
+          ></app-file-upload>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="info info-docs">
+      <h4>
+        <span>Document</span>
+      </h4>
+      <div class="d-flex has-3-cols contains-multiple-images">
+        <div class="col image-holder">
+          <figure *ngIf="propertyDetails?.panCertificate?.fileType.toLowerCase() !== 'pdf'">
+            <img [src]="propertyDetails?.panCertificate?.mediumFileUrl | imagePath" />
+          </figure>
+          <i class="las la-file-alt text-primary"></i>
+          <a
+            *ngIf="propertyDetails?.panCertificate?.fileType.toLowerCase() === 'pdf'"
+            class="text-primary"
+            (click)="openPDF(propertyDetails?.panCertificate)"
+          >
+            Company PAN/VAT Registration
+          </a>
+        </div>
+        <div class="col image-holder">
+          <figure *ngIf="propertyDetails?.registrationCertificate?.fileType.toLowerCase() !== 'pdf'">
+            <img [src]="propertyDetails?.registrationCertificate?.mediumFileUrl | imagePath" />
+          </figure>
+          <i class="las la-file-alt text-primary"></i>
+          <a
+            *ngIf="propertyDetails?.registrationCertificate?.fileType.toLowerCase() === 'pdf'"
+            class="text-primary"
+            (click)="openPDF(propertyDetails?.registrationCertificate)"
+          >
+            Company Registration Certificate
+          </a>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="site-images contains-multiple-images">
+      <h5 class="form-section-title">{{ "property_images_label" | translate }}</h5>
+      <div lightbox-group class="d-flex has-5-cols">
+        <div class="col image-holder" *ngFor="let image of propertyDetails?.images">
+          <app-file-upload [file]="image" [fileUploadType]="'rectangular'" [enableUpload]="false"></app-file-upload>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

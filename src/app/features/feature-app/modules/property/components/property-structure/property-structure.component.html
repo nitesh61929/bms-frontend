@@ -1,0 +1,15 @@
+<form (keydown.enter)="$event.preventDefault()" class="property-structure-form">
+  <app-property-tree
+    #propertyTree
+    [selectedPropertyStructures]="selectedPropertyStructures"
+    [propertyStructures]="propertyStructures"
+    [hasDetailView]="hasDetailView"
+    [propertyType]="propertyType"
+    (deleteStructure)="onDeleteStructure()"
+  ></app-property-tree>
+  <div class="buttons-wrapper d-flex" *ngIf="!hasDetailView">
+    <button mat-button class="btn btn-theme-green left-auto" (click)="onUpdatePropertyStructure()">
+      {{ "common.update" | translate }}
+    </button>
+  </div>
+</form>

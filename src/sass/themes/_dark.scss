@@ -1,0 +1,18 @@
+$primary: #19191a;
+
+$primaryLight: lighten($primary, 8.5%);
+$primaryLightMedium: lighten($primary, 14.75%);
+
+$primaryDarkFaint: lighten($primary, 4%);
+
+$textColor: darken(invert($primary), 16.15%);
+
+$primary_brand_lightness: floor(lightness($primary));
+$primary_lightness_limit: 50%;
+
+@if $primary_brand_lightness > $primary_lightness_limit {
+	$primaryLight: lighten($primary, 2.75%);
+	$primaryDarkFaint: darken($primary, 1%);
+	$textColor: $blue;
+  // $textColor: lighten(invert($primary), 23.5%);
+}

@@ -1,0 +1,44 @@
+<mat-drawer-container>
+  <mat-drawer-content>
+    <div class="content-inner">
+      <div class="d-flex">
+        <div class="profile-detail-wrapper profile-detail-wrapper--user">
+          <mat-tab-group>
+            <!-- Account Profile Tab-->
+            <mat-tab label="{{ 'account_profile_label' | translate }}" *ngIf="hasAccountDetailAccess()">
+              <app-company-profile
+                [companyDetail$]="companyDetail$"
+                [companyProfileError$]="companyProfileError$"
+              ></app-company-profile>
+            </mat-tab>
+            <!-- Account Profile Tab-->
+
+            <!-- User Profile Tab-->
+            <mat-tab label="{{ 'my_profile_label' | translate }}">
+              <app-my-profile [myProfile$]="myProfile$" [error$]="error$"></app-my-profile>
+            </mat-tab>
+            <!-- User Profile Tab-->
+
+            <!-- Update Password -->
+            <mat-tab *ngIf="userHasPassword" label="{{ 'update_password' | translate }}">
+              <app-change-password-container></app-change-password-container>
+            </mat-tab>
+            <!-- Update Password -->
+
+            <!-- Update Credentials Tab-->
+            <mat-tab label="{{ 'update_credentials_label' | translate }}">
+              <app-update-credential></app-update-credential>
+            </mat-tab>
+            <!-- Update Credentials Tab-->
+
+            <!-- Billing Tab-->
+            <mat-tab label="{{ 'billing_label' | translate }}" *appHasAccess="hasTrialDatePermission">
+              <app-billing [billingDetails$]="billingDetail$" [error$]="billingDetailError$"></app-billing>
+            </mat-tab>
+            <!-- Billing Tab-->
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,94 @@
+$directions: left, center, right;
+
+@each $direction in $directions {
+  .text-#{$direction} {
+    text-align: $direction !important;
+  }
+}
+
+.las,
+.lab {
+  font-style: initial;
+  font-size: 24px !important;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.module-header-text {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.records-filter {
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+}
+
+.text-primary {
+  color: $peach;
+}
+
+.text-green {
+  color: $green;
+}
+
+.text-error {
+  color: $error;
+}
+
+.mat-list-item {
+  font-family: $mainFont !important;
+  color: $textColor !important;
+}
+
+.label-status {
+  background: $peach;
+  border-radius: 4px;
+  color: $white;
+  display: inline-block;
+  min-width: 50px;
+  padding: 1px 5px;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 11px;
+  &.isActive,
+  &.published {
+    background: $green;
+  }
+  &.verified,
+  &.medium,
+  &.Completed {
+    background: $green;
+  }
+  &.Processed {
+    background: $orange;
+  }
+  &.in_verification {
+    background: $blue;
+  }
+  &.pending_verification,
+  &.low,
+  &.unpublished {
+    background: $gray;
+    color: $blue;
+  }
+  &.expired,
+  &.critical,
+  &.OverDue {
+    background: $red;
+  }
+  &.invited,
+  &.Pending,
+  &.high {
+    background: $orange;
+  }
+}
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $black !important;
+}

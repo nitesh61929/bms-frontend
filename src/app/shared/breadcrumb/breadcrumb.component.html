@@ -1,0 +1,10 @@
+<div class="breadcrubms">
+  <span *ngFor="let breadcrum of breadcrumbsList">
+    <ng-container *ngIf="breadcrum?.routerLink">
+      <a [routerLink]="[breadcrum.routerLink]">{{ breadcrum?.displayText }}</a>
+    </ng-container>
+    <ng-container *ngIf="!breadcrum?.routerLink">
+      {{ breadcrum?.displayText }}
+    </ng-container>
+  </span>
+</div>

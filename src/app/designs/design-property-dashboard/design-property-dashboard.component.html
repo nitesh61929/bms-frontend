@@ -1,0 +1,212 @@
+<div class="app-container">
+    <!-- Header -->
+    <header class="d-flex align-center">
+      <h1 class="building-logo d-flex align-center">
+        <figure>
+          <img src="./assets/images/favicon.png" alt="Building Logo" />
+        </figure>
+        <span class="text-primary bold">Sunrise Builder</span>
+      </h1>
+  
+      <span class="nav-toggle" (click)="drawer.toggle()">
+        <i class="las la-bars"></i>
+      </span>
+  
+      <mat-nav-list class="nav nav-primary">
+        <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+  
+        <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+        <mat-menu #propertyMenu="matMenu" class="is-dropdown property-dropdown-menu">
+          <h3>My Property</h3>
+          <mat-nav-list class="added-records-list">
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Sunrise Homes</span>
+                <label>Apartment</label>
+                <label class="label-status in_verification">Pending</label>
+              </p>
+            </a>
+          </mat-nav-list>
+          <mat-nav-list class="record-actions">
+            <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+            <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+          </mat-nav-list>
+        </mat-menu>
+  
+        <a mat-list-item [matMenuTriggerFor]="userMenu">User</a>
+        <mat-menu #userMenu="matMenu" class="is-dropdown">
+          <h3>Active User</h3>
+          <mat-nav-list class="added-records-list">
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Ghanashyam Kushwaha</span>
+                <label>Property Manger</label>
+              </p>
+            </a>
+            <a mat-list-item class="d-flex align-center added-records-list-item">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+              </figure>
+              <p>
+                <span>Kanti Lal Shah</span>
+                <label>Gate Keeper</label>
+              </p>
+            </a>
+          </mat-nav-list>
+          <mat-nav-list class="record-actions">
+            <a mat-list-item>Add New</a>
+            <a mat-list-item routerLink="/designs/staff">View All</a>
+          </mat-nav-list>
+        </mat-menu>
+  
+        <a mat-list-item routerLink="/designs/users">Users</a>
+  
+        <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+      </mat-nav-list>
+  
+      <mat-nav-list class="nav nav-secondary">
+        <a mat-list-item><i class="las la-question-circle"></i></a>
+        <a mat-list-item><i class="las la-cog"></i></a>
+        <a mat-list-item><i class="las la-bell"></i></a>
+        <a mat-list-item [matMenuTriggerFor]="userDropDown">
+          <figure class="is-rounded-image">
+            <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+          </figure>
+        </a>
+  
+        <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+          <mat-nav-list class="record-actions">
+            <a mat-list-item routerLink="/designs/profile">View Profile</a>
+            <a mat-list-item>Logout</a>
+          </mat-nav-list>
+        </mat-menu>
+      </mat-nav-list>
+    </header>
+    <!-- Header -->
+  
+    <div class="app-content">
+      <mat-drawer-container>
+        <mat-drawer #drawer mode="side" opened>
+          <!-- Sidebar -->
+          <section class="nav nav-sidebar">
+            <h2 class="property-name d-flex align-center">
+              <figure class="is-rounded-image">
+                <img src="./assets/images/hero.jpg" alt="Property Image" />
+              </figure>
+              <span class="text-primary">Sunrise Homes</span>
+            </h2>
+  
+            <mat-nav-list>
+              <a mat-list-item routerLink="/designs/units">
+                <i class="las la-door-open"></i>
+                <span>Units</span>
+              </a>
+  
+              <a mat-list-item routerLink="/designs/tenant-active">
+                <i class="las la-user-tie"></i>
+                <span>Tenants</span>
+              </a>
+              <mat-nav-list class="submenu">
+                <a mat-list-item routerLink="/designs/tenant-active">Active</a>
+                <a mat-list-item routerLink="/designs/tenant-invited">Invited</a>
+              </mat-nav-list>
+  
+              <a mat-list-item routerLink="/designs/notice-board">
+                <i class="las la-newspaper"></i>
+                <span>Notice Board</span>
+              </a>
+  
+              <a mat-list-item routerLink="/designs/helpdesk">
+                <i class="las la-user-astronaut"></i>
+                <span>Helpdesk</span>
+              </a>
+              <a mat-list-item routerLink="/designs/invoices">
+                <i class="las la-file-invoice"></i>
+                <span>Invoice</span>
+              </a>
+              <a mat-list-item routerLink="/designs/property-staff">
+                <i class="las la-users-cog"></i>
+                <span>Staff</span>
+              </a>
+              <a mat-list-item routerLink="/designs/committee-member" >
+                <i class="las la-users"></i>
+                <span>Committee Member</span>
+              </a>
+              <a mat-list-item routerLink="/designs/property-policy">
+                <i class="las la-file-alt"></i>
+                <span>Policy</span>
+              </a>
+              <a mat-list-item>
+                <i class="las la-chart-bar"></i>
+                <span>Reports</span>
+              </a>
+  
+              <a mat-list-item routerLink="/designs/settings">
+                <i class="las la-cog"></i>
+                <span>Settings</span>
+              </a>
+              <mat-nav-list class="submenu">
+                <a mat-list-item routerLink="/designs/settings" class="active">Property</a>
+                <a mat-list-item routerLink="/designs/unit-configuration">Units</a>
+                <a mat-list-item routerLink="/designs/notification">Notification</a>
+                <a mat-list-item routerLink="/designs/invoice-setting">Invoice</a>
+              </mat-nav-list>
+            </mat-nav-list>
+          </section>
+          <!-- Sidebar -->
+        </mat-drawer>
+  
+        <mat-drawer-content>
+          <div class="content-inner">
+            <div class="breadcrubms">
+                <span>Sunrise Homes</span>
+                <span>Dashboard</span>
+            </div>
+            <h2 class="module-header d-flex align-center justify-between">
+                <span class="module-header-text">Analytics</span>
+                <div class="has-no-margin has-padding-right">
+                    Date: March 11, 2021, 18:02
+                  </div>
+            </h2> 
+            <div class="property-dashboard">
+                <div class="col1">
+                    <!--mat card-->
+                    <div class="d-flex has-3-cols justify-between has-margin-bottom">
+                        <mat-card class="col total-user">
+                            <mat-card-content>400</mat-card-content>
+                            <mat-card-title>Total User</mat-card-title>
+                        </mat-card>
+                        <mat-card class="col active-user">
+                            <mat-card-content>312</mat-card-content>
+                            <mat-card-title>Active Users</mat-card-title>
+                        </mat-card>
+                        <mat-card class="col inactive-user">
+                            <mat-card-content>88</mat-card-content>
+                            <mat-card-title>Inactive Users</mat-card-title>
+                        </mat-card>
+                    </div>
+                    <!--mat card-->
+                    <div class="d-flex has-margin-bottom invoice-statistics">
+                        Invoice Statistics
+                    </div>
+                </div>
+                <div class="col2">
+                    <mat-card class="col resident-info">
+                        <mat-card-title>Total User</mat-card-title>
+                        <mat-card-content>400</mat-card-content>
+                    </mat-card>
+                </div>
+              </div>
+          </div>
+          
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  </div>
+  

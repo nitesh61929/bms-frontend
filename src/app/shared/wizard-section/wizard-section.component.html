@@ -1,0 +1,51 @@
+<div class="app-container auth setup d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="setup-wizard">
+      <h1 class="app-icon d-flex align-center">
+        <img src="../../../assets/images/ownant-logo.png" height="60" />
+        <p>{{ "page_titles.ownant" | translate }}</p>
+      </h1>
+
+      <mat-nav-list class="setup-wizard-steps">
+        <!-- <a
+          mat-list-item
+          [class.current-step]="isCurrentStep('owner-type')"
+          [class.completed-step]="isCompleted('owner-type')"
+          >Owner Type</a
+        > -->
+        <a
+          mat-list-item
+          [class.current-step]="isCurrentStep('owner-detail')"
+          [class.completed-step]="isCompleted('owner-detail')"
+          >{{ "account_detail_label" | translate }}</a
+        >
+        <a
+          mat-list-item
+          [class.current-step]="isCurrentStep('property-type')"
+          [class.completed-step]="isCompleted('property-type')"
+          >{{ "property_type_label" | translate }}</a
+        >
+        <a
+          mat-list-item
+          [class.current-step]="isCurrentStep('property-detail')"
+          [class.completed-step]="isCompleted('property-detail')"
+          >{{ "property_detail_label" | translate }}</a
+        >
+        <a mat-list-item [class.current-step]="isCurrentStep('greet')" [class.completed-step]="isCompleted('greet')">
+          {{ "complete_label" | translate }}
+        </a>
+      </mat-nav-list>
+
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <span class="wizard-logout" matTooltip="{{ 'common.logout' | translate }}" (click)="onLogout()"
+        ><i class="las la-sign-out-alt"></i
+      ></span>
+      <!-- <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p> -->
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

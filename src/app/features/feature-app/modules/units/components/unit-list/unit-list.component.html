@@ -1,0 +1,147 @@
+<div class="content-inner">
+  <h2 class="module-header d-flex align-center justify-between">
+    <span class="module-header-text">{{ "units_label" | translate }}</span>
+    <form>
+      <div class="form-field-wrapper has-no-margin">
+        <app-search-input
+          (searched)="onSearch($event)"
+          [placeholder]="'unit_name_label' | translate"
+        ></app-search-input>
+      </div>
+    </form>
+  </h2>
+
+  <div class="records-filter" *ngIf="dataSource.data.length > 0">
+    <h3>{{ "filter_by" | translate }}</h3>
+    <div class="d-flex">
+      <div
+        class="form-field-wrapper"
+        *ngFor="let structure of selectedPropertyStructures"
+        (click)="dropdownClicked(structure)"
+      >
+        <mat-form-field>
+          <mat-select (selectionChange)="structureFilterChange($event, structure?.id)">
+            <mat-option value="">{{ "select_all" | translate }}</mat-option>
+            <mat-option [value]="option" *ngFor="let option of unitFilterDropdown[structure?.id]">{{
+              option
+            }}</mat-option>
+            <mat-progress-spinner
+              *ngIf="loading$ | async"
+              color="primary"
+              mode="indeterminate"
+              style="transform: translate(-50%, -50%)"
+            ></mat-progress-spinner>
+          </mat-select>
+
+          <mat-label>{{ structure.name }}</mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="records-wrapper">
+    <div class="table-wrapper">
+      <ng-container *ngIf="dataSource.data.length === 0">
+        <div class="no-records-found">
+          <span>{{ "result_not_found_label" | translate }}</span>
+        </div>
+      </ng-container>
+      <table
+        mat-table
+        matSort
+        (matSortChange)="sortData($event)"
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="records-table records-table--units"
+        *ngIf="dataSource.data.length > 0"
+      >
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex">
+            {{ getSerialNumberForPaginatedList(i, paginatorCmp.pageIndex, paginatorCmp.pageSize) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit_name">
+          <th mat-header-cell mat-sort-header="unitName" *matHeaderCellDef>{{ "unit_name_label" | translate }}</th>
+          <td mat-cell *matCellDef="let unit" class="text-left">{{ unit.unitName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="block">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "block_label" | translate }}</th>
+          <td mat-cell *matCellDef="let unit">{{ getBlockName(unit?.structures) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tower">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "tower_label" | translate }}</th>
+          <td mat-cell *matCellDef="let unit">{{ getTowerName(unit?.structures) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="floor">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "floor_label" | translate }}</th>
+          <td mat-cell *matCellDef="let unit">{{ getFloorName(unit?.structures) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tenant_fullname">
+          <th mat-header-cell mat-sort-header="tenantName" *matHeaderCellDef class="text-center">
+            {{ "residence_full_name_label" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let unit">{{ unit.residenceName || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobile_number">
+          <th mat-header-cell mat-sort-header="mobileNumber" *matHeaderCellDef class="text-center">
+            {{ "common.mobile_number" | translate }}
+          </th>
+          <td mat-cell *matCellDef="let unit">{{ unit.residenceMobileNumber || ("na_label" | translate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rent_or_owned">
+          <th mat-header-cell *matHeaderCellDef class="text-center">{{ "occupancy_label" | translate }}</th>
+          <td mat-cell *matCellDef="let unit">
+            <ng-container *ngIf="unit.occupy === 'EMPTY'">{{ "na_label" | translate }}</ng-container>
+            <ng-container *ngIf="unit.occupy !== 'EMPTY'"> {{ unit.occupy }}</ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td colspan="8" mat-cell *matCellDef="let element" class="text-left">
+            <div class="units-info" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <app-unit-detail-container
+                [unit]="this.currentElement"
+                *ngIf="element == expandedElement"
+                [activePropertyId]="activePropertyId"
+                (updateUnitMaintenanceChargeSuccess)="onUpdateUnitMaintenanceChargeSuccess()"
+                (unitRentConfigUpdated)="onUnitRentConfigUpdated()"
+              ></app-unit-detail-container>
+
+              <app-invite-tenant
+                [unit]="this.currentElement"
+                [hasInvoicePrefixSetup]="hasInvoicePrefixSetup"
+                *ngIf="element == expandedElement && !this.currentElement?.residenceId"
+              ></app-invite-tenant>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          class="records-row"
+          [class.expanded]="expandedElement == element"
+          (click)="onClickTableRow(element)"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+      </table>
+      <mat-paginator
+        #paginatorCmp
+        [length]="listLength"
+        [pageSize]="perPage"
+        [pageSizeOptions]="getDefaultPageSizeOptions()"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

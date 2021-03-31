@@ -1,0 +1,143 @@
+<form class="detail-form" [formGroup]="myProfileForm">
+  <div class="d-flex justify-between">
+    <div class="col">
+      <div class="form-field-wrapper has-margin-bottom">
+        <app-file-upload
+          formControlName="profilePicture"
+          [fileUploadType]="fileUploadTypeEnum.CIRCULAR"
+          [folderName]="'USER_LOGO'"
+          [figCaption]="'profile_picture_label' | translate"
+        ></app-file-upload>
+        <mat-error *ngIf="submitted">
+          <app-error-message [control]="myProfileForm.get('profilePicture')"></app-error-message>
+        </mat-error>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex has-3-cols">
+    <div class="form-field-wrapper has-no-padding-left col">
+      <mat-form-field>
+        <mat-label>{{ "common.full_name" | translate }}</mat-label>
+        <input type="text" matInput formControlName="name" required />
+        <mat-error>
+          <app-error-message [control]="myProfileForm.get('name')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-wrapper has-no-padding-left col">
+      <mat-form-field class="isDisabled">
+        <mat-label>{{ "common.email" | translate }}</mat-label>
+        <input type="email" matInput formControlName="email" required />
+        <mat-error>
+          <app-error-message [control]="myProfileForm.get('email')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-wrapper has-no-padding-left col">
+      <mat-form-field class="isDisabled">
+        <mat-label>{{ "common.mobile_number" | translate }}</mat-label>
+        <input matInput formControlName="mobileNumber" appOnlyNumber required />
+        <mat-error>
+          <app-error-message [control]="myProfileForm.get('mobileNumber')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="address-details address-details-company" formGroupName="address">
+    <h5 class="form-section-title">{{ "address" | translate }}</h5>
+    <div class="d-flex has-2-cols">
+      <div class="form-field-wrapper has-no-padding-left col full-width">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.address_line_1_label" | translate }}</mat-label>
+          <input type="text" matInput formControlName="addressLine1" required />
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('addressLine1')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper has-no-padding-left col full-width">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.address_line_2_label" | translate }}</mat-label>
+          <input type="text" matInput formControlName="addressLine2" />
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('addressLine2')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper has-no-padding-left col">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.address_line_1_label" | translate }}</mat-label>
+          <mat-select formControlName="country" required>
+            <mat-option [value]="country.value" *ngFor="let country of countries">{{ country.title }}</mat-option>
+          </mat-select>
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('country')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper has-no-padding-left col">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.province_label" | translate }}</mat-label>
+          <input
+            type="text"
+            placeholder="{{ 'province_placeholder' | translate }}"
+            matInput
+            formControlName="province"
+            [matAutocomplete]="auto"
+            required
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let province of filteredProvinces | async" [value]="province.value">
+              {{ province.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('province')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper has-no-padding-left col">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.city_label" | translate }}</mat-label>
+          <input type="text" matInput formControlName="city" required />
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('city')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper has-no-padding-left col">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.zip_code_label" | translate }}</mat-label>
+          <input matInput formControlName="zipCode" appOnlyNumber required />
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('zipCode')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper has-no-padding-left col">
+        <mat-form-field>
+          <mat-label>{{ "mod_address.ward_number_label" | translate }}</mat-label>
+          <input matInput formControlName="wardNo" appOnlyNumber required />
+          <mat-error>
+            <app-error-message [control]="myProfileForm.get('address').get('wardNo')"></app-error-message>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons-wrapper d-flex">
+    <button mat-button class="btn btn-theme-green left-auto" (click)="updateMyProfile()">
+      {{ "common.update" | translate }}
+    </button>
+  </div>
+</form>

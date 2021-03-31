@@ -1,0 +1,166 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">OWNANT</span>
+    </h1>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+      <mat-menu #propertyMenu="matMenu" class="is-dropdown">
+        <h3>My Property</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Sunrise Homes</span>
+              <label>Apartment</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+          <a mat-list-item routerLink="/designs/dashboard">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="staffMenu">Staff</a>
+      <mat-menu #staffMenu="matMenu" class="is-dropdown">
+        <h3>Active Staff</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="openDialog()">Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer-content>
+        <div class="content-inner">
+          <h2 class="module-header d-flex align-center justify-between">
+            <span class="module-header-text">Staffs</span>
+            <form class="d-flex align-center">
+              <div class="form-field-wrapper has-no-margin has-padding-right">
+                <mat-form-field floatLabel="never">
+                  <mat-label>Search by Name</mat-label>
+                  <input type="text" matInput placeholder="Search by Owner" />
+                  <i mat-icon-button matSuffix class="las la-search"></i>
+                </mat-form-field>
+              </div>
+              <button mat-button class="btn btn-theme-green" (click)="openDialog()">Add</button>
+            </form>
+          </h2>
+
+          <!-- Filters -->
+          <div class="records-filter">
+            <h3>Filter by</h3>
+            <div class="d-flex">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-select floatLabel="never">
+                    <mat-option value="property-manager" seleceted>Property Manager</mat-option>
+                    <mat-option value="gatekeeper">Gatekeeper</mat-option>
+                    <mat-option value="plumber">Plumber</mat-option>
+                  </mat-select>
+                  <mat-label>Role</mat-label>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- Filters -->
+
+          <div class="records-wrapper">
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="staffDataSource" class="records-table records-table--staffs">
+                <ng-container matColumnDef="fullname">
+                  <th mat-header-cell *matHeaderCellDef>Full Name</th>
+                  <td mat-cell *matCellDef="let staff">{{ staff.fullname }}</td>
+                </ng-container>
+                <ng-container matColumnDef="mobile_number">
+                  <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+                  <td mat-cell *matCellDef="let staff">{{ staff.mobile_number }}</td>
+                </ng-container>
+                <ng-container matColumnDef="role">
+                  <th mat-header-cell *matHeaderCellDef>Role</th>
+                  <td mat-cell *matCellDef="let staff">
+                    <mat-form-field>
+                      <mat-label>Role</mat-label>
+                      <mat-select>
+                        <mat-option value="manager" selected>{{ staff.role }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let staff">
+                    <a class="text-primary has-pointer-style"><i class="las la-minus-circle"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="no-records-found">
+            <span>{{ "no_records_found" | translate }}</span>
+          </div>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

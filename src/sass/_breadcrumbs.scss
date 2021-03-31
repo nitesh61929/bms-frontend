@@ -1,0 +1,18 @@
+.breadcrubms {
+  font-size: 13px;
+  margin-bottom: 24px;
+
+  span {
+    a {
+      color: $peach;
+      text-decoration: underline;
+    }
+    & + span {
+      &:before {
+        content: "/";
+        margin: 0 8px;
+        display: inline-block;
+      }
+    }
+  }
+}

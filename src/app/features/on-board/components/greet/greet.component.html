@@ -1,0 +1,9 @@
+<app-wizard-section [pathName]="pathName">
+  <div class="success-msg text-center">
+    <h4>{{ "congratulations_message" | translate }}</h4>
+    <p>{{ "greet_message" | translate }}</p>
+    <button mat-button class="btn btn-theme-green" (click)="onGoToDashboard()">
+      {{ "go_to_dashboard" | translate }}
+    </button>
+  </div>
+</app-wizard-section>

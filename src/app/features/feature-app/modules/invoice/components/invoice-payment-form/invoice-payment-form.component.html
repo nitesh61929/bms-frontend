@@ -1,0 +1,179 @@
+<ng-container *ngIf="paymentDetail">
+  <div class="form-detail" *ngIf="!paymentDetail.id || (paymentDetail.id && paymentDetail.paymentType == 'CHEQUE')">
+    <form [formGroup]="invoicePaymentForm">
+      <div class="d-flex has-2-cols justify-between">
+        <div class="col has-margin-top">
+          <div class="form-field-wrapper">
+            <mat-form-field>
+              <mat-label>{{ "mod_invoice.payment_option_label" | translate }}</mat-label>
+              <mat-select formControlName="paymentType" (selectionChange)="onPaymentTypeSelect($event)" required>
+                <mat-option [value]="method.value" *ngFor="let method of paymentMethods">{{ method.title }}</mat-option>
+              </mat-select>
+              <mat-error>
+                <app-error-message [control]="invoicePaymentForm.get('paymentType')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col has-margin-top" *ngIf="invoicePaymentForm.get('paymentType').value">
+          <div class="form-field-wrapper">
+            <mat-form-field>
+              <mat-label *ngIf="invoicePaymentForm.get('paymentType').value === 'CHEQUE'">
+                {{ "mod_invoice.cheque_received_date" | translate }}
+              </mat-label>
+              <mat-label class="has-margin-top" *ngIf="invoicePaymentForm.get('paymentType').value === 'CASH'">
+                {{ "mod_invoice.cash_received_date" | translate }}
+              </mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="receivedDate"
+                (click)="picker.open()"
+                required
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error>
+                <app-error-message [control]="invoicePaymentForm.get('receivedDate')"></app-error-message>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="invoicePaymentForm.get('paymentType').value">
+        <h3 class="has-margin-top" *ngIf="invoicePaymentForm.get('paymentType').value === 'CHEQUE'">
+          {{ "mod_invoice.cheque_details_label" | translate }}
+        </h3>
+        <h3 class="has-margin-top" *ngIf="invoicePaymentForm.get('paymentType').value === 'CASH'">
+          {{ "mod_invoice.cash_details_label" | translate }}
+        </h3>
+        <div
+          class="d-flex justify-between"
+          [class.has-2-cols]="invoicePaymentForm.get('paymentType').value === 'CASH'"
+          [class.has-3-cols]="invoicePaymentForm.get('paymentType').value === 'CHEQUE'"
+        >
+          <ng-container *ngIf="invoicePaymentForm.get('paymentType').value === 'CHEQUE'">
+            <div class="col has-margin-top">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>{{ "mod_invoice.bank_name" | translate }}</mat-label>
+                  <input matInput formControlName="bankName" required />
+                  <mat-error>
+                    <app-error-message [control]="invoicePaymentForm.get('bankName')"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col has-margin-top">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>{{ "mod_invoice.account_holder_name" | translate }}</mat-label>
+                  <input matInput formControlName="accountHolderName" required />
+                  <mat-error>
+                    <app-error-message [control]="invoicePaymentForm.get('accountHolderName')"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col has-margin-top">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>{{ "mod_invoice.account_number" | translate }}</mat-label>
+                  <input matInput formControlName="accountNumber" required />
+                  <mat-error>
+                    <app-error-message [control]="invoicePaymentForm.get('accountNumber')"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col has-margin-top">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>{{ "mod_invoice.account_maintained_branch" | translate }}</mat-label>
+                  <input matInput formControlName="accountMaintainBranchName" required />
+                  <mat-error>
+                    <app-error-message
+                      [control]="invoicePaymentForm.get('accountMaintainBranchName')"
+                    ></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col has-margin-top">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>{{ "mod_invoice.cheque_deposited_branch" | translate }}</mat-label>
+                  <input matInput formControlName="chequeDepositedBranchName" required />
+                  <mat-error>
+                    <app-error-message
+                      [control]="invoicePaymentForm.get('chequeDepositedBranchName')"
+                    ></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col has-margin-top">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>{{ "mod_invoice.cheque_number_label" | translate }}</mat-label>
+                  <input matInput formControlName="chequeNumber" required />
+                  <mat-error>
+                    <app-error-message [control]="invoicePaymentForm.get('chequeNumber')"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="d-flex justify-between has-2-cols">
+          <div class="col has-margin-top">
+            <div class="form-field-wrapper">
+              <mat-form-field>
+                <mat-label>{{ "amount_label" | translate }}</mat-label>
+                <input matInput formControlName="amount" appOnlyNumber [decimal]="true" required />
+                <mat-error>
+                  <app-error-message [control]="invoicePaymentForm.get('amount')"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col has-margin-top">
+            <div class="form-field-wrapper isDisabled">
+              <mat-form-field>
+                <mat-label>{{ "amount_in_word" | translate }}</mat-label>
+                <input matInput [value]="printAmountInWords()" formControlName="amountInWords" required />
+                <mat-error>
+                  <app-error-message [control]="invoicePaymentForm.get('amountInWords')"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-between" *ngIf="invoicePaymentForm.get('paymentType').value === 'CHEQUE'">
+          <div class="col image-holder">
+            <app-file-upload
+              formControlName="image"
+              [fileUploadType]="fileUploadTypeEnum.RECTANGULAR"
+              [figCaption]="'mod_invoice.deposit_slip_label' | translate"
+              [folderName]="'PAYMENT_DOCUMENT'"
+              [enableUpload]="!isDisabled()"
+            ></app-file-upload>
+            <mat-error *ngIf="submitted">
+              <app-error-message [control]="invoicePaymentForm.get('image')"></app-error-message>
+            </mat-error>
+          </div>
+        </div>
+      </ng-container>
+      <div class="d-flex info has-margin-bottom full-width">
+        <button mat-button class="btn-theme-green" (click)="savePayment()" *ngIf="!paymentDetail.id">
+          {{ "mod_invoice.pay_now" | translate }}
+        </button>
+        <ng-container *appHasAccess="hasVerifyChequePaymentAccess">
+          <button mat-button class="btn-theme-green" (click)="verifyPayment()" *ngIf="showVerifyButton()">
+            {{ "mod_invoice.verify_payment" | translate }}
+          </button>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+</ng-container>

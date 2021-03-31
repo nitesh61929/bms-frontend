@@ -1,0 +1,8 @@
+<app-unit-list
+  [unitList$]="unitList$"
+  [selectedPropertyStructures$]="selectedPropertyStructures$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  [activePropertyId]="activePropertyId"
+  (updateUnitMaintenanceChargeSuccess)="onUpdateUnitMaintenanceChargeSuccess()"
+></app-unit-list>

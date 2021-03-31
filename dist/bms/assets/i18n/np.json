@@ -1,0 +1,16 @@
+{
+  "common": {
+    "name": "मेरो नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "submit": "बुझाउनुहोस्",
+    "select_language": "Select language"
+  },
+  "validation_messages": {
+    "required": "यो क्षेत्र आवश्यक छ"
+  },
+  "login": {
+    "welcome": "स्वागत छ",
+    "building_management": "भवन व्यवस्थापन प्रणाली"
+  }
+}

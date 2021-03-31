@@ -1,0 +1,228 @@
+@media screen and (max-width: 1440px) {
+  .setup {
+    form {
+      min-height: 69vh;
+    }
+  }
+  .success-msg {
+    margin-top: 20vh;
+    p {
+      margin: 24px 0;
+    }
+  }
+
+  .records-table--staffs {
+    tr {
+      th {
+        &[class*="number"],
+        &[class*="role"],
+        &[class*="actions"] {
+          width: 150px !important;
+        }
+      }
+      td {
+        &[class*="number"] {
+          width: 150px !important;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1360px) {
+  .cover-image {
+    & + .d-flex {
+      display: block;
+    }
+  }
+  .profile-basic-info {
+    margin: 0 0 20px 0;
+    flex: 1 1 100%;
+  }
+  .profile-contact-info {
+    display: flex;
+    justify-content: center;
+    p {
+      & + p {
+        margin-left: 20px;
+      }
+    }
+  }
+  .profile-detail-wrapper {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .profile-contact-info {
+    display: block;
+    p {
+      text-align: center;
+      display: block;
+      i,
+      a {
+        display: inline-block;
+        vertical-align: middle;
+        transform: inherit;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+  .nav {
+    &-primary {
+      .mat-list-item {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1024px) {
+  .nav {
+    &-primary {
+      .mat-list-item {
+        margin-left: 6px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .mat-drawer-container {
+    height: calc(100vh - 128px);
+  }
+  header {
+    &.d-flex {
+      flex-wrap: wrap;
+    }
+  }
+  .nav {
+    &-primary {
+      flex: 1 1 100%;
+      order: 4;
+      margin-top: 8px;
+      border-top: 1px solid $gray;
+      padding-top: 8px;
+      .mat-list-item {
+        margin-top: 8px;
+        &:first-of-type {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+  .app-content {
+    padding-top: 128px;
+  }
+  .property {
+    &-basic-info {
+      flex: 1 1 100%;
+      margin: 0 0 16px 0;
+    }
+    &-detail-wrapper {
+      flex: 1 1 100%;
+    }
+    &-contact-info {
+      p {
+        justify-content: center;
+        span {
+          flex: inherit;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  .auth {
+    padding: 1rem;
+    &-content {
+      height: auto;
+      .app-info {
+        h2 {
+          margin: 24px 0;
+          position: relative;
+          z-index: 1;
+        }
+        p {
+          position: relative;
+          z-index: 1;
+        }
+        figure {
+          opacity: 0.4;
+        }
+      }
+      .form-wrapper {
+        h4 {
+          margin: 24px 0;
+        }
+      }
+    }
+  }
+  .d-flex {
+    display: block;
+  }
+  .setup {
+    .setup-wizard {
+      figure {
+        opacity: 0.2;
+      }
+      &-steps {
+        margin-top: 20px;
+        white-space: nowrap;
+        overflow: auto;
+        position: relative;
+        z-index: 1;
+        padding-bottom: 4px;
+        li {
+          display: inline-block;
+          &:before {
+            margin-right: 5px;
+          }
+          & + li {
+            margin: 0 0 0 24px;
+          }
+        }
+      }
+    }
+  }
+  .lists-item {
+    display: flex;
+  }
+  .documents-form {
+    min-height: inherit;
+    .buttons-wrapper {
+      position: static;
+    }
+  }
+  header {
+    &.d-flex {
+      display: flex;
+    }
+    .d-flex {
+      display: flex;
+    }
+    .nav-item {
+      & + .nav-item {
+        margin-left: 10px;
+      }
+    }
+  }
+  .property-name {
+    display: flex;
+  }
+  .profile-detail-wrapper {
+    max-width: inherit;
+  }
+  .password-mismatch {
+    padding-left: 0;
+    margin-left: 0;
+  }
+}

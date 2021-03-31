@@ -1,0 +1,71 @@
+// Product Admin Property List & Detail Exapnded
+.records-table {
+  &--property-owner,
+  &--properties {
+    background: transparent;
+    figure {
+      height: 32px !important;
+      width: 32px !important;
+    }
+    
+    tr {
+      border-radius: 48px;
+      th{
+        background: transparent ;
+        border: 0;
+      }
+      td {
+        background: rgba($primaryLight, 0.5) !important;
+        border-bottom: 2px solid $primaryDarkFaint !important;
+        padding: 12px 24px !important;
+        cursor: pointer;
+        &:first-child {
+          border-bottom-left-radius: 48px;
+          border-top-left-radius: 48px;
+          width: 70px;
+        }
+        &:last-child {
+          border-bottom-right-radius: 48px;
+          border-top-right-radius: 48px;
+          width: 120px;
+        }
+        &[class*="address"] {
+          width: 500px;
+        }
+        &[class*="logo"] {
+          width: 80px;
+        }
+      }
+      &:hover {
+        td {
+          background: $primaryLight !important;
+        }
+      }
+    }
+  }
+}
+
+// Product Admin Property Add Form
+.property {
+  &-detail-form {
+    h5 {
+      font-weight: 500;
+    }
+    .contact-details {
+      .col {
+        max-width: 250px;
+        padding-right: 16px;
+      }
+    }
+    .address-details {
+      .col {
+        &:nth-last-of-type(n + 5) {
+          max-width: 120px;
+        }
+        &:nth-of-type(3) {
+          min-width: calc(100% - 272px);
+        }
+      }
+    }
+  }
+}

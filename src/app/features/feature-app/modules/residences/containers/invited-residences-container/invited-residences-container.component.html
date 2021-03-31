@@ -1,0 +1,10 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-invited-residences
+  [invitedResidences$]="invitedResidences$"
+  [unitList$]="unitList$"
+  [pagination$]="pagination$"
+  (paramChanged)="onParamChange($event)"
+  (resendInvitationClicked)="onResendInvitation($event)"
+  (cancelInvitationClicked)="onCancelInvitation($event)"
+></app-invited-residences>
+<!-- </app-navigation-bar> -->

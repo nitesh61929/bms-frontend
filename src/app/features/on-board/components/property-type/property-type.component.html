@@ -1,0 +1,27 @@
+<app-wizard-section [pathName]="pathName">
+  <h4>{{ "property_type_label" | translate }}</h4>
+  <mat-nav-list class="lists lists-site-type">
+    <ng-container *ngFor="let propertyType of propertyTypes$ | async">
+      <a
+        mat-list-item
+        class="d-flex lists-item selected"
+        [class.selected]="propertyType.code === selectedPropertyTypeCode"
+        (click)="onSelectPropertyType(propertyType.code)"
+      >
+        <figure>
+          <i class="las la-city" *ngIf="propertyType.code === 'RESIDENTIAL'"></i>
+          <i class="las la-building" *ngIf="propertyType.code === 'HOUSING'"></i>
+        </figure>
+        <div class="lists-item-content">
+          <h5>{{ propertyType?.title }}</h5>
+          <!-- <span *ngIf="propertyType.code === 'RESIDENTIAL'">{{ "apartment_description" | translate }}</span> -->
+          <span *ngIf="propertyType.code === 'HOUSING'">{{ "housing_description" | translate }}</span>
+        </div>
+      </a>
+    </ng-container>
+  </mat-nav-list>
+  <div class="buttons-wrapper d-flex">
+    <a mat-button class="btn btn-theme-white" (click)="onPrevious()">{{ "previous_label" | translate }}</a>
+    <button mat-button class="btn btn-theme-green" (click)="onNext()">{{ "next_label" | translate }}</button>
+  </div>
+</app-wizard-section>

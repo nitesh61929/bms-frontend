@@ -1,0 +1,50 @@
+<form class="form-notice" [formGroup]="addNoticeForm">
+  <div class="form-field-wrapper">
+    <div class="form-field-wrapper">
+      <app-file-upload
+        formControlName="file"
+        [fileUploadType]="fileUploadTypeEnum.CIRCULAR"
+        [folderName]="'NOTICE'"
+        [figCaption]="'notice_image_caption' | translate"
+      ></app-file-upload>
+      <mat-error>
+        <app-error-message [control]="addNoticeForm.get('file')"></app-error-message>
+      </mat-error>
+    </div>
+  </div>
+
+  <div class="form-field-wrapper">
+    <mat-form-field>
+      <mat-label>{{ "common.title" | translate }}</mat-label>
+      <input matInput required formControlName="title" required />
+      <mat-error>
+        <app-error-message [control]="addNoticeForm.get('title')"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-wrapper">
+    <mat-form-field>
+      <mat-label>{{ "detail_label" | translate }}</mat-label>
+      <textarea matInput required formControlName="description" required></textarea>
+      <mat-error>
+        <app-error-message [control]="addNoticeForm.get('description')"></app-error-message>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-wrapper">
+    <mat-slide-toggle formControlName="published">{{ "publish" | translate }}</mat-slide-toggle>
+    <mat-error>
+      <app-error-message [control]="addNoticeForm.get('published')"></app-error-message>
+    </mat-error>
+  </div>
+
+  <div class="buttons-wrapper text-right">
+    <a (click)="closeDialog()" mat-button class="btn btn-theme-white">{{ "common.cancel" | translate }}</a>
+    <button mat-button class="btn btn-theme-green" (click)="onAddOrUpdateNoticeClick()">
+      <span *ngIf="!isUpdate">{{ "common.save" | translate }}</span>
+      <span *ngIf="isUpdate">{{ "common.update" | translate }}</span>
+    </button>
+  </div>
+</form>

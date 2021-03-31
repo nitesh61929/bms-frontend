@@ -1,0 +1,53 @@
+.mat-button {
+  border-radius: 5rem !important;
+  font-family: $mainFont;
+  font-size: 12px;
+  font-weight: 400;
+  min-width: 80px !important;
+  padding: 0 20px !important;
+  &[disabled] {
+    background: $gray;
+    color: $textColor;
+    pointer-events: none;
+  }
+  &-wrapper {
+    margin-right: 0 !important;
+  }
+  &-ripple {
+    margin: 0 !important;
+  }
+}
+
+.mat-icon-button {
+  .las {
+    position: static !important;
+    transform: inherit !important;
+  }
+}
+
+.btn-theme-green {
+  background: $green;
+  color: $white;
+}
+
+.btn-theme-peach {
+  background: $peach;
+  color: $white;
+}
+
+.btn-theme-white {
+  background: $primaryLightMedium;
+  color: $textColor;
+  &:hover {
+    background: darken($primaryLightMedium, 5%);
+  }
+}
+
+.btn-theme-green-outline {
+  border: 1px solid $green !important;
+  transition: all 0.25s ease;
+  &:hover {
+    background: $green;
+    color: $white;
+  }
+}

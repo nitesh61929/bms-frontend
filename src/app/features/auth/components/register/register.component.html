@@ -1,0 +1,25 @@
+<app-login-section [showLogoutIcon]="false">
+  <h4 class="text-center">{{ "enter_mobile_number_otp_label" | translate }}</h4>
+  <form class="login-form" [formGroup]="registrationForm">
+    <div class="form-field-wrapper">
+      <i class="las la-mobile"></i>
+      <mat-form-field>
+        <mat-label>{{ "common.mobile_number" | translate }}</mat-label>
+        <input matInput formControlName="mobileNumber" appOnlyNumber required />
+        <mat-error>
+          <app-error-message [control]="registrationForm.get('mobileNumber')"></app-error-message>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="buttons-wrapper">
+      <button mat-button class="btn-theme-green" (click)="onGenerateOTP()">
+        {{ "common.generate_otp" | translate }}
+      </button>
+    </div>
+    <div class="buttons-wrapper text-center">
+      <a class="text-center has-pointer-style" (click)="onLoginWithPassword()">{{
+        "password_login_label" | translate
+      }}</a>
+    </div>
+  </form>
+</app-login-section>

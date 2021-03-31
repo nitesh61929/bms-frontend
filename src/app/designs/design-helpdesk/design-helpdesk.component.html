@@ -1,0 +1,413 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">OWNANT</span>
+    </h1>
+
+    <span class="nav-toggle" (click)="drawer.toggle()">
+      <i class="las la-bars"></i>
+    </span>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item routerLink="/designs/dashboard" class="active">Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+      <mat-menu #propertyMenu="matMenu" class="is-dropdown">
+        <h3>My Property</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Sunrise Homes</span>
+              <label>Apartment</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item>Add New</a>
+          <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="staffMenu">Staff</a>
+      <mat-menu #staffMenu="matMenu" class="is-dropdown">
+        <h3>Active Staff</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item>Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer mode="side" opened>
+        <!-- Sidebar -->
+        <section class="nav nav-sidebar">
+          <h2 class="property-name d-flex align-center">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/hero.jpg" alt="Property Image" />
+            </figure>
+            <span class="text-primary">Sunrise Homes</span>
+          </h2>
+
+          <mat-nav-list>
+            <a mat-list-item routerLink="/designs/units">
+              <i class="las la-door-open"></i>
+              <span>Units</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/tenant-active">
+              <i class="las la-user-tie"></i>
+              <span>Tenants</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/notice-board">
+              <i class="las la-newspaper"></i>
+              <span>Notice Board</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/Helpdesk" class="active">
+              <i class="las la-user-astronaut"></i>
+              <span>Helpdesk</span>
+            </a>
+
+            <a mat-list-item>
+              <i class="las la-chart-bar"></i>
+              <span>Reports</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/settings">
+              <i class="las la-cog"></i>
+              <span>Settings</span>
+            </a>
+          </mat-nav-list>
+        </section>
+        <!-- Sidebar -->
+      </mat-drawer>
+
+      <mat-drawer-content>
+        <div class="content-inner">
+          <div class="breadcrubms">
+            <span>Sunrise Homes</span>
+            <span>Helpdesk</span>
+          </div>
+
+          <h2 class="module-header d-flex align-center justify-between">
+            <span class="module-header-text">Helpdesk</span>
+            <form class="d-flex align-center">
+              <div class="form-field-wrapper has-no-margin has-padding-right">
+                <mat-form-field>
+                  <mat-label>Search by Title</mat-label>
+                  <input type="text" matInput />
+                  <i mat-icon-button matSuffix class="las la-search"></i>
+                </mat-form-field>
+              </div>
+            </form>
+          </h2>
+
+          <!-- Filters -->
+          <div class="records-filter">
+            <h3>Filter by</h3>
+            <div class="d-flex">
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date" />
+                    <input matEndDate placeholder="End date" />
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-select>
+                    <mat-option value="active">New</mat-option>
+                    <mat-option value="inactive">In Progress</mat-option>
+                    <mat-option value="inactive">Resolved</mat-option>
+                    <mat-option value="inactive">Closed</mat-option>
+                  </mat-select>
+                  <mat-label>Status</mat-label>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-select>
+                    <mat-option value="inactive">Critical</mat-option>
+                    <mat-option value="inactive">Normal</mat-option>
+                    <mat-option value="inactive">Minor</mat-option>
+                    <mat-option value="active">Low</mat-option>
+                  </mat-select>
+                  <mat-label>Priority</mat-label>
+                </mat-form-field>
+              </div>
+              <div class="form-field-wrapper">
+                <mat-form-field>
+                  <mat-select>
+                    <mat-option value="active">Maintenance</mat-option>
+                    <mat-option value="inactive">Payment</mat-option>
+                    <mat-option value="inactive">Other</mat-option>
+                  </mat-select>
+                  <mat-label>Category</mat-label>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- Filters -->
+          <div class="records-wrapper">
+            <div class="table-wrapper">
+              <div class="col ticket-lists">
+                <table
+                  mat-table
+                  [dataSource]="dataSource"
+                  multiTemplateDataRows
+                  class="records-table records-table--help-desk"
+                >
+                  <ng-container matColumnDef="ticket_ID">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element">{{ element.ticket_ID }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef>Title</th>
+                    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="priority">
+                    <th mat-header-cell *matHeaderCellDef>Priority</th>
+                    <td mat-cell *matCellDef="let element">
+                      <label class="label-status {{ element.priority }}">{{ element.priority }}</label>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef>Category</th>
+                    <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="created_date">
+                    <th mat-header-cell *matHeaderCellDef>Created Date</th>
+                    <td mat-cell *matCellDef="let element">{{ element.created_date }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="due_date">
+                    <th mat-header-cell *matHeaderCellDef>Due Date</th>
+                    <td mat-cell *matCellDef="let element">{{ element.due_date }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" class="text-left">
+                      <div
+                        class="d-flex help-desk-records"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+                      >
+                        <div class="col info ticket-details">
+                          <div class="d-flex">
+                            <div class="col ticket-detail-content has-padding-right">
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                mollit anim id est laborum.
+                              </p>
+
+                              <div lightbox-group class="ticket-images has-margin-top">
+                                <figure class="w-64">
+                                  <img src="/assets/images/hero.jpg" lightbox alt="" />
+                                </figure>
+                              </div>
+                              <!-- tabs Comments/History -->
+                              <mat-tab-group mat-align-tabs="start">
+                                <mat-tab label="Comments">
+                                  <div class="comments has-margin-top">
+                                    <h5 class="has-margin-bottom">Comments</h5>
+                                    <ul>
+                                      <li class="d-flex">
+                                        <figure class="is-rounded-image w-32">
+                                          <img src="/assets/images/hero.jpg" alt="" />
+                                        </figure>
+                                        <div>
+                                          <p>Lorem Ipsum Dolor</p>
+                                          <span>Digesh</span>
+                                          <label>Fri Oct 30, 2020 11:30 AM</label>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                    <form class="has-margin-top">
+                                      <div class="form-field-wrapper has-no-padding">
+                                        <mat-form-field>
+                                          <mat-label>Comment</mat-label>
+                                          <textarea matInput></textarea>
+                                        </mat-form-field>
+                                      </div>
+                                      <button mat-button class="btn btn-theme-green">Submit</button>
+                                    </form>
+                                  </div>
+                                </mat-tab>
+                                <mat-tab label="History">
+                                  <div class="ticket-history has-margin-top">
+                                    <h5 class="has-margin-bottom">Ticket History</h5>
+                                    <ul>
+                                      <li>
+                                        <p>Assigned to Digesh</p>
+                                        <span>Fri Oct 30, 2020 11:30 AM</span>
+                                      </li>
+
+                                      <li>
+                                        <p>Created by Ghanshyam</p>
+                                        <span>Fri Oct 30, 2020 11:00 AM</span>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </mat-tab>
+                              </mat-tab-group>
+                            </div>
+                            <div class="col ticket-actions">
+                              <div class="form-field-wrapper has-no-padding-left">
+                                <mat-form-field>
+                                  <mat-label>Assigned To</mat-label>
+                                  <input matInput type="text" />
+                                </mat-form-field>
+                              </div>
+
+                              <div class="form-field-wrapper has-no-padding-left">
+                                <mat-form-field class="mat-form-field-disabled">
+                                  <mat-label>Due Date</mat-label>
+                                  <input matInput [matDatepicker]="picker" />
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="form-field-wrapper has-no-padding-left">
+                                <mat-form-field>
+                                  <mat-label>Status</mat-label>
+                                  <mat-select>
+                                    <mat-option value="new">New</mat-option>
+                                    <mat-option value="in-progress">In Progress</mat-option>
+                                    <mat-option value="resolved">Resolved</mat-option>
+                                    <mat-option value="closed">Closed</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="form-field-wrapper has-no-padding-left">
+                                <mat-form-field>
+                                  <mat-label>Priority</mat-label>
+                                  <mat-select>
+                                    <mat-option value="critical">Critical</mat-option>
+                                    <mat-option value="high">High</mat-option>
+                                    <mat-option value="medium">Medium</mat-option>
+                                    <mat-option value="low">Low</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                              <div class="form-field-wrapper has-no-padding-left">
+                                <mat-form-field>
+                                  <mat-label>Category</mat-label>
+                                  <mat-select>
+                                    <mat-option value="electricity">Electricity</mat-option>
+                                    <mat-option value="plumbing">Plumbing</mat-option>
+                                    <mat-option value="payment">Payemnt</mat-option>
+                                    <mat-option value="Other">Other</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+
+                              <div class="created-by has-margin-top">
+                                <h5 class="has-margin-bottom">Created By:</h5>
+                                <mat-list class="has-no-padding">
+                                  <mat-list-item>
+                                    <i class="las la-user text-primary"></i> Ghanashyam Kushwaha
+                                  </mat-list-item>
+                                  <mat-list-item>
+                                    <i class="las la-mobile text-primary"></i> 977-9876543210
+                                  </mat-list-item>
+                                  <mat-list-item>
+                                    <i class="las la-envelope text-primary"></i> ghanashyam@ownant.com
+                                  </mat-list-item>
+                                  <mat-list-item>
+                                    <i class="lab la-buffer text-primary"></i> East, Tower-01, Floor-10, Unit-01
+                                  </mat-list-item>
+                                </mat-list>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let element; columns: displayedColumns"
+                    class="records-row"
+                    [class.expanded]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element"
+                  ></tr>
+                  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-row-details"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

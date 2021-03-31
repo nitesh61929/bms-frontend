@@ -1,0 +1,19 @@
+<div class="app-container auth d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="app-info">
+      <h1 class="app-icon d-flex align-center">
+        <img src="../../../assets/images/ownant-logo.png" height="60" />
+        <p>{{ "page_titles.ownant" | translate }}</p>
+      </h1>
+      <h2>{{ "auth_section_heading_text" | translate }}</h2>
+      <p>{{ "auth_section_description_text" | translate }}</p>
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="estateCloud" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <!-- <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p> -->
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<!-- <app-navigation-bar [showSidebar]="true"> -->
+<app-property-invoice-setting
+  #invoiceSettingCmp
+  [invoiceNumberSetting$]="invoiceNumberSetting$"
+  [errorInvoiceNumSetting$]="errorInvoiceNumSetting$"
+></app-property-invoice-setting>
+<app-payment-method-config
+  *appHasAccess="hasKhaltiKeySetAccess"
+  #khaltiPaymentConfigCmp
+  [khaltiPaymentConfig$]="khaltiPaymentConfig$"
+  [errorKhaltiConfigSetting$]="errorKhaltiConfigSetting$"
+></app-payment-method-config>
+<app-property-currency-config
+  #propertyCurrencyConfigCmp
+  [propertyCurrencyConfig$]="propertyCurrencyConfig$"
+  [errorCurrencyConfigSetting$]="errorCurrencyConfigSetting$"
+></app-property-currency-config>
+<!-- </app-navigation-bar> -->

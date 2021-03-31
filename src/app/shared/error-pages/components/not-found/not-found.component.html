@@ -1,0 +1,10 @@
+<div class="app-container error d-flex align-center">
+  <div class="error-content">
+    <i class="las la-bug"></i>
+    <h4>{{ "not_found_error_code" | translate }}</h4>
+    <p>{{ "page_not_found_message" | translate }}</p>
+    <button (click)="redirectToDefaultPage()" mat-button class="btn btn-theme-peach">
+      {{ "back_to_homepage_label" | translate }}
+    </button>
+  </div>
+</div>

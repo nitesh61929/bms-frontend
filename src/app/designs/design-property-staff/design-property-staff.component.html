@@ -1,0 +1,262 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="d-flex align-center">
+    <h1 class="building-logo d-flex align-center">
+      <figure>
+        <img src="./assets/images/favicon.png" alt="Building Logo" />
+      </figure>
+      <span class="text-primary bold">Sunrise Builder</span>
+    </h1>
+
+    <span class="nav-toggle" (click)="drawer.toggle()">
+      <i class="las la-bars"></i>
+    </span>
+
+    <mat-nav-list class="nav nav-primary">
+      <a mat-list-item routerLink="/designs/dashboard">Dashboard</a>
+
+      <a mat-list-item [matMenuTriggerFor]="propertyMenu">Property</a>
+      <mat-menu #propertyMenu="matMenu" class="is-dropdown property-dropdown-menu">
+        <h3>My Property</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Sunrise Homes</span>
+              <label>Apartment</label>
+              <label class="label-status in_verification">Pending</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/property-owner-add-property">Add New</a>
+          <a mat-list-item routerLink="/designs/product-admin-property">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item [matMenuTriggerFor]="userMenu">User</a>
+      <mat-menu #userMenu="matMenu" class="is-dropdown">
+        <h3>Active User</h3>
+        <mat-nav-list class="added-records-list">
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Ghanashyam Kushwaha</span>
+              <label>Property Manger</label>
+            </p>
+          </a>
+          <a mat-list-item class="d-flex align-center added-records-list-item">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+            </figure>
+            <p>
+              <span>Kanti Lal Shah</span>
+              <label>Gate Keeper</label>
+            </p>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list class="record-actions">
+          <a mat-list-item (click)="openStaffDialog()">Add New</a>
+          <a mat-list-item routerLink="/designs/staff">View All</a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <a mat-list-item routerLink="/designs/users">Users</a>
+
+      <a mat-list-item routerLink="/designs/property-owner-add-property" class="is-button">Add Property</a>
+    </mat-nav-list>
+
+    <mat-nav-list class="nav nav-secondary">
+      <a mat-list-item><i class="las la-question-circle"></i></a>
+      <a mat-list-item><i class="las la-cog"></i></a>
+      <a mat-list-item><i class="las la-bell"></i></a>
+      <a mat-list-item [matMenuTriggerFor]="userDropDown">
+        <figure class="is-rounded-image">
+          <img src="./assets/images/unnamed.jpg" alt="Property Image" />
+        </figure>
+      </a>
+
+      <mat-menu #userDropDown="matMenu" class="is-dropdown user-menu-dropdown">
+        <mat-nav-list class="record-actions">
+          <a mat-list-item routerLink="/designs/profile">View Profile</a>
+          <a mat-list-item>Logout</a>
+        </mat-nav-list>
+      </mat-menu>
+    </mat-nav-list>
+  </header>
+  <!-- Header -->
+
+  <div class="app-content">
+    <mat-drawer-container>
+      <mat-drawer #drawer mode="side" opened>
+        <!-- Sidebar -->
+        <section class="nav nav-sidebar">
+          <h2 class="property-name d-flex align-center">
+            <figure class="is-rounded-image">
+              <img src="./assets/images/hero.jpg" alt="Property Image" />
+            </figure>
+            <span class="text-primary">Sunrise Homes</span>
+          </h2>
+
+          <mat-nav-list>
+            <a mat-list-item routerLink="/designs/units">
+              <i class="las la-door-open"></i>
+              <span>Units</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/tenant-active">
+              <i class="las la-user-tie"></i>
+              <span>Tenants</span>
+            </a>
+            <mat-nav-list class="submenu">
+              <a mat-list-item routerLink="/designs/tenant-active">Active</a>
+              <a mat-list-item routerLink="/designs/tenant-invited">Invited</a>
+            </mat-nav-list>
+
+            <a mat-list-item routerLink="/designs/notice-board">
+              <i class="las la-newspaper"></i>
+              <span>Notice Board</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/helpdesk">
+              <i class="las la-user-astronaut"></i>
+              <span>Helpdesk</span>
+            </a>
+            <a mat-list-item routerLink="/designs/property-staff" class="active">
+              <i class="las la-users-cog"></i>
+              <span>Staff</span>
+            </a>
+            <a mat-list-item routerLink="/designs/committee-member">
+              <i class="las la-users"></i>
+              <span>Committee Member</span>
+            </a>
+            <a mat-list-item routerLink="/designs/property-policy">
+              <i class="las la-file-alt"></i>
+              <span>Policy</span>
+            </a>
+            <a mat-list-item>
+              <i class="las la-chart-bar"></i>
+              <span>Reports</span>
+            </a>
+
+            <a mat-list-item routerLink="/designs/settings">
+              <i class="las la-cog"></i>
+              <span>Settings</span>
+            </a>
+            <mat-nav-list class="submenu">
+              <a mat-list-item routerLink="/designs/property-configuration">Property</a>
+              <a mat-list-item routerLink="/designs/unit-configuration">Units</a>
+              <a mat-list-item routerLink="/designs/notification">Notification</a>
+            </mat-nav-list>
+          </mat-nav-list>
+        </section>
+        <!-- Sidebar -->
+      </mat-drawer>
+
+      <mat-drawer-content>
+        <div class="content-inner">
+          <h2 class="module-header d-flex align-center justify-between">
+            <span class="module-header-text">Property Staff</span>
+            <form>
+              <div class="form-field-wrapper has-no-margin">
+                <mat-form-field>
+                  <mat-label>Search by name/number</mat-label>
+                  <input type="text" matInput />
+                  <i mat-icon-button matSuffix class="las la-search"></i>
+                </mat-form-field>
+              </div>
+            </form>
+          </h2>
+          <div class="records-filter">
+            <form class="staff-configuration-form">
+              <h4 class="form-section-title">Add Staff</h4>
+              <div class="d-flex has-3-cols">
+                <div class="col has-padding-right">
+                  <div class="form-field-wrapper has-no-padding-left">
+                    <mat-form-field class="mat-form-field-invalid">
+                      <mat-label>Full Name</mat-label>
+                      <input type="text" matInput [matAutocomplete]="auto" />
+                      <mat-error class="mat-error">This field is required.</mat-error>
+
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option>
+                          <span>John Doe</span>
+                          <label>9800000000</label>
+                        </mat-option>
+                        <mat-option>
+                          <span>John Doe</span>
+                          <label>9800000000</label>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col has-padding-right">
+                  <div class="form-field-wrapper has-no-padding-left">
+                    <mat-form-field>
+                      <mat-label>Role</mat-label>
+                      <mat-select>
+                        <mat-option value="property-manager">Property Manager</mat-option>
+                        <mat-option value="gatekeeper">Gate Keeper</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <button mat-button class="btn btn-theme-green">Add</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- ADDED RECORDS -->
+          <div class="records-wrapper">
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="dataSource" class="records-table records-table--staffs">
+                <ng-container matColumnDef="sn">
+                  <th mat-header-cell *matHeaderCellDef>Sn</th>
+                  <td mat-cell *matCellDef="let staff">{{ staff.sn }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="fullname">
+                  <th mat-header-cell *matHeaderCellDef>Full Name</th>
+                  <td mat-cell *matCellDef="let staff">{{ staff.fullname }}</td>
+                </ng-container>
+                <ng-container matColumnDef="mobile_number">
+                  <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+                  <td mat-cell *matCellDef="let staff">{{ staff.mobile_number }}</td>
+                </ng-container>
+                <ng-container matColumnDef="role">
+                  <th mat-header-cell *matHeaderCellDef>Role</th>
+                  <td mat-cell *matCellDef="let staff">
+                    <mat-form-field>
+                      <mat-label>Role</mat-label>
+                      <mat-select>
+                        <mat-option value="manager" selected>{{ staff.role }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let staff">
+                    <a class="text-primary has-pointer-style"><i class="las la-minus-circle"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+          </div>
+          <!-- ADDED RECORDS -->
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<app-invoice-detail [invoice]="invoice" [paymentDetail$]="paymentDetail$"></app-invoice-detail>
+<ng-container *appHasAccess="hasManualPaymentAccess">
+  <app-invoice-payment-form
+    [invoice]="invoice"
+    [error$]="error$"
+    [paymentDetail$]="paymentDetail$"
+    (savePaymentClicked)="onSavePayment($event)"
+    (verifyPaymentClicked)="onVerifyPayment($event)"
+  ></app-invoice-payment-form>
+</ng-container>

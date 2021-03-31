@@ -1,0 +1,27 @@
+.mat-tab {
+  &-list {
+    display: block;
+    margin-top: 20px;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  &-label {
+    color: $textColor;
+    font-family: $mainFont;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0 5px;
+    opacity: 1 !important;
+    padding: 0;
+    text-transform: uppercase;
+  }
+  &-body-content {
+    height: auto !important;
+    padding: 20px;
+  }
+}
+.mat-ink-bar {
+  background-color: $peach !important;
+}

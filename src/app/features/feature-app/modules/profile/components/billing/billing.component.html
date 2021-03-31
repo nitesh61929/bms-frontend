@@ -1,0 +1,29 @@
+<form [formGroup]="billingDetailForm">
+  <div class="d-flex has-4-cols">
+    <div class="col">
+      <div class="form-field-wrapper has-margin-bottom">
+        <mat-form-field>
+          <mat-label>{{ "trial_start_date_label" | translate }}</mat-label>
+          <input matInput [matDatepicker]="trialStartDatePicker" formControlName="trialStartDate" />
+          <mat-datepicker-toggle style="font-size: 18px" matSuffix [for]="trialStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #trialStartDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-field-wrapper has-margin-bottom">
+        <mat-form-field>
+          <mat-label>{{ "trial_end_date_label" | translate }}</mat-label>
+          <input matInput [matDatepicker]="trialEndDatePicker" formControlName="trialEndDate" />
+          <mat-datepicker-toggle style="font-size: 18px" matSuffix [for]="trialEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #trialEndDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="buttons-wrapper d-flex">
+    <button mat-button class="btn btn-theme-green left-auto" (click)="updateBillingDetail()">
+      {{ "common.update" | translate }}
+    </button>
+  </div> -->
+</form>

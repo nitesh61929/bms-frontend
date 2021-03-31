@@ -1,0 +1,37 @@
+.error {
+  background: $primaryLight;
+  height: 100vh;
+  justify-content: center;
+  padding: 16px;
+  &-content {
+    max-width: 650px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 48px;
+    text-align: center;
+    background: $primaryLightMedium;
+    position: relative;
+    .las {
+      font-size: 120px;
+      opacity: 0.1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+      font-weight: 600;
+    }
+    h4 {
+      font-size: 80px;
+      font-weight: 300;
+    }
+    h5 {
+      font-size: 30px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+    button {
+      margin-top: 32px;
+      box-shadow: 0 3px 12px rgba($black, 0.2);
+    }
+  }
+}

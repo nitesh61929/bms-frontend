@@ -1,0 +1,68 @@
+.property-listings {
+  margin-top: 24px;
+  .col{
+    &:not(:last-of-type){
+      margin-right: 15px;
+    }
+  }
+  .mat-card {
+    background: $primaryLightMedium;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    color: $textColor;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    &:hover {
+      border: 1px solid $peach;
+    }
+  }
+  .mat-card-header-text {
+    margin: 0;
+  }
+  p {
+    &:not(:last-of-type) {
+      margin-bottom: 16px;
+    }
+    &:nth-last-of-type(n + 3) {
+      display: inline-block;
+      width: 50%;
+    }
+    * {
+      vertical-align: middle;
+    }
+  }
+  span {
+    margin: 0 8px;
+  }
+}
+
+/* Property Dashboard */
+.property-dashboard{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  .col1{
+    order: 1;
+    flex:1 1 67%;
+    margin: 0 1.5em 0 0;
+    .total-user{
+      background: $peach;
+      color: $white;
+    }
+    .active-user{
+      background:$green;
+      color: $white;
+    }
+    .inactive-user{
+      background:$blue;
+      color: $white;
+    }
+  }
+  .col2{
+    order: 2;
+    flex:1 1 33%;
+  }
+}
+

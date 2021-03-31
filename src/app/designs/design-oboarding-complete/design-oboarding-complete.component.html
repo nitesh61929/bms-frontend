@@ -1,0 +1,32 @@
+<div class="app-container auth setup d-flex align-center">
+  <div class="auth-content d-flex">
+    <div class="setup-wizard">
+      <h1 class="app-icon">
+        <span></span>
+        <p>estate<i>Cloud</i></p>
+      </h1>
+
+      <mat-nav-list class="setup-wizard-steps">
+        <a mat-list-item class="completed-step" routerLink="/designs/owner-type">Owner Type</a>
+        <a mat-list-item class="completed-step" routerLink="/designs/individual-owner-detail">Owner Detail</a>
+        <a mat-list-item class="completed-step" routerLink="/designs/site-type">Property Type</a>
+        <a mat-list-item class="completed-step" routerLink="/designs/site-detail">Property Detail</a>
+      </mat-nav-list>
+
+      <figure class="text-center">
+        <img src="./assets/images/bms-wizard-footer-img.png" alt="OWNANT" />
+      </figure>
+    </div>
+    <div class="form-wrapper">
+      <p class="help-text">Having troubles? <a href="#" class="text-primary bold">Get Help</a></p>
+      <div class="success-msg text-center">
+        <h4>Congratulation</h4>
+        <p>
+          You have submitted all the required detail of yours and your first property for verification. You must get an
+          SMS and an email and when your profile and your property both are verified at our end.
+        </p>
+        <button mat-button class="btn btn-theme-green" (click)="onClickRedirectTo()">Go to Dashboard</button>
+      </div>
+    </div>
+  </div>
+</div>
